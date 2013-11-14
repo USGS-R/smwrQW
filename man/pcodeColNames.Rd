@@ -1,0 +1,24 @@
+\name{pcodeColNames}
+\alias{pcodeColNames}
+\title{Column Names}
+\usage{
+  pcodeColNames()
+}
+\value{
+  A data frame containing the columns \code{parm_cd} and
+  \code{col_name}.
+}
+\description{
+  Create a data.frame of column names for water-quality
+  constituents
+}
+\note{
+  This function is intended to create a user-modifiable
+  data.frame called pcode.ColNames instead of accpeting the
+  default column names.
+}
+\seealso{
+  \code{\link{pcodeNWISqw}}
+}
+\keyword{utilities}
+

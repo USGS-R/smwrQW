@@ -1,0 +1,92 @@
+\name{qqPlot.lcens}
+\alias{qqPlot.lcens}
+\title{Q-Q Plot}
+\usage{
+  \method{qqPlot}{lcens} (x, y, alpha = 0.4,
+    Plot = list(name = "", what = "points", type = "solid", width = "standard", symbol = "circle", filled = TRUE, size = 0.09, color = "black"),
+    LineRef = list(name = "", what = "lines", color = "black"),
+    Line1.1 = list(name = "Line of equality", what = "lines", color = "gray"),
+    yaxis.log = FALSE, yaxis.range = c(NA, NA),
+    xaxis.log = FALSE, xaxis.range = c(NA, NA),
+    ylabels = 7, xlabels = 7, xtitle, ytitle, caption = "",
+    margin = c(NA, NA, NA, NA),
+    Censored = list(name = "", what = "points", symbol = "circle", filled = FALSE, size = 0.09, color = "black"),
+    Projected = list(name = "", what = "points", symbol = "plus", filled = FALSE, size = 0.09, color = "black"),
+    ...)
+}
+\arguments{
+  \item{x}{the x-axis data, or data to plot if y is
+  missing. Must be of class "lcens."}
+
+  \item{y}{the y-axis data. If missing, then produce a
+  quantile-normal quantile plot from the data in x.}
+
+  \item{alpha}{the alpha value of the function for
+  computing plotting positions.}
+
+  \item{Plot}{control parameters of the uncensored data
+  plot.}
+
+  \item{LineRef}{control parameters of the reference line
+  (best fit between x and y. See \bold{Details}.}
+
+  \item{Line1.1}{control parameters for the 1:1 line. Drawn
+  only for q-q plot. See \bold{Details}.}
+
+  \item{yaxis.log}{log-transform the y axis?}
+
+  \item{yaxis.range}{set the range of the y axis.}
+
+  \item{xaxis.log}{log-transform the x axis?}
+
+  \item{xaxis.range}{set the range of the x axis.}
+
+  \item{ylabels}{set the y-axis labels. See
+  \code{\link{linearPretty}} for details.}
+
+  \item{xlabels}{set the x-axis labels. See
+  \code{\link{linearPretty}} for details.}
+
+  \item{xtitle}{the x-axis title.}
+
+  \item{ytitle}{the y-axis title.}
+
+  \item{caption}{the figure caption.}
+
+  \item{margin}{the parameters of the margin of the plot
+  area.}
+
+  \item{Censored}{control parameters of the left-censored
+  data q-normal plot.}
+
+  \item{Projected}{control parameters of the projected
+  (filled in) left-censored data q-normal plot.}
+
+  \item{\dots}{any additional arguments required for
+  specific methods.}
+}
+\value{
+  Information about the graph.
+}
+\description{
+  Produce a quantile-quantile (q-q) or a q-normal plot for
+  left-censored data.
+}
+\details{
+  The argument what for either \code{LineRef} or
+  \code{Line1.1} may be set to "none" to suppress drawing
+  of either line.
+}
+\examples{
+\dontrun{
+set.seed(1932)
+Xu <- rlnorm(32)
+setPage("sq") # required page set up
+qqPlot(as.lcens(Xu, 1.0), yaxis.log=TRUE)
+}
+}
+\seealso{
+  \code{\link{probPlot.lcens}}
+}
+\keyword{hplot}
+

@@ -1,0 +1,39 @@
+\name{censSumStats}
+\alias{censSumStats}
+\title{Summary Statistics}
+\usage{
+  censSumStats(..., group = NULL, Nums = TRUE,
+    Stats = TRUE, Probs = (0:4)/4, na.rm = TRUE,
+    method = "log MLE")
+}
+\arguments{
+  \item{\dots}{any number of vectors or a data.frame of the
+  data to be summarized.}
+
+  \item{group}{the data to group the data in \code{\dots}.}
+
+  \item{Nums}{logical, include the number of observations
+  and numbers of censored values in the output data.frame.}
+
+  \item{Stats}{logical, include the mean and standard
+  deviation in the output data.frame.}
+
+  \item{Probs}{the argument to quantile specifying the
+  desired probabilities in the output data.frame}
+
+  \item{na.rm}{logical, remove missing values before
+  processing?}
+
+  \item{method}{the method to use for computing the
+  statistics.}
+}
+\value{
+  A data.frame with the desired statistcs for each variable
+  in \code{\dots} grouped by each unique value in
+  \code{group}.
+}
+\description{
+  Compute selected summary statistics for censored data.
+}
+\keyword{univar}
+

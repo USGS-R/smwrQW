@@ -1,0 +1,28 @@
+\name{print.censStats}
+\alias{print.censStats}
+\title{Print Results}
+\usage{
+  \method{print}{censStats} (x, digits = 4, ...)
+}
+\arguments{
+  \item{x}{an object of class "censStats."}
+
+  \item{digits}{the number of significant digits to print}
+
+  \item{\dots}{further arguments passed to or from other
+  methods.}
+}
+\value{
+  The object \code{x} is returned invisibly.
+}
+\description{
+  Print the output of \code{censStats}.
+}
+\note{
+  The printed includes the mean and standard deviation of
+  the data and if a log-transform was used in the
+  computation, then the mean and standard deviation of the
+  log-transformed values.
+}
+\keyword{utilities}
+

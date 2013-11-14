@@ -1,0 +1,31 @@
+\name{extractAIC.censReg}
+\alias{extractAIC.censReg}
+\title{Extract AIC from a Fitted Model}
+\usage{
+  \method{extractAIC}{censReg} (fit, scale = 0, k = 2, ...)
+}
+\arguments{
+  \item{fit}{an object of class "censReg"---output from
+  \code{censReg}.}
+
+  \item{scale}{set scale, ignored in current version.}
+
+  \item{k}{the weight of the equivalent degrees of
+  freedom.}
+
+  \item{\dots}{further arguments passed to or from other
+  methods.}
+}
+\value{
+  A vector of length 2, giving the equivalent degreees of
+  freedom and the AIC for \code{fit}.
+}
+\description{
+  Computes the Akaike An Information Criterion for an
+  AMLE/MLE regression.
+}
+\seealso{
+  \code{\link{censReg}}, \code{\link{extractAIC}}
+}
+\keyword{regression}
+

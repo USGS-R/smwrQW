@@ -1,0 +1,24 @@
+\name{rmse.censReg}
+\alias{rmse.censReg}
+\title{Root-Mean-Squared Error}
+\usage{
+  \method{rmse}{censReg} (x, ...)
+}
+\arguments{
+  \item{x}{the output from \code{censReg}.}
+
+  \item{\dots}{further arguments passed to or from other
+  methods.}
+}
+\value{
+  The estimated root-mean-squared error, also know as the
+  residual standard error.
+}
+\description{
+  Compute the root-mean-squared error (RMSE) of the
+  difference between observed values and the fitted values
+}
+\seealso{
+  \code{\link{censReg}}
+}
+

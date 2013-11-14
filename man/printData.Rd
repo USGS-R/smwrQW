@@ -1,0 +1,30 @@
+\name{print.lcens}
+\alias{print.lcens}
+\alias{print.mcens}
+\alias{print.qw}
+\title{Print Values}
+\usage{
+  \method{print}{lcens} (x, digits = 4, ...)
+
+  \method{print}{mcens} (x, digits = 4, ...)
+
+  \method{print}{qw} (x, ...)
+}
+\arguments{
+  \item{x}{the object to print.}
+
+  \item{digits}{the number of significant digits for
+  numbers.}
+
+  \item{\dots}{further arguments passed to or from other
+  methods.}
+}
+\value{
+  The object \code{x} is returned invisibly.
+}
+\description{
+  Print representations of censored or water-quality data
+  values.
+}
+\keyword{print}
+

@@ -1,0 +1,33 @@
+\name{mean.lcens}
+\alias{mean.lcens}
+\alias{mean.mcens}
+\title{Arithmetic Mean}
+\usage{
+  \method{mean}{lcens} (x, ...)
+
+  \method{mean}{mcens} (x, ...)
+}
+\arguments{
+  \item{x}{the censored data object.}
+
+  \item{\dots}{further arguments passed to or from other
+  methods.}
+}
+\value{
+  An error message.
+}
+\description{
+  These functions are designed to stop the user from
+  accidentally using the function \code{mean} on censored
+  data.
+}
+\note{
+  The mean and standard deviation of censored data should
+  be computed using \code{censStats}.
+}
+\seealso{
+  \code{\link{censStats}}
+}
+\keyword{censored}
+\keyword{univariate}
+

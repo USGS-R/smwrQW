@@ -1,0 +1,60 @@
+\name{kendallATS.test}
+\alias{kendallATS.test}
+\title{Kendall' tau}
+\usage{
+  kendallATS.test(x, y, na.rm = TRUE)
+}
+\arguments{
+  \item{x}{a left-censored data object}
+
+  \item{y}{a left-censored data object}
+
+  \item{na.rm}{remove missing values before performing the
+  test?}
+}
+\value{
+  an object of class "htest" having these components:
+  \item{statistic}{ the value of the taub statistic.}
+  \item{p.value}{ the attained p-value for the test.}
+  \item{data.name}{ a character string describing the name
+  of the data used in the test.} \item{method}{ a
+  description of the method.} \item{alternative}{ a
+  description alternate hypotheses, always "two-sided."}
+  \item{null.value}{ the value of taub for the null
+  hypothesis.} \item{estimate}{ the ATS slope, and medians
+  of \code{x} and \code{y}.} \item{coef}{ the coefficients
+  of the monotic fit line. See \bold{Note}.}
+  \item{slope.se}{ an estimate of the standard error of the
+  slope.}
+}
+\description{
+  Compute Kendall's tau for left-censored data and the
+  Akritas-Theil-Sen slope estimator.
+}
+\note{
+  The intercept is computed as slope * -median.x +
+  median.y. The coef vector is designed to graphically
+  represent the relation between x and y. It is not
+  intended for prediction proposes.
+}
+\examples{
+# Simple no censoring
+set.seed(450)
+tmp.X <- rnorm(25)
+tmp.Y <- tmp.X/2 + rnorm(25)
+cor.test(tmp.X, tmp.Y, method="k", exact=FALSE, continuity=TRUE)
+kendallATS.test(tmp.X, tmp.Y)
+# Some censoring
+kendallATS.test(as.lcens(tmp.X, -1), as.lcens(tmp.Y, -1))
+}
+\references{
+  Akritas, M.G., Murphy, S.A., and LaValley, M.P., 1995,
+  The Theil-Sen estimator with doubly-censored data and
+  applications to astronomy: Journal of the American
+  Statistical Association, v. 90, p. 170--177.\cr Helsel,
+  D.R. 2005, Nondetects and data analysis: New York, Wiley,
+  266 p.
+}
+\keyword{censored}
+\keyword{htest}
+

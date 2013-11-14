@@ -1,0 +1,46 @@
+\name{censPPCC.test}
+\alias{censPPCC.test}
+\title{Test for Normality}
+\usage{
+  censPPCC.test(x)
+}
+\arguments{
+  \item{x}{a vector of left-censored observations, missing
+  values are removed before computation.}
+}
+\value{
+  An object of class "htest" having these components:
+
+  \item{statistic}{ the value of the test statistic.}
+  \item{p.value}{ the attained p-value for the test.}
+  \item{data.name}{ a character string describing the name
+  of the data used in the test.} \item{method}{ a
+  description of the method.} \item{alternative}{ a
+  description of the null and alternate hypotheses.}
+}
+\description{
+  Generates the sequence of probability points for
+  uncensored and censored values
+}
+\note{
+  The PPCC test is attractive because it has a simple,
+  graphical interpretation: it is a measure of the
+  correlation in a Q-normal plot of the uncensored data and
+  is related to the Shapiro-Francia test for normality
+  described by Royston (1993). The extension to multiple
+  detection limit data is described in the help files in
+  Millard (2001). The attained p-value for multiple
+  detection limit data is only approximate.
+}
+\references{
+  Millard, S.P., 2001, EnvironmentalStats for Spotfire S+
+  Help, Version 2.0. Probability, Statistics & Information,
+  Seattle, WA.\cr Royston, P., 1993, A toolkit for testing
+  for non-normality in complete and censored samples: The
+  Statistician, v. 42, p. 37--43.
+}
+\seealso{
+  \code{\link{ppcc.test}}, \code{\link{censpp}}
+}
+\keyword{htest}
+

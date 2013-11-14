@@ -1,0 +1,46 @@
+\name{[.lcens}
+\alias{[.lcens}
+\alias{[.mcens}
+\alias{[.qw}
+\alias{subset.qw}
+\title{Subset an Object}
+\usage{
+  \method{[}{lcens} (x, i, ...)
+
+  \method{[}{mcens} (x, i, ...)
+
+  \method{[}{qw} (x, i, ...)
+
+  \method{subset}{qw} (x, subset, ...)
+}
+\arguments{
+  \item{x}{any R object to subset.}
+
+  \item{i}{index specifying elements to extract.}
+
+  \item{subset}{an logical expression invloving a slot name
+  of the qw object.}
+
+  \item{\dots}{not used, required for other methods.}
+}
+\value{
+  A subset of the object \code{x}.
+}
+\description{
+  Extracts or subsets censored or water-quality data
+  objects by
+}
+\details{
+  The values for \code{i} can be either numeric indexes or
+  logical.\cr Valid slot names are "remark.codes,"
+  "reporting.level," "reporting.method," "reporting.units,"
+  "analyte.method," "analyte.name," and "unique.code."
+}
+\examples{
+as.lcens(c(1,3, NA), 2)[1:3]
+}
+\seealso{
+  \code{\link{[.qw}}
+}
+\keyword{manip}
+

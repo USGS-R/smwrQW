@@ -1,0 +1,68 @@
+\name{importNWISqw}
+\alias{importNWISqw}
+\title{Water-Quality Data}
+\usage{
+  importNWISqw(sites, params = "All", begin.date = "",
+    end.date = "", keep = NULL, use.pnames = FALSE)
+}
+\arguments{
+  \item{sites}{a vector of the USGS station identifiers.}
+
+  \item{params}{A character string contains the name of a
+  group of parameter codes, or a vector of parameter codes.
+  See \bold{Details}.}
+
+  \item{begin.date}{the earliest date for data, must be a
+  character with the format "YYYY-mm-dd."}
+
+  \item{end.date}{the latest date for data, must be a
+  character with the format "YYYY-mm-dd."}
+
+  \item{keep}{a character vector for any additional columns
+  to retain from the retrieved data.}
+
+  \item{use.pnames}{create colummn names based on pcode
+  (like P00000)? Default is to generate more English-like
+  names.}
+}
+\value{
+  A data frame of the water-quality data of class "qw"
+  organized by sample. Column names for the water-quality
+  constituents are generated automatically, but can be set
+  by the user, see \code{\link{makeColNames}}.
+}
+\description{
+  Import discrete sample water-quality data from NWISweb.
+}
+\details{
+  Valid groups are "All," "information," "physical,"
+  "cations," "anions," "nutrients," "microbiological,"
+  "biological," "metals," "nonmetals," "toxicity,"
+  "pesticides," "pcbs," "other organics," "radio
+  chemicals,", "stable isotopes," "sediment," and
+  "population/community."
+}
+\note{
+  The sample information columns that are automatically
+  retained are the USGS station identifier, sample date,
+  sample time, time zone code, and medium code. If
+  composite samples are found in the data, then sample end
+  date and sample end time are also included. Use the
+  \code{keep} argument to retain more if needed.
+}
+\examples{
+\dontrun{
+importNWISqw("05330000", "00608") # Ammonia samples from the Minnesota River at Jordan.
+}
+}
+\references{
+  Lorenz, D.L., 2014, USGSwsQW OFR.\cr See information
+  about discrete samples at
+  \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
+}
+\seealso{
+  \code{\link{readNWISqw}}, \code{\link{makeColNames}}
+}
+\keyword{datasets}
+\keyword{IO}
+

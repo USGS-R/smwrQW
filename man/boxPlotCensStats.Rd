@@ -1,0 +1,20 @@
+\name{boxPlotCensStats}
+\alias{boxPlotCensStats}
+\title{Not exported}
+\usage{
+  boxPlotCensStats(x, Box, yaxis.log)
+}
+\arguments{
+  \item{x}{list of the lcens data}
+
+  \item{Box}{the Box parameters}
+
+  \item{yaxis.log}{is it?}
+}
+\value{
+  Info to actually plot the boxplot.
+}
+\description{
+  Compute the stats for a censored boxplot
+}
+

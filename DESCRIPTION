@@ -1,0 +1,115 @@
+Package: USGSwsQW
+Version: 0.5
+Date: 2013-08-01
+Title: Tools for censored data analysis
+Author: Dave Lorenz <lorenz@usgs.gov>.
+Maintainer: Dave Lorenz <lorenz@usgs.gov>
+Depends:
+    USGSwsBase,
+    USGSwsGraphs,
+    USGSwsStats,
+    survival,
+    methods,
+    XML,
+    mvtnorm
+Suggests:
+    USGSwsData
+Description: This package provides tools for the analysis and graphing
+    of censored data, focussing on water-quality data. It provides
+    a uniform user interface to many different methods for the
+    analysis.
+License: file LICENSE
+LazyLoad: yes
+Collate:
+    '000lcens-class.R'
+    '000mcens-class.R'
+    '000qw-class.R'
+    '00as.lcens.R'
+    '00as.mcens.R'
+    '00as.qw.R'
+    '0as.lcens-methods.R'
+    '0as.mcens-methods.R'
+    '0as.qw-methods.R'
+    'add.R'
+    'Arith-methods.R'
+    'as.character.R'
+    'as.data.frame.R'
+    'as.double.R'
+    'boxPlot.lcens.R'
+    'boxPlotCensStats.R'
+    'c.R'
+    'censCor.R'
+    'censKSample.test.R'
+    'censMulticomp.test.R'
+    'censoring.R'
+    'censorlevels.R'
+    'censpp.R'
+    'censPPCC.test.R'
+    'censQuantile.R'
+    'censReg.fit.R'
+    'censReg.pred.R'
+    'censReg.R'
+    'censStats.R'
+    'censSumStats.R'
+    'coef.censReg.R'
+    'convert2qw.R'
+    'countNWISqw.R'
+    'dlimit.R'
+    'dotPlot-methods.R'
+    'ecdfPlot.R'
+    'extractAIC.censReg.R'
+    'fillIn.R'
+    'fitted.censReg.R'
+    'format.R'
+    'genWilcox.test.R'
+    'importNWISqw.R'
+    'importQW.R'
+    'is.na.R'
+    'kendallATS.test.R'
+    'length.R'
+    'logLik.censReg.R'
+    'makeColNames.R'
+    'Math-methods.R'
+    'mcenKM.R'
+    'mdlAMLE.R'
+    'mdlKM.R'
+    'mdlKMstats.R'
+    'mdlMLE.R'
+    'mdlROS.R'
+    'mean.qw.R'
+    'meanStats.R'
+    'medianStats.R'
+    'nobs.censReg.R'
+    'pcodeColNames.R'
+    'pcodeNWISqw.R'
+    'plot.censReg.R'
+    'plot.htest.R'
+    'plot.qw.R'
+    'plot.summary.censReg.R'
+    'ppw.test.R'
+    'predict.censReg.R'
+    'print.censMCT.R'
+    'print.censQuantile.R'
+    'print.censReg.R'
+    'print.censStats.R'
+    'print.summary.censReg.R'
+    'printData.R'
+    'probPlot.R'
+    'qqPlot.R'
+    'quantile.R'
+    'rbindQW.R'
+    'readNWISqw.R'
+    'readNWQLdl.R'
+    'residuals.censReg.R'
+    'rmse.censReg.R'
+    'sdlFill.R'
+    'show-methods.R'
+    'sort.censored.R'
+    'str.R'
+    'subset.R'
+    'summary.censReg.R'
+    'summary.R'
+    'timePlot-methods.R'
+    'USGSwsQW-package.R'
+    'vif.censReg.R'
+    'pctCens.R'

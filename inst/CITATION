@@ -1,0 +1,13 @@
+citHeader("Suggested citation for USGSwsQW:")
+
+citEntry(entry = "TechReport",
+  title        = "USGSwsQW--An R Package for Managing and Analyzing Water-Quality Data, Version 0.4",
+  author       = personList(as.person("Dave Lorenz")),
+  institution  = "U.S. Geological Survey",
+  series       = "Open File report",
+  year         = "in preparation",
+
+  textVersion  =
+  paste("Lorenz, D.L., in preparation",
+        "USGSwsQW--An R Package for Managing and Analyzing Water-Quality Data, Version 0.4:")
+)

@@ -1,0 +1,35 @@
+\name{str.lcens}
+\alias{str.lcens}
+\alias{str.mcens}
+\alias{str.qw}
+\title{Display Structure}
+\usage{
+  \method{str}{lcens} (object, ...)
+
+  \method{str}{mcens} (object, ...)
+
+  \method{str}{qw} (object, ...)
+}
+\arguments{
+  \item{object}{an object of class "lcens,", "mcens," or
+  "qw."}
+
+  \item{\dots}{any additional valid arguments ot the
+  default method for \code{str} and give.censoring, a
+  logical value that includes the type of censoring in the
+  output if TRUE.}
+}
+\value{
+  Nothing is returned, the side effect is to print a short
+  summary of the object.
+}
+\description{
+  These methods display the basic information o
+}
+\examples{
+str(as.lcens(c(1,3), 2))
+}
+\seealso{
+  \code{\link{str.default}}
+}
+

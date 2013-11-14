@@ -1,0 +1,64 @@
+#'Print Results
+#'
+#'Print the results of an AMLE/MLE regression.
+#'
+#'@param x an object of class "censReg"---output from \code{censReg}
+#'@param digits the number of significant digits to print
+#'@param \dots further arguments passed to or from other methods.
+#'@return The object \code{x} is returned invisibly.
+#'@note The printed output includes the call, the coefficent table, the
+#'estimated residual standard error, the log-likelihood of the model and
+#'null model with the attained p-value, and the computational method.
+#'@seealso \code{\link{censReg}}, \code{\link{coef.censReg}}
+#'@keywords utilities
+#'
+#'@S3method print censReg
+#'@method print censReg
+print.censReg <- function(x, digits=4, ...) {
+  ## Coding history:
+  ##    2012Sep25 DLLorenz Initial Coding
+  ##    2012Dec31 DLLorenz Roxygenized
+  ##    2013Jan21 DLLorenz Added nobs and ncen
+  ##
+  cat("Call:\n")
+  dput(x$call)
+  if(x$IERR > 0) {
+    cat("\nFatal error in censReg, error code: ", x$IERR, "\n\n", sep='')
+    return(invisible(x))
+  }
+  cat("\nCoefficients:\n")
+  ctab <- coef(x, summary=TRUE)
+  ## round last column of table to eliminate scientific notation
+  ctab[,4L] <- round(ctab[, 4L], 4)
+  print(ctab, digits=digits)
+  cat("\nEstimated residual standard error (Unbiased) = ",
+      signif(rmse(x), digits), "\n", sep="")
+  cat("\nDistribution: ", x$dist, "\n", sep="")
+  ## Compute the p-value of the regression model
+  x1 <- update(x, formula=.~ 1)
+  llx <- logLik(x)
+  llx1 <- logLik(x1)
+  chi2 <- 2*(llx - llx1)
+  df <- x$NPAR - 1
+  pval <- 1 - pchisq(chi2, df)
+  ## Format the attained p-value, last one prevents scientific printing
+  if(pval < 0.0001)
+    pval <- "<0.0001"
+  else
+    pval <- format(round(pval, 4), scientific=5)
+  if(is.logical(x$CENSFLAG)) # Only left-censored
+    cat("Number of observations = ", x$NOBSC, ", number censored = ",
+      sum(x$CENSFLAG), " (", round(sum(x$CENSFLAG)/x$NOBSC*100, 1),
+      " percent)\n", sep="")
+  else
+   cat("Number of observations = ", x$NOBSC, ", number left censored = ",
+      sum(x$CENSFLAG < 0), ",\n  number right censored = ", sum(x$CENSFLAG > 0),
+      " (", round(sum(abs(x$CENSFLAG))/x$NOBSC*100, 1),
+      " percent)\n", sep="")
+  cat("\nLoglik(model) = ", signif(llx, digits),
+      " Loglik(intercept only) = ", signif(llx1, digits),
+      "\n  Chi-square = ", signif(chi2, digits), 
+      ", degrees of freedom = ", df, ", p-value = ", pval,
+      "\n\nComputation method: ", x$method, "\n\n", sep="")
+  invisible(x)
+}

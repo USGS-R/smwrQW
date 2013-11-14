@@ -1,0 +1,38 @@
+\name{add}
+\alias{add}
+\title{Add Water-Quality Data}
+\usage{
+  add(..., analyte, pcode = "", gt0 = TRUE)
+}
+\arguments{
+  \item{\dots}{any number of water-quality (class "qw") or
+  numeric vectors. The length of the water-quality data
+  must all agree, but numeric values are replicated to the
+  length of the water-quality data. See \bold{Details}.}
+
+  \item{analyte}{the name of the analyte, if not supplied,
+  generated from \dots.}
+
+  \item{pcode}{the parameter code of the analyte or any
+  othe unique identifier the user chooses.}
+
+  \item{gt0}{force values to be strictly non-negative on
+  subtraction?}
+}
+\value{
+  An object of class "qw" that is the result of the
+  requested operations.
+}
+\description{
+  The \code{add} function provide a method for adding or
+  subtracting water-quality data while trying to maintain
+  the integrity of the data.
+}
+\details{
+  The \dots arguments must not be named in the call. Only
+  objects of class "qw" or "numeric" are allowed. To
+  perform a subtraction, simply preceed the arguemnt with
+  the unary - sign in the call. The first argument must be
+  a positive valued object of class "qw."
+}
+

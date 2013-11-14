@@ -1,0 +1,20 @@
+\name{mcenKM}
+\alias{mcenKM}
+\title{Estimate Statistics}
+\usage{
+  mcenKM(x, group)
+}
+\arguments{
+  \item{x}{an object of "mcens" to compute}
+
+  \item{group}{the group variable}
+}
+\value{
+  An object of class "survfit."
+}
+\description{
+  Support function for computing statistics for
+  multiply-censored data.
+}
+\keyword{misc}
+

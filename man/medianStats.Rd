@@ -1,0 +1,41 @@
+\name{median.lcens}
+\alias{median.lcens}
+\alias{median.mcens}
+\alias{median.qw}
+\title{Median Value}
+\usage{
+  \method{median}{lcens} (x, na.rm = FALSE)
+
+  \method{median}{mcens} (x, na.rm = FALSE)
+
+  \method{median}{qw} (x, na.rm = FALSE)
+}
+\arguments{
+  \item{x}{the censored data object.}
+
+  \item{na.rm}{remove missing values before computation?}
+}
+\value{
+  A vector of length one representing the sample median.
+}
+\description{
+  Compute the sample median of left- or multiply-censored
+  or water-quality data.
+}
+\note{
+  The median is computed using the flipped Kaplan-Meier
+  method described in Helsel (2012).
+}
+\examples{
+median(as.lcens(1:4, 2))
+}
+\references{
+  Helsel, D.R. 2012, Statistics for censored environmental
+  data using Minitab and R: New York, Wiley, 324 p.\cr
+}
+\seealso{
+  \code{\link{censQuantile}}
+}
+\keyword{censored}
+\keyword{univariate}
+

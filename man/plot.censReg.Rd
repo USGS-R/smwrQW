@@ -1,0 +1,37 @@
+\name{plot.censReg}
+\alias{plot.censReg}
+\title{Diagnostic Plot}
+\usage{
+  \method{plot}{censReg} (x, which = "All", set.up = TRUE,
+    ...)
+}
+\arguments{
+  \item{x}{an object of class "censReg"---output from
+  \code{censReg}}
+
+  \item{which}{either "All," 1, or 2 indicating which plot,
+  see \bold{Details}.}
+
+  \item{set.up}{set up the graphics page?}
+
+  \item{\dots}{further arguments passed to or from other
+  methods.}
+}
+\value{
+  The object \code{x} is returned invisibly.
+}
+\description{
+  Plot simple AMLE/MLE model diagnostics.
+}
+\details{
+  Two graphs can be produced by this function. Number 1 is
+  a plot of fitted versus actual and number 2 is a
+  Q--normal plot. More complete diagnostic plots are
+  available from the \code{\link{summary.censReg}} output.
+}
+\seealso{
+  \code{\link{censReg}}
+}
+\keyword{hplot}
+\keyword{regression}
+

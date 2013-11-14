@@ -1,0 +1,27 @@
+\name{as.character.lcens}
+\alias{as.character.lcens}
+\alias{as.character.mcens}
+\alias{as.character.qw}
+\title{Character Representations}
+\usage{
+  \method{as.character}{lcens} (x, ...)
+
+  \method{as.character}{mcens} (x, ...)
+
+  \method{as.character}{qw} (x, ...)
+}
+\arguments{
+  \item{x}{any R object to coerce to character}
+
+  \item{\dots}{further arguments passed to or from other
+  methods.}
+}
+\value{
+  Creates a character representation of \code{x}.
+}
+\description{
+  Create character representations of censored and
+  water-quality data.
+}
+\keyword{manip}
+
