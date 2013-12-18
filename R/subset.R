@@ -32,7 +32,7 @@
 #'@method [ mcens
 #'@rdname subset
 "[.mcens" <- function(x, i, ...) {
-  x@.Data <- x@.Data[i, ]
+  x@.Data <- x@.Data[i, , drop=FALSE]
   x@censor.codes <- x@censor.codes[i]
   x@interval <- x@interval[i]
   x@names <- as.character(seq(length(x@interval)))

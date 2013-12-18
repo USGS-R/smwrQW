@@ -18,14 +18,15 @@
 #'\bold{Details}.
 #'@param data.names character string to be used to explain the data. Default
 #'names are derived from the data arguments.
-#'@return An object of class "htest."
+#'@return An object of class "htest" that inherits "ppw."
 #'@note The \code{ppw.test}
 #'function uses the \code{survfit} function. Helsel (2012) describes flipping
 #'the left-censored data so that small values become large and left-censored
 #'values become right-censored values and adapt nonparametric techniques from
 #'survival analysis.\cr
+#'A \code{plot} method is supported for the returned object.
 #'
-#'@section Null Hypothesis: The null hypothesis for all tests is that the
+#'@section Null Hypothesis: The null hypothesis is that the
 #'distributions are not different from one another.
 #'@seealso \code{\link{survdiff}}, \code{\link{survfit}},
 #'\code{\link{lcens-class}}

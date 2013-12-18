@@ -32,9 +32,9 @@ readNWISqw <- function(sites, params="All", begin.date="", end.date="") {
   ## Coding history:
   ##    2012Sep06 DLLorenz original Coding
   ##    2012Dec28 DLLorenz Roxygenized
-  ##    2012Dec28          This version
+  ##    2013Dec16 DLLorenz
   ##
-  params <- paste(params,  collapse="%0D%0A")
+  params <- paste(params,  collapse=",")
   pgrp <- pmatch(params, c("information", "physical", "cations", "anions", "nutrients",
                            "microbiological", "biological", "metals", "nonmetals",
                            "toxicity", "pesticides", "pcbs", "other organics",
@@ -42,7 +42,7 @@ readNWISqw <- function(sites, params="All", begin.date="", end.date="") {
                            "population/community"), nomatch=0)
   if(pgrp == 0) {
     ## pack sites
-    sites <- paste(sites, collapse="%0D%0A")
+    sites <- paste(sites, collapse=",")
     if(params == "All")
       myurl <- url(paste("http://nwis.waterdata.usgs.gov/nwis/qwdata?multiple_site_no=", sites,
                          "&sort_key=site_no&group_key=NONE&inventory_output=0",

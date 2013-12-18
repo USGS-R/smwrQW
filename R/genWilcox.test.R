@@ -15,12 +15,16 @@
 #'Must be one of "two.sided, "greater," or "less."
 #' @param data.names character string to be used to explain the data. Default
 #'names are derived from the data arguments.
-#' @return An object of class "htest."
+#' @return An object of class "htest" that inherits "genWilcox."
 #' @note The \code{genWilcox.test} 
 #'function uses the \code{survfit} function. Helsel (2012) describes flipping
 #'the left-censored data so that small values become large and left-censored
 #'values become right-censored values and adapt nonparametric techniques from
-#'survival analysis.\cr
+#'survival analysis. The results from \code{survfit} are printed as the sample
+#'estimates when printing the output, the important columns are records,
+#'the numner in each group; events, the number of uncensored values; and 
+#'median, the group median.\cr
+#'A \code{plot} method is supported for the returned object.
 #'
 #' @section Null Hypothesis: The null hypothesis is that the
 #'distributions are not different from one another.
@@ -68,6 +72,7 @@ genWilcox.test <- function(x, y, alternative="two.sided", data.names) {
   ##    2012Aug13 DLLorenz Conversion to R and split ppw test
   ##    2013Jan01 DLLorenz Roxygenized
   ##    2013Sep03 DLLorenz Bug Fix for missing values
+	##    2013Dec06 DLLorenz Added computations of estimates (median)
   ##
   ## Error checks:
   if(missing(data.names)) {
@@ -116,8 +121,8 @@ genWilcox.test <- function(x, y, alternative="two.sided", data.names) {
     ## Required adjustment to values
     values <- ifelse(cenflag, values-.1, values)
     df <- data.frame(values=-values, cenflag=!cenflag)
-    kmout <- survfit(Surv(values, cenflag) ~ 1, data=df)
-    kmout$time <- - kmout$time # convert back to actual values
+    kmout <- survfit(Surv(values, cenflag) ~ 1, data=df, conf.type="none")
+    kmout$time <- - kmout$time # convert back to actual ranks
     ## Define the link between the observed data and the K-M table
     ## and compute needed stats.
     link <- match(values, kmout$time)
@@ -139,7 +144,7 @@ genWilcox.test <- function(x, y, alternative="two.sided", data.names) {
   meth <- "Peto-Prentice generalized Wilcoxon test"
   param <- ret1$Ngroup
   names(param) <- c("n", "m")
-  ## add finishing touches
+  ## Add finishing touches
   if(alternative == 1L)
     pvalue <- (1. - pnorm(abs(stat))) * 2.
   else if(alternative == 2)
@@ -148,10 +153,15 @@ genWilcox.test <- function(x, y, alternative="two.sided", data.names) {
     pvalue <- pnorm(stat)
   mu <- 0
   names(mu) <- "difference"
+  ## Compute the median for each group
+  ret2 <- survfit(Surv(-data@.Data[,1L], !data@censor.codes) ~ group, conf.type="none")
+  ret2$time <- - ret2$time # convert back to actual values
+  ret2$call <- NULL # remove unecessary info
   retval <- list(statistic = stat, parameters = param,
                  p.value = pvalue, null.value = mu,
                  alternative = c('two.sided', 'greater', 'less')[alternative],
-                 method = meth, data.name = data.names)
-  oldClass(retval) <- 'htest'
+                 method = meth, data.name = data.names,
+  							 estimate=ret2)
+  oldClass(retval) <- c("htest", "genWilcox")
   return(retval)
 }

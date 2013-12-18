@@ -24,7 +24,7 @@
   arguments.}
 }
 \value{
-  An object of class "htest."
+  An object of class "htest" that inherits "ppw."
 }
 \description{
   This function tests for differences in paired
@@ -43,10 +43,12 @@
   left-censored data so that small values become large and
   left-censored values become right-censored values and
   adapt nonparametric techniques from survival analysis.\cr
+  A \code{plot} method is supported for the returned
+  object.
 }
 \section{Null Hypothesis}{
-  The null hypothesis for all tests is that the
-  distributions are not different from one another.
+  The null hypothesis is that the distributions are not
+  different from one another.
 }
 \examples{
 # Compare uncensored results

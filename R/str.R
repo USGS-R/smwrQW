@@ -12,6 +12,7 @@
 #'
 #'str(as.lcens(c(1,3), 2))
 #'
+#' @importFrom utils str
 #' @rdname str
 #' @S3method str lcens
 #' @method str lcens

@@ -10,36 +10,37 @@
 #'or common log distributions, if the \code{type} is "response," then the options for
 #'\code{se.fit} and \code{interval} ae "none" or "prediction."
 #'
-#'@param object the output from \code{censReg}.
-#'@param newdata an optional data frame in for predictions.
+#' @param object the output from \code{censReg}.
+#' @param newdata an optional data frame in for predictions.
 #'If omitted, the observations from \code{object} are used.
-#'@param type the type of predicted value. To get predictions on the
+#' @param type the type of predicted value. To get predictions on the
 #'original scale of the response, use "response." To get predictions on the
 #'transformed scale of the response, use "link." To get the mean predictions
 #'for log-normal data, use "mean."
-#'@param se.fit the type of standard errors of the predicted value to include
+#' @param se.fit the type of standard errors of the predicted value to include
 #'in the result.
-#'@param interval type type of interval calculation. See \code{Details}.
-#'@param level the confidence or prediction interval.
-#'@param na.action function determining what should be done with missing values
+#' @param interval type type of interval calculation. See \code{Details}.
+#' @param level the confidence or prediction interval.
+#' @param na.action function determining what should be done with missing values
 #'in newdata. The default is to predict NA.
-#'@param \dots further arguments passed to or from other methods.
-#'@return A vector of predictions or a matrix of predictions and the other
+#' @param \dots further arguments passed to or from other methods.
+#' @return A vector of predictions or a matrix of predictions and the other
 #'selected statistics. In contrast with other regression predict functions,
 #'a list of fitted values and standard errors is never returned.
-#'@note The predicted value for \code{type} = "mean" uses the adjusted maximum
+#' @note The predicted value for \code{type} = "mean" uses the adjusted maximum
 #'likelihood method for bias correction described by Cohn (1988) and Cohn and 
 #'others (1992). that method will give sligthly different predicted values than
 #'the minimum variance unbiased estimate (MVUE) described by Bradu and Mundlak (1970).
-#'@references Bradu, D., and Mundlak, Y. 1979, Estimation in lognormal linear models:
+#' @references Bradu, D., and Mundlak, Y. 1979, Estimation in lognormal linear models:
 #'Journal of the American Statistical Association, v. 65, no. 39, p. 198--211.\cr
 #'Cohn, T.A., 1988, Adjusted maximum likelihood estimation of the moments of lognormal
 #'populations form type I censored samples: U.S. Geological Survey Open-File Report 88-350, 34 p.\cr
 #'Cohn, T.A., Gilroy, E.J., and Baier, W.G., 1992, Estimating fluvial transport of trace
 #'constituents using a regression model with data subject to censoring: Proceeding of the 
 #'Joint Statistical Meeting, Boston, August 9--13, 1992, p. 142--151.
-#'@seealso \code{\link{censReg}}, \code{\link{predictMVUE}}
-#'@S3method predict censReg
+#' @seealso \code{\link{censReg}}, \code{\link{predictMVUE}}
+#' @method predict censReg
+#' @S3method predict censReg
 predict.censReg <- function(object, newdata, type=c("response", "link", "mean"),
   se.fit=c("none", "estimate", "prediction"), 
   interval=c("none", "confidence", "prediction"), level=0.95,

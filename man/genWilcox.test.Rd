@@ -22,7 +22,7 @@
   arguments.}
 }
 \value{
-  An object of class "htest."
+  An object of class "htest" that inherits "genWilcox."
 }
 \description{
   This function tests for differences in left-censored
@@ -39,7 +39,12 @@
   \code{survfit} function. Helsel (2012) describes flipping
   the left-censored data so that small values become large
   and left-censored values become right-censored values and
-  adapt nonparametric techniques from survival analysis.\cr
+  adapt nonparametric techniques from survival analysis.
+  The results from \code{survfit} are printed as the sample
+  estimates when printing the output, the important columns
+  are records, the numner in each group; events, the number
+  of uncensored values; and median, the group median.\cr A
+  \code{plot} method is supported for the returned object.
 }
 \section{Null Hypothesis}{
   The null hypothesis is that the distributions are not

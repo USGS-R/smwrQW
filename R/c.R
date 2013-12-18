@@ -21,7 +21,9 @@ c.lcens <- function (..., recursive=FALSE) {
   dls <- unlist(lapply(all.lcens, function(x) x@.Data[, 2]))
   ccds <- unlist(lapply(all.lcens, function(x) x@censor.codes))
   mat <- cbind(values=vals, detlim=dls)
-  return(new("lcens", mat, censor.codes=ccds))
+  retval <- new("lcens", mat, censor.codes=ccds)
+  retval@names <- as.character(seq(nrow(mat)))
+  return(retval)
 }
 
 #' @rdname c
@@ -34,7 +36,9 @@ c.mcens <- function (..., recursive=FALSE) {
   censor.codes <- unlist(lapply(all.mcens, function(x) x@censor.codes))
   interval <- unlist(lapply(all.mcens, function(x) x@interval))
   mat <- cbind(lower.val=lower.val, upper.val=upper.val)
-  return(new("mcens", mat, censor.codes=censor.codes, interval=interval))
+  retval <- new("mcens", mat, censor.codes=censor.codes, interval=interval)
+  retval@names <- as.character(seq(nrow(mat)))
+  return(retval)
 }
 
 #' @rdname c

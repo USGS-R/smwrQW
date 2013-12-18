@@ -113,3 +113,4 @@ Collate:
     'USGSwsQW-package.R'
     'vif.censReg.R'
     'pctCens.R'
+    'qw2mcens.R'

@@ -2,7 +2,7 @@
 \alias{predict.censReg}
 \title{Predict Values}
 \usage{
-  predict.censReg(object, newdata,
+  \method{predict}{censReg} (object, newdata,
     type = c("response", "link", "mean"),
     se.fit = c("none", "estimate", "prediction"),
     interval = c("none", "confidence", "prediction"),
