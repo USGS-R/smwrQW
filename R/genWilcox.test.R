@@ -1,20 +1,32 @@
-#' Test for difference in left-censored samples
+#' Test for Difference in Censored Samples
 #'
-#' This function tests for differences in left-censored samples from 2
-#'groups.
+#' This function tests for differences in censored samples from 2
+#'groups. Two methods are available---the Peto-Prentice test is
+#'appropriate only for left-censored data. The Gehan test has
+#'been extended to multiply censored data as suggested in
+#'Gehan (1965) but uses a permutation test to compute the 
+#'variance.
 #'
 #' If \code{y} is either type character or factor, then it is assumed to be a group
-#'identifier. Anything else is treated as another set of sample and forced to class
-#'"lcens."
+#'identifier. Anything else is treated as another set of sample and forced to the
+#'appropriate class of censored data.
 #'
-#' @param x the samples from each group. Forced to class "lcens." Missing values
-#'are removed before the analysis.
+#' The argument \code{method} must be one of "peto" or "gehan." It may also
+#'be "best," which selects "peto" for  uncensored or 
+#'left-censored data and "gehan" otherwise.
+#'
+#' @param x the samples from each group. Forced to the appropriate class. 
+#'Missing values are removed before the analysis.
 #' @param y either another set of samples or a group identifier with exactly
 #'two groups. Missing values are removed before the analysis. See \bold{Details}.
 #' @param alternative character string describing the alternative hypothesis.
 #'Must be one of "two.sided, "greater," or "less."
-#' @param data.names character string to be used to explain the data. Default
-#'names are derived from the data arguments.
+#' @param method a character string indicating which method
+#'to use for the analysis. See \bold{Details}.
+#' @param data.names character string to be used to explain 
+#' the data. Default names are derived from the data arguments.
+#' @param gehan.seed an single integer value to set the seed to
+#'compute the variance of the Gehan statistic.
 #' @return An object of class "htest" that inherits "genWilcox."
 #' @note The \code{genWilcox.test} 
 #'function uses the \code{survfit} function. Helsel (2012) describes flipping
@@ -64,7 +76,8 @@
 #'genWilcox.test(as.lcens(Xu, 1), as.lcens(Yu, 1))
 #'
 #' @export
-genWilcox.test <- function(x, y, alternative="two.sided", data.names) {
+genWilcox.test <- function(x, y, alternative="two.sided", 
+                           method="best", data.names, gehan.seed=346) {
   ## Coding history:
   ##    2005Mar08 DLLorenz Initial Coding.
   ##    2005Jul14 DLLorenz Fixed date
@@ -73,6 +86,7 @@ genWilcox.test <- function(x, y, alternative="two.sided", data.names) {
   ##    2013Jan01 DLLorenz Roxygenized
   ##    2013Sep03 DLLorenz Bug Fix for missing values
 	##    2013Dec06 DLLorenz Added computations of estimates (median)
+  ##    2014Jan02 DLLorenz Added Gehan test
   ##
   ## Error checks:
   if(missing(data.names)) {
@@ -90,10 +104,24 @@ genWilcox.test <- function(x, y, alternative="two.sided", data.names) {
     num.y <- TRUE
     }
   }
-  x <- as.lcens(x)
+  ## Set up methods
+  method <- match.arg(method, c("best", "peto", "gehan"))
+  if(method == "best") {
+    if(censoring(x) == "multiple" || censoring(y) == "multiple"
+       || class(x)[1L] == "mcens" || class(y)[1L] == "mcens" ) {
+      method <- "gehan"
+    } else
+      method <- "peto"
+  }
+  if(method == "peto") {
+    converter <- as.lcens
+  } else
+    converter <- as.mcens
+  ## OK, do the test
+  x <- converter(x)
   ## Create stacked data and group column
   if(num.y) {
-    y <- as.lcens(y)
+    y <- converter(y)
     ## Remove missings
     x <- x[!is.na(x)]
     y <- y[!is.na(y)]
@@ -138,10 +166,36 @@ genWilcox.test <- function(x, y, alternative="two.sided", data.names) {
     return(retval)
 
   } # End of P-P.test
-  ret1 <- PetoPrentice.test(data@.Data[,1L], data@censor.codes, group)
-  stat <- ret1$W[1L] / sqrt(ret1$VarW)
-  names(stat) <- "Peto-Prentice Z"
-  meth <- "Peto-Prentice generalized Wilcoxon test"
+  Gehan.test <- function(values, group) {
+    ## Perform the Gehan test as described in Helsel
+    levs <- levels(group)
+    ## Compute W, its variance and th number in each group
+    W <- gehanScores(values[group==levs[1L]],
+                     values[group==levs[2L]])
+    W <- sum(W)
+    nums <- table(group)
+    ## Set up the permutation test
+    gs <- double(1000)
+    N <- length(group)
+    set.seed(gehan.seed)
+    for(i in seq(1000)) {
+      rs <- sample(N, nums[1L], replace=FALSE)
+      gs[i] <- sum(gehanScores(values[rs], values[-rs]))
+    }
+    VarW <- mean(gs^2) # Assume true mean of 0
+    return(list(W=W, VarW=VarW, Ngroup=nums))
+  }
+  if(method == "peto") {
+    ret1 <- PetoPrentice.test(data@.Data[,1L], data@censor.codes, group)
+    stat <- ret1$W[1L] / sqrt(ret1$VarW)
+    names(stat) <- "Peto-Prentice Z"
+    meth <- "Peto-Prentice generalized Wilcoxon test"
+  } else {
+    ret1 <- Gehan.test(data, group)
+    stat <- ret1$W[1L] / sqrt(ret1$VarW)
+    names(stat) <- "Gehan Z"
+    meth <- "Gehan generalized Wilcoxon test"
+  }
   param <- ret1$Ngroup
   names(param) <- c("n", "m")
   ## Add finishing touches

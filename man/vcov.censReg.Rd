@@ -1,0 +1,28 @@
+\name{vcov.censReg}
+\alias{vcov.censReg}
+\title{Variance-Covariance Matrix}
+\usage{
+  \method{vcov}{censReg} (object, ...)
+}
+\arguments{
+  \item{objects}{an object of class "censReg"---output from
+  \code{censReg}.}
+
+  \item{\dots}{not used, further arguments passed to or
+  from other methods.}
+}
+\value{
+  A matrix of the estimated covariances between the
+  parameter estimates for each main parameter of the model.
+  The matrix has row and column names corresponding to the
+  parameter names.
+}
+\description{
+  Computes the variance-covariance matrix of the main
+  parameters of a fitted censored-regression model object.
+}
+\seealso{
+  \code{\link{censReg}}
+}
+\keyword{regression}
+

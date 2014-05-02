@@ -1,13 +1,14 @@
 \name{genWilcox.test}
 \alias{genWilcox.test}
-\title{Test for difference in left-censored samples}
+\title{Test for Difference in Censored Samples}
 \usage{
   genWilcox.test(x, y, alternative = "two.sided",
-    data.names)
+    method = "best", data.names, gehan.seed = 346)
 }
 \arguments{
-  \item{x}{the samples from each group. Forced to class
-  "lcens." Missing values are removed before the analysis.}
+  \item{x}{the samples from each group. Forced to the
+  appropriate class. Missing values are removed before the
+  analysis.}
 
   \item{y}{either another set of samples or a group
   identifier with exactly two groups. Missing values are
@@ -17,22 +18,36 @@
   alternative hypothesis. Must be one of "two.sided,
   "greater," or "less."}
 
+  \item{method}{a character string indicating which method
+  to use for the analysis. See \bold{Details}.}
+
   \item{data.names}{character string to be used to explain
   the data. Default names are derived from the data
   arguments.}
+
+  \item{gehan.seed}{an single integer value to set the seed
+  to compute the variance of the Gehan statistic.}
 }
 \value{
   An object of class "htest" that inherits "genWilcox."
 }
 \description{
-  This function tests for differences in left-censored
-  samples from 2 groups.
+  This function tests for differences in censored samples
+  from 2 groups. Two methods are available---the
+  Peto-Prentice test is appropriate only for left-censored
+  data. The Gehan test has been extended to multiply
+  censored data as suggested in Gehan (1965) but uses a
+  permutation test to compute the variance.
 }
 \details{
   If \code{y} is either type character or factor, then it
   is assumed to be a group identifier. Anything else is
-  treated as another set of sample and forced to class
-  "lcens."
+  treated as another set of sample and forced to the
+  appropriate class of censored data.
+
+  The argument \code{method} must be one of "peto" or
+  "gehan." It may also be "best," which selects "peto" for
+  uncensored or left-censored data and "gehan" otherwise.
 }
 \note{
   The \code{genWilcox.test} function uses the

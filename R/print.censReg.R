@@ -33,7 +33,21 @@ print.censReg <- function(x, digits=4, ...) {
   print(ctab, digits=digits)
   cat("\nEstimated residual standard error (Unbiased) = ",
       signif(rmse(x), digits), "\n", sep="")
-  cat("\nDistribution: ", x$dist, "\n", sep="")
+  cat("Distribution: ", x$dist, "\n", sep="")
+  ## If not normal, print SEE in percent and upper and lower ranges
+  if(x$dist == "lognormal") {
+  	MSE <- x$PARAML[x$NPAR + 1L]
+  	cat("Percent standard error: ", signif(100*sqrt(exp(MSE)-1), digits),
+  			"\nPositive percent error: ", signif(100*(exp(sqrt(MSE))-1), digits),
+  			"\nNegative percent error: ", signif(100*(exp(-sqrt(MSE))-1), digits),
+  			"\n\n", sep="")
+  } else if(x$dist == "commonlog") {
+  	MSE <- x$PARAML[x$NPAR + 1L] * log(10)^2 # in natural units
+  	cat("Percent standard error: ", signif(100*sqrt(exp(MSE)-1), digits),
+  			"\nPositive percent error: ", signif(100*(exp(sqrt(MSE))-1), digits),
+  			"\nNegative percent error: ", signif(100*(exp(-sqrt(MSE))-1), digits),
+  			"\n\n", sep="")
+  }
   ## Compute the p-value of the regression model
   x1 <- update(x, formula=.~ 1)
   llx <- logLik(x)

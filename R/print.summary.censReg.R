@@ -19,13 +19,18 @@ print.summary.censReg <- function(x, digits=4, ...) {
   ##    2012Dec31 DLLorenz Initial Coding
   ##
   print(x$object, digits=digits)
+  ## Print Pseudo R-squared
+  cat("Pseudo R-squared: ", signif(x$R2, digits), "\n\n", sep="")
   ## Add model comparison stats:
   cat("  AIC: ", signif(AIC(x$object), digits),
     "\n  BIC: ", signif(BIC(x$object), digits),
     "\n\n", sep="")
   if(length(x$vif) > 1L) {
     cat("\nVariance inflation factors\n")
-    print(x$vif, digits=digits)
+    namvif <- format(names(x$vif), justify = "right")
+    valvif <- format(round(x$vif, 2), justify = "right")
+    for (i in seq(along = x$vif)) cat(namvif[i], " ", valvif[i], 
+    																	"\n", sep = "")  
     ## Only makes sense to print correlations if more than 1 explanatory var.
     if(!is.null(x$correlation)) {
       corr <- format(round(x$correlation, digits))

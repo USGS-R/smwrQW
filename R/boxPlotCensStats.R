@@ -12,8 +12,9 @@ boxPlotCensStats <- function(x, Box, yaxis.log) {
   ##                        (copied from uncensored version)
   ##    2012Sep18 DLLorenz Added fill option
   ##    2013Jan11 DLLorenz Roxygenized ans censortype to censorstyle
-  ##    2013Jan11          This version.
+  ##    2014Jan27 DLLorenz Added censor level to exaplanation
   ##
+	print(Box)
   type <- match.arg(Box$type, c("tukey", "truncated", "simple", "extended"))
   ctype <- match.arg(Box$censorstyle, c("censored", "estimated"))
   cval <- Box$censorbox
@@ -22,7 +23,7 @@ boxPlotCensStats <- function(x, Box, yaxis.log) {
                                       ncol=1),
                                n=54, names="",
                                out=-2.4, farout=-3.7,
-                               group=c(1, 1)),
+                               group=c(1, 1), censored=-4.9, estimated=-Inf),
                     labels=list(expression(bold("Number of values")),
                       list(expression(bold("Largest value within 1.5 times")),
                            expression(bold("  interquartile range above")),
@@ -39,32 +40,35 @@ boxPlotCensStats <- function(x, Box, yaxis.log) {
                            "  beyond either end of box"),
                       list(expression(paste(bold("Far-out value"),symbol("\276"),
                           "Value ", is >= 3, " times", sep='')),
-                           "  the interquartile range beyond", "  either end of box")),
-                    values=c(4.5, 3.6, 1.5, .7, 0.1, -1.2, -2.4, -3.7),
+                           "  the interquartile range beyond", "  either end of box"),
+                    						expression(bold("    censor level"))),
+                    values=c(4.5, 3.6, 1.5, .7, 0.1, -1.2, -2.4, -3.7, -4.9),
                     IQR=expression(bold("Interquartile\nrange"))),
-                  truncated=list(z=list(stats=matrix(c(-4.0, -2. ,0, 2.0, 4.0),
+                  truncated=list(z=list(stats=matrix(c(-3.0, -1.2 ,0, 1.5, 3.5),
                                           ncol=1),
-                                   n=54, names=""),
+                                   n=54, names="", censored=-4.5, estimated=-Inf),
                     labels=list(expression(bold("Number of values")),
                       as.expression(substitute(bold(x), list(x=paste(Box$truncated[2L], "th percentile", sep='')))),
                       expression(bold("75th percentile")),
                       list(expression(bold("50th percentile")),expression(bold("  (median)"))),
                       expression(bold("25th percentile")),
-                      as.expression(substitute(bold(x), list(x=paste(Box$truncated[1L], "th percentile", sep=''))))),
-                    values=c(4.5, 4., 2., 0, -2., -4.)),
-                  simple=list(z=list(stats=matrix(c(-4.0, -2.0 ,0, 2.0, 4.0),
+                      as.expression(substitute(bold(x), list(x=paste(Box$truncated[1L], "th percentile", sep='')))),
+                    						expression(bold("    censor level"))),
+                    values=c(4.2, 3.5, 1.5, 0, -1.2, -3.0)),
+                  simple=list(z=list(stats=matrix(c(-3.0, -1.2 ,0, 1.5, 3.5),
                                        ncol=1),
-                                n=54, names=""),
+                                n=54, names="", censored=-4.5, estimated=-Inf),
                     labels=list(expression(bold("Number of values")),
                       expression(bold("Maximum value")),
                       expression(bold("75th percentile")),
                       list(expression(bold("50th percentile")),expression(bold("  (median)"))),
                       expression(bold("25th percentile")),
-                      expression(bold("Minimum value"))),
-                    values=c(4.5, 4., 2., 0, -2., -4.)),
+                      expression(bold("Minimum value")),
+                    						expression(bold("    censor level"))),
+                    values=c(4.2, 3.5, 1.5, 0, -1.2, -3.0)),
                   extended=list(z=list(stats=matrix(c(-3., -1.5, 0, 1.5, 3.),
                                          ncol=1),
-                                  n=54, names="",
+                                  n=54, names="", censored=-4.5, estimated=-Inf,
                                   out=c(-3.5, 4.0), group=c(1,1)),
                     labels=list(expression(bold("Number of values")),
                       list(expression(bold("Individual value above the")),
@@ -77,8 +81,9 @@ boxPlotCensStats <- function(x, Box, yaxis.log) {
                       as.expression(substitute(bold(x), list(x=paste(Box$truncated[1L], "th percentile", sep='')))),
                       list(expression(bold("Individual value below the")),
                            as.expression(substitute(bold(x), list(x=paste("  ",
-                               Box$truncated[1L], "th percentile", sep='')))))),
-                    values=c(4.5, 4.0, 3, 1.5, 0, -1.5, -3., -3.5)))
+                               Box$truncated[1L], "th percentile", sep=''))))),
+                    						expression(bold("    censor level"))),
+                    values=c(4.5, 4.0, 3, 1.5, 0, -1.5, -3., -3.5, -4.5)))
   ## Note copied from boxPlotStats in USGSgraphs
   bxp.stats <- function(x, range=1.5) {
     stats <- quantile(x, type=2, names=FALSE)

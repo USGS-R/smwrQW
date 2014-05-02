@@ -114,3 +114,5 @@ Collate:
     'vif.censReg.R'
     'pctCens.R'
     'qw2mcens.R'
+    'gehanScores.R'
+    'vcov.censReg.R'

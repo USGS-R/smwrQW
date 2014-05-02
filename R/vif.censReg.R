@@ -4,9 +4,13 @@
 #'variable in an AMLE/MLE regression.
 #'
 #' @param model an object of class "censReg"---output from \code{censReg}.
-#' @param \dots further arguments passed to or from other methods.
-#' @return  further arguments passed to or from other methods.
+#' @param \dots not used, further arguments passed to or from other methods.
+#' @return  A named numeric vector containing the variance inflation factors 
+#'for each variable.
 #' @seealso \code{\link{censReg}}
+#' @references Helsel, D.R. and Hirsch, R.M., 2002, Statistical methods in 
+#' water resources: U.S. Geological Survey Techniques of Water-Resources 
+#' Investigations, book 4, chap. A3, 522 p.
 #' @keywords regression
 #' @importFrom USGSwsStats vif
 #' @S3method vif censReg

@@ -63,7 +63,16 @@
   largest value of the detection limit. The estimated style
   box plot estimates values for left-censored data and uses
   those estimates to construct the full boxplot; the range
-  of estiamted values is shown in gray.
+  of estimated values is shown in gray.
+
+  The \code{fillIn} function is used to estimate values
+  that are censored. If \code{yaxis.log} is \code{TRUE},
+  then the "log ROS" method is used to estimate those
+  values, otherwise, the "ROS" method is used.
+  Occasionally, estimated values by \code{fillIn} will
+  estimate values for censored data that are greater than
+  the censoring level. In those cases, a red bar is drawn
+  on the box plot at the largest estimated value.
 }
 \examples{
 \dontrun{
@@ -72,6 +81,9 @@ Xu <- rlnorm(32)
 setPage("sq") # required page set up
 boxPlot(as.lcens(Xu, 1.0))
 }
+}
+\seealso{
+  \code{\link{fillIn}}
 }
 \keyword{hplot}
 

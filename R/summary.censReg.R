@@ -1,24 +1,44 @@
-#'Summarizing Linear Model Fits
+#' Summarizing Linear Model Fits
 #'
-#'Summaryizes the output from an AMLE/MLE regression
+#' Summaryizes the output from an AMLE/MLE regression
 #'
-#'@param object an object of class "censReg"---output from \code{censReg}.
-#'@param correlation include the correlation matrix of the estimated
+#' @param object an object of class "censReg"---output from \code{censReg}.
+#' @param correlation include the correlation matrix of the estimated
 #'parameters?
-#'@param \dots further arguments passed to or from other methods.
-#'@return An object of class "summary.censReg" containing the object, variance
-#'inflation factors, a table of diagnostic statistics, critical values for
-#'selected diagnostic statistics, an indication of which observations
-#'exceed any of the selected diagnostic statistics, and optionally the
-#'parameter correlation matrix.
-#'@seealso \code{\link{censReg}}
-#'@keywords regression
-#'@S3method summary censReg
-#'@method summary censReg
+#' @param \dots further arguments passed to or from other methods.
+#' @return An object of class "summary.censReg" containing the object, 
+#'the pseudo R-squared, variance inflation factors, a table of diagnostic 
+#'statistics, critical values for selected diagnostic statistics, 
+#'an indication of which observations exceed any of the selected 
+#'diagnostic statistics, and optionally the parameter correlation matrix.
+#' @note The pseudo R-squared is computed using the McKelvey-Zavoina method,
+#'which tries to describe the proportion of variance explained by the fit and
+#'tries to capture the square of the correlation between the fitted and
+#'actual values. For uncensored data, it is equal to the usual R-squared 
+#'for ordinary least squares.
+#' @references McKelvey, R.D., and Zavoina, W., 1975, A statistical model for
+#'the analysis of ordinal dependent variables: The Journal of Mathematical
+#'Sociology, v. 4, no. 1, p. 103--120.
+#' @seealso \code{\link{censReg}}
+#' @keywords regression
+#' @S3method summary censReg
+#' @method summary censReg
 summary.censReg <- function(object, correlation=FALSE, ...) {
   ## Coding history:
   ##    2012Dec31 DLLorenz Initial Coding
+	##    2014Jan06 DLLorenz Added pseudo R2
   ##
+	## Pseudo R-squared McKelvey-Zavoina method, which tries to replicate
+  ## the R-squared of OLS
+	vmat <- var(object$XLCAL[,-1, drop=FALSE])
+  ## Correct to Sum of squares
+  vmat <- vmat * (object$NOBSC - 1)
+  cf <- object$PARAML[seq(2L, object$NPAR)]
+  ## Regression sum-of-squares
+  RSS <- t(cf) %*% vmat %*% cf
+  ## Error sum-of-squares
+  ESS <- object$PARMLE[object$NPAR + 1L] * object$NOBSC
+  R2 <- RSS/(ESS+RSS)
   ## Construct the diagnostics table
   diagstats <- data.frame(Y=object$YLCAL,
                           ycen=object$CENSFLAG,
@@ -38,7 +58,7 @@ summary.censReg <- function(object, correlation=FALSE, ...) {
   cvs <- c(leverage=cvlev, cooksD=cvcook)
   pck <- c(diagstats$leveerage > cvlev | diagstats$cooksD > cvcook)
   ## Pack it up
-  retval <- list(object=object, vif=vif(object),
+  retval <- list(object=object, vif=vif(object), R2=R2,
                  diagstats=diagstats, crit.val=cvs, flagobs=pck)
   if(correlation) {
     corr <- cov2cor(object$COV)

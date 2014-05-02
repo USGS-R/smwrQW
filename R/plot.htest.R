@@ -12,7 +12,7 @@
 #'The \code{genWilcox} method creates a single graph that shows the emprical
 #'cumulative distributions for each group.
 #'
-#' @aliases plot.htest plot.ppw plot.genWilcox
+#' @aliases plot.ppw plot.genWilcox
 #' @param x an object having classes "htest" and some other class for which a
 #'\code{plot} method exists.
 #' @param which either "All" or an number indicating which plot,
@@ -24,15 +24,6 @@
 #' @param \dots not used, arguments passed to or from other methods.
 #' @return The object \code{x} is returned invisibly.
 #' @keywords hplot
-#' @rdname plot.htest
-#' @S3method plot htest
-#' @method plot htest
-plot.htest <- function(x, which="All", set.up = TRUE, ...)
-  ## Coding history:
-  ##    2013Jan06 DLLorenz Initial Coding and start ppw
-  ##    2013Jan21          This version
-  NextMethod("plot")
-
 #' @rdname plot.htest
 #' @S3method plot ppw
 #' @method plot ppw

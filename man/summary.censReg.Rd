@@ -17,14 +17,29 @@
 }
 \value{
   An object of class "summary.censReg" containing the
-  object, variance inflation factors, a table of diagnostic
-  statistics, critical values for selected diagnostic
-  statistics, an indication of which observations exceed
-  any of the selected diagnostic statistics, and optionally
-  the parameter correlation matrix.
+  object, the pseudo R-squared, variance inflation factors,
+  a table of diagnostic statistics, critical values for
+  selected diagnostic statistics, an indication of which
+  observations exceed any of the selected diagnostic
+  statistics, and optionally the parameter correlation
+  matrix.
 }
 \description{
   Summaryizes the output from an AMLE/MLE regression
+}
+\note{
+  The pseudo R-squared is computed using the
+  McKelvey-Zavoina method, which tries to describe the
+  proportion of variance explained by the fit and tries to
+  capture the square of the correlation between the fitted
+  and actual values. For uncensored data, it is equal to
+  the usual R-squared for ordinary least squares.
+}
+\references{
+  McKelvey, R.D., and Zavoina, W., 1975, A statistical
+  model for the analysis of ordinal dependent variables:
+  The Journal of Mathematical Sociology, v. 4, no. 1, p.
+  103--120.
 }
 \seealso{
   \code{\link{censReg}}

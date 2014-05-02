@@ -136,9 +136,11 @@ censCor <- function(x, y, Full=TRUE, na.rm=TRUE) {
   par0 <- pars
   par0[1L] <- 0
   ll0 <- -logprobcor(par0, x, y, cx, cy, pfixed)
-  retval <- optim(pars, logprobcor,
-                  method="BFGS",
-                  x=x, y=y, cx=cx, cy=cy, pfixed=pfixed)
+  # The BFGS method gives a better estimate than the default, but will fail occasionally
+  retval <- tryCatch(optim(pars, logprobcor, method="BFGS",
+  												 x=x, y=y, cx=cx, cy=cy, pfixed=pfixed),
+  									 error=function(e) optim(pars, logprobcor,
+  									 												x=x, y=y, cx=cx, cy=cy, pfixed=pfixed))
   ## Compute the log-likelihood at cor=cor
   pars <- retval$par
   llcor <- -logprobcor(pars, x, y, cx, cy, pfixed)

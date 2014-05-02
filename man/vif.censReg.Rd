@@ -8,16 +8,22 @@
   \item{model}{an object of class "censReg"---output from
   \code{censReg}.}
 
-  \item{\dots}{further arguments passed to or from other
-  methods.}
+  \item{\dots}{not used, further arguments passed to or
+  from other methods.}
 }
 \value{
-  further arguments passed to or from other methods.
+  A named numeric vector containing the variance inflation
+  factors for each variable.
 }
 \description{
   Computes the variance inflation factor (Helsel and
   Hirsch, 2002) for each variable in an AMLE/MLE
   regression.
+}
+\references{
+  Helsel, D.R. and Hirsch, R.M., 2002, Statistical methods
+  in water resources: U.S. Geological Survey Techniques of
+  Water-Resources Investigations, book 4, chap. A3, 522 p.
 }
 \seealso{
   \code{\link{censReg}}

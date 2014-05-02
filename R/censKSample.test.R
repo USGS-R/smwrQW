@@ -79,7 +79,7 @@ censKSample.test <- function(x, groups, type="Peto", data.names) {
   nas <- is.na(x) | is.na(groups)
   x <- x[!nas]
   groups <- groups[!nas, drop=T]
-  ## The test
+  ## The test--flip data to convert to right-censoring.
   retval <- survdiff(Surv(-x@.Data[, 1], !x@censor.codes) ~ groups, rho=rho)
   stat <- retval$chisq
   names(stat) <- paste(c("log-rank", "Peto & Peto")[rho+1], "chi-square", sep=" ")

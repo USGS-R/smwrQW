@@ -1,12 +1,8 @@
-\name{plot.htest}
+\name{plot.ppw}
 \alias{plot.genWilcox}
-\alias{plot.htest}
 \alias{plot.ppw}
 \title{Plot}
 \usage{
-  \method{plot}{htest} (x, which = "All", set.up = TRUE,
-    ...)
-
   \method{plot}{ppw} (x, which = "All", set.up = TRUE,
     labels, ...)
 
