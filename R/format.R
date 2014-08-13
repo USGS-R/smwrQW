@@ -19,7 +19,7 @@
 #'format(as.mcens(1:3, 1:3))
 #'
 #' @rdname format
-#' @S3method format lcens
+#' @export
 #' @method format lcens
 format.lcens <- function(x, digits=NULL, ...) {
   if(!is.null(digits))
@@ -29,7 +29,7 @@ format.lcens <- function(x, digits=NULL, ...) {
 }
 
 #' @rdname format
-#' @S3method format mcens
+#' @export
 #' @method format mcens
 format.mcens <- function(x, digits=NULL, ...) {
   if(!is.null(digits))
@@ -39,7 +39,7 @@ format.mcens <- function(x, digits=NULL, ...) {
 }
 
 #' @rdname format
-#' @S3method format qw
+#' @export
 #' @method format qw
 format.qw <- function(x, round=TRUE, units=FALSE, ...) {
   xval <- x@.Data

@@ -19,7 +19,7 @@
 #'
 #'as.lcens(c(1,3, NA), 2)[1:3]
 #'
-#'@S3method "[" lcens
+#' @export
 #'@method [ lcens
 "[.lcens" <- function(x, i, ...) {
  x@.Data <- x@.Data[i, , drop=FALSE]
@@ -28,7 +28,7 @@
  return(x)
 }
 
-#'@S3method "[" mcens
+#' @export
 #'@method [ mcens
 #'@rdname subset
 "[.mcens" <- function(x, i, ...) {
@@ -39,7 +39,7 @@
   return(x)
 }
 
-#'@S3method "[" qw
+#' @export
 #'@method [ qw
 #'@rdname subset
 "[.qw" <- function(x, i, ...) {
@@ -56,7 +56,7 @@
   return(x)
 }
 
-#'@S3method subset qw
+#' @export
 #'@method subset qw
 #'@rdname subset
 subset.qw <- function(x, subset, ...) {

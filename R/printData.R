@@ -9,7 +9,7 @@
 #' @return The object \code{x} is returned invisibly.
 #' @keywords print
 #' @rdname printData
-#' @S3method print lcens
+#' @export
 #' @method print lcens
 print.lcens <- function(x, digits=4, ...) {
   xtemp <- x
@@ -19,7 +19,7 @@ print.lcens <- function(x, digits=4, ...) {
 }
 
 #' @rdname printData
-#' @S3method print mcens
+#' @export
 #' @method print mcens
 print.mcens <- function(x, digits=4, ...) {
   xtemp <- x
@@ -29,7 +29,7 @@ print.mcens <- function(x, digits=4, ...) {
 }
 
 #' @rdname printData
-#' @S3method print qw
+#' @export
 #' @method print qw
 print.qw <- function(x, ...) {
   retval <- as.character(x)

@@ -1,19 +1,20 @@
-#'Mathematical Transform Methods for \code{lcens} objects
+#' @title Mathematical Transform Methods for \code{lcens} objects
 #'
-#'Some limited mathematical methods are possible and well-defined for
+#' @description Some limited mathematical methods are possible and well-defined for
 #'censored or water-quality data.
 #'
 #'
-#'@name Math-methods
-#'@aliases Math-methods Math,lcens-method
-#'@docType methods
-#'@section Methods: \describe{
-#'
-#'\item{list("signature(x = \"lcens\")")}{ The functions \code{log},
-#'\code{log10}, \code{exp}, and \code{sqrt} are defined for objects of class
-#'"lcens." } }
-#'@keywords methods
-#'@exportMethod  Math
+#' @name Math-censored
+#' @include mcens-class.R lcens-class.R qw-class.R
+#' @param x the object to transform
+#' @keywords methods manip
+#' @exportMethod  Math
+#' @examples
+#'log(as.lcens(c(1, 3), 2))
+#' 
+
+#' @rdname Math-censored
+#' @aliases Math,lcens-method
 setMethod("Math", "lcens", function(x) {
   if(length(x) == 0L)
     return(x) # Do nothing

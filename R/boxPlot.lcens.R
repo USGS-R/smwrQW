@@ -47,7 +47,7 @@
 #'
 #' @importFrom USGSwsGraphs boxPlot
 #' @rdname boxPlot.lcens
-#' @S3method boxPlot lcens
+#' @export
 #' @method boxPlot lcens
 boxPlot.lcens <- function(..., group=NULL, # data
                             Box=list(type="truncated", show.counts=TRUE,
@@ -122,7 +122,7 @@ boxPlot.lcens <- function(..., group=NULL, # data
 }
 
 #' @rdname boxPlot.lcens
-#' @S3method boxPlot qw
+#' @export
 #' @method boxPlot qw
 boxPlot.qw <- function(..., group=NULL, # data
                             Box=list(type="truncated", show.counts=TRUE,

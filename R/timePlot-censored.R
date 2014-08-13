@@ -1,28 +1,38 @@
-#'Censored Data Methods for Function \code{timePlot}
+#' @title Censored Data Methods for Function \code{timePlot}
 #'
-#'Produce a plot of censored time-series data.
+#' @description Produce a plot of censored time-series data.
 #'
-#'
-#' @name timePlot-methods
-#' @aliases timePlot-methods timePlot,Date,lcens-method timePlot.lcens
-#'timePlot,Date,qw-method timePlot.qw
-#' @docType methods
-#' @section Methods: \describe{
-#'
-#'\item{list('signature(x = "Date", y = "lcens")')}{ This is the method for
-#'left-censored data, \code{x} must be class "Date." See \code{\link{timePlot}}
-#'for details about the arguments. There is an optional argument
-#'\code{Censored} that controls how the censored data are plotted. It functions
-#'like the \code{Plot} argument, but has an additional argument \code{bar},
-#'which draws a drop line if set to \code{TRUE}. } 
-#'
-#'\item{list('signature(x = "Date", y = "qw")')}{ This is the method for
-#'water-quality data, \code{x} must be class "Date." It converts \code{y}
-#'to class "lcens" and executes that method. If \code{y} cannot be converted,
-#'then the clall fails. } }
+#' @details The value for \code{xlabels} must be one of "full," the full month names;
+#'"abbrev," abbreviations; or "letter," the first letter of the
+#'month. The default is "Auto," which selects one of the rpevious options based on
+#'the number of labels.
+#' 
+#' @include mcens-class.R lcens-class.R qw-class.R
+#' @name timePlot-censored
+#' @param x the time/date data.
+#' @param y the y-axis data.
+#' @param Plot control parameters of the plot for uncensored data.
+#' @param yaxis.log log-transform the y axis?
+#' @param yaxis.rev reverse the y axis?
+#' @param yaxis.range set the range of the y-axis.
+#' @param xaxis.range set the range of the x-axis.
+#' @param ylabels set up y-axis labels. See \code{\link{linearPretty}} for
+#' details.
+#' @param xlabels set up x-axis labels. See \bold{Details}.
+#' @param xtitle the x-axis title.
+#' @param ytitle the y-axis title.
+#' @param caption the figure caption.
+#' @param margin set up the plot area margins.
+#' @param Censored control parameters of the plot for censored data.
+#' @param ... arguments for specific methods.
+#' @return Information about the graph.
+
 #' @keywords methods hplot
 #' @importMethodsFrom USGSwsGraphs timePlot
 #' @exportMethod timePlot
+
+#' @rdname timePlot-censored
+#' @aliases timePlot,Date,lcens-method
 setMethod("timePlot", signature("Date", "lcens"), # Need to allow Date only
 function(x, y, # data
          Plot=list(name="", what="points", type="solid",
@@ -115,8 +125,8 @@ function(x, y, # data
 }
 )
 
-#' @rdname timePlot-methods
-#' @exportMethod timePlot
+#' @rdname timePlot-censored
+#' @aliases timePlot,Date,qw-method
 setMethod("timePlot", signature("Date", "qw"), # Need to allow Date only
 function(x, y, # data
          Plot=list(name="", what="points", type="solid",

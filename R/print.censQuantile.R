@@ -10,7 +10,7 @@
 #'percentile and the second column is the value.
 #' @keywords utilities
 #'
-#' @S3method print censQuantile
+#' @export
 #' @method print censQuantile
 print.censQuantile <- function(x, digits=4, ...) {
   ## Coding history:

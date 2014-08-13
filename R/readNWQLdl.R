@@ -1,23 +1,23 @@
-#'Historical Reporting Limits
+#' @title Historical Reporting Limits
 #'
-#'Import the hstorical reporting limits for all methods for a parameter code.
+#' @description Import the historical reporting limits for all methods for a parameter code.
 #'
-#'
-#'@param parm_cd the parameter code.
-#'@return A data frame of the analyte, methods, begin and end date for each
+#' @importFrom XML readHTMLTable
+#' @param parm_cd the parameter code.
+#' @return A data frame of the analyte, methods, begin and end date for each
 #'reporting level change, the reporting level type used, the long-term
 #'detection limit and the reporting level.
-#'@note This function works only within the internal USGS network.
-#'@seealso \code{\link{qw-class}}
-#'@references Lorenz, D.L., 2014, USGSqw OFR.
-#'@keywords IO
-#'@examples
+#' @note This function works only within the internal USGS network.
+#' @seealso \code{\link{qw-class}}
+#' @references Lorenz, D.L., 2014, USGSqw OFR.
+#' @keywords IO
+#' @examples
 #'
 #'\dontrun{
 #'readNWQLdl("00608")
 #'}
 #'
-#'@export
+#' @export
 readNWQLdl <- function(parm_cd) {
   ## Coding history:
   ##    2012Sep21 DLLorenz original Coding

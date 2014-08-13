@@ -17,19 +17,19 @@
 #'
 #' @importFrom stats median
 #' @rdname medianStats
-#' @S3method median lcens
+#' @export
 #' @method median lcens
 median.lcens <- function(x, na.rm=FALSE)
   as.vector(quantile(x, probs=0.50, na.rm=na.rm, method="flipped K-M"))
 
 #' @rdname medianStats
-#' @S3method median mcens
+#' @export
 #' @method median mcens
 median.mcens <- function(x, na.rm=FALSE)
   as.vector(quantile(x, probs=0.50, na.rm=na.rm, method="flipped K-M"))
 
 #' @rdname medianStats
-#' @S3method median qw
+#' @export
 #' @method median qw
 median.qw <- function(x, na.rm=FALSE)
   as.vector(quantile(as.mcens(x), probs=0.50, na.rm=na.rm, method="flipped K-M"))

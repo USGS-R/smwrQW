@@ -1,6 +1,8 @@
 #'Sorting Vectors
 #'
-#'Sort a censored-data object.
+#'Sort a censored-data object. This function sorts left-censored values
+#'immediately below the equivalent uncensored values and rigth-censored
+#'values immediately above the euvualent uncensored values. 
 #'
 #'@aliases sort.lcens sort.mcens
 #'@param x the data to be sorted.
@@ -19,7 +21,7 @@
 #'sort(as.lcens(XR, rep(c(0, -1), each=5))) # censors at 0 and -1
 #'
 #' @rdname sort.censored
-#' @S3method sort lcens
+#' @export
 #' @method sort lcens
 sort.lcens <- function(x, decreasing=FALSE, na.last=NA, ...) {
   ## Coding history:
@@ -34,7 +36,7 @@ sort.lcens <- function(x, decreasing=FALSE, na.last=NA, ...) {
 }
 
 #' @rdname sort.censored
-#' @S3method sort mcens
+#' @export
 #' @method sort mcens
 sort.mcens <- function(x, decreasing=FALSE, na.last=TRUE, ...) {
   nums1 <- x@.Data[, 1L]

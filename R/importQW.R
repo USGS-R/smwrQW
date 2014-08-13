@@ -1,11 +1,17 @@
-#'Water-Quality Data
+#' Water-Quality Data
 #'
-#'Convert a dataset containing stacked discrete sample water-quality data to a
-#'dataset reporesnting those data as class "qw."
+#' Convert a dataset containing stacked discrete sample water-quality data to a
+#'dataset representing those data as class "qw."
 #'
-#'Only \code{values} and \code{remark.codes} are required. All others can be
+#' Only \code{values} and \code{remark.codes} are required. All others can be
 #'interpreted as constant values if the column name is not in \code{data}.  For
-#'automatic generation of column names, see \code{\link{makeColNames}}.
+#'automatic generation of column names, see \code{\link{makeColNames}}.\cr
+#' For \code{reporting.level}, it is better to use \code{NA} than to use an
+#'arbitrary small value because the functions to convert to objects for analysis
+#'will create reasonable reporting level values if they are not known.\cr
+#' For other columns when the actual value is not known, the actual value 
+#'is less important for analysis and more important for the user, so 
+#'arbitrary values can be used.
 #'
 #'@param data the dataset.
 #'@param keep the names of the columns that represent a single sample and any
@@ -92,8 +98,10 @@ importQW <- function(data, keep=c("STAID", "DATES", "TIMES", "MEDIM"),
   remark.codes <- data[[remark.codes]]
   if(!is.null(data[[value.codes]]))
      value.codes <- data[[value.codes]]
-  if(is.character(reporting.level) && !is.null(data[[reporting.level]]))
+  if(is.character(reporting.level) && !is.null(data[[reporting.level]])) {
     reporting.level <- as.numeric(data[[reporting.level]]) # force numeric
+  } else
+  	reporting.level <- as.numeric(reporting.level) # for NA to numeric if necessary
   if(!is.null(data[[reporting.method]]))
     reporting.method <- data[[reporting.method]]
   if(!is.null(data[[reporting.units]]))

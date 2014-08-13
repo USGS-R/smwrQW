@@ -25,7 +25,7 @@
 #' @return The object \code{x} is returned invisibly.
 #' @keywords hplot
 #' @rdname plot.htest
-#' @S3method plot ppw
+#' @export
 #' @method plot ppw
 plot.ppw <- function(x, which="All", set.up = TRUE, labels, ...) {
   ## Identify which plots to do:
@@ -57,7 +57,7 @@ plot.ppw <- function(x, which="All", set.up = TRUE, labels, ...) {
 }
 
 #' @rdname plot.htest
-#' @S3method plot genWilcox
+#' @export
 #' @method plot genWilcox
 plot.genWilcox <- function(x, which="All", set.up = TRUE, xaxis.log=TRUE, ...) {
 	## Identify which plots to do:

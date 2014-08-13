@@ -17,7 +17,7 @@
 #'using \code{censStats}.
 #'@seealso \code{\link{censStats}}
 #'@keywords censored univariate
-#'@S3method mean qw
+#' @export
 #'@method mean qw
 mean.qw <- function(x, lt.tol=.5, ...) {
   if(length(x) <= 1L)

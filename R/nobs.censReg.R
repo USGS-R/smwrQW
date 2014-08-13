@@ -8,7 +8,7 @@
 #' @seealso \code{\link{censReg}}
 #' @keywords regression
 #' @importFrom stats nobs
-#' @S3method nobs censReg
+#' @export
 #' @method nobs censReg
 nobs.censReg <- function(object, ...)
   ## Coding history:

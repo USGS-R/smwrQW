@@ -31,7 +31,7 @@
 #'}
 #'
 #' @importFrom USGSwsGraphs ecdfPlot
-#' @S3method ecdfPlot lcens
+#' @export
 #' @method ecdfPlot lcens
 ecdfPlot.lcens <- function(x, group=NULL, # data specification
                            Plot=list(name="Auto", what="stairstep", type="solid",
@@ -118,7 +118,7 @@ ecdfPlot.lcens <- function(x, group=NULL, # data specification
                  yax=yax, xax=xax))
 }
 
-#' @S3method ecdfPlot qw
+#' @export
 #' @method ecdfPlot qw
 #' @rdname ecdfPlot.lcens
 ecdfPlot.qw <- function(x, group=NULL, # data specification

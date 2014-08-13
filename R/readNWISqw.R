@@ -34,6 +34,7 @@ readNWISqw <- function(sites, params="All", begin.date="", end.date="") {
   ##    2012Dec28 DLLorenz Roxygenized
   ##    2013Dec16 DLLorenz
   ##
+	warning("readNWISqw is deprecated, use readNWISqw in USGSwsDataRetrieval.")
   params <- paste(params,  collapse=",")
   pgrp <- pmatch(params, c("information", "physical", "cations", "anions", "nutrients",
                            "microbiological", "biological", "metals", "nonmetals",

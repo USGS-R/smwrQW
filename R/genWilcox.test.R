@@ -1,13 +1,13 @@
-#' Test for Difference in Censored Samples
+#' @title Test for Difference in Censored Samples
 #'
-#' This function tests for differences in censored samples from 2
+#' @description This function tests for differences in censored samples from 2
 #'groups. Two methods are available---the Peto-Prentice test is
 #'appropriate only for left-censored data. The Gehan test has
 #'been extended to multiply censored data as suggested in
 #'Gehan (1965) but uses a permutation test to compute the 
 #'variance.
 #'
-#' If \code{y} is either type character or factor, then it is assumed to be a group
+#' @details If \code{y} is either type character or factor, then it is assumed to be a group
 #'identifier. Anything else is treated as another set of sample and forced to the
 #'appropriate class of censored data.
 #'
@@ -15,6 +15,7 @@
 #'be "best," which selects "peto" for  uncensored or 
 #'left-censored data and "gehan" otherwise.
 #'
+#' @importFrom survival survfit Surv
 #' @param x the samples from each group. Forced to the appropriate class. 
 #'Missing values are removed before the analysis.
 #' @param y either another set of samples or a group identifier with exactly
@@ -90,11 +91,11 @@ genWilcox.test <- function(x, y, alternative="two.sided",
   ##
   ## Error checks:
   if(missing(data.names)) {
-    if(class(y) == "factor") {
+    if(inherits(y, "factor")) {
       data.names <- levels(y)
       data.names <- paste(data.names[1L], "and", data.names[2L], sep=" ")
       num.y <- FALSE
-    } else if(class(y) == "character") {
+    } else if(inherits(y, "character")) {
       data.names <- unique(y)
       data.names <- paste(data.names[1L], "and", data.names[2L], sep=" ")
       num.y <- FALSE

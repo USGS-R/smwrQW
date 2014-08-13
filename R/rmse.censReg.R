@@ -9,7 +9,7 @@
 #'standard error.
 #' @seealso \code{\link{censReg}}
 #' @importFrom USGSwsStats rmse
-#' @S3method rmse censReg
+#' @export
 #' @method rmse censReg
 rmse.censReg <- function(x, ...) {
   ## Coding history:

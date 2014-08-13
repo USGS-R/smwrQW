@@ -1,12 +1,13 @@
-#'Estimate Statistics
+#' @title Estimate Statistics
 #'
-#'Support function for computing statistics for multiply-censored data.
+#' @description Support function for computing statistics for multiply-censored data.
 #'
-#'@param x an object of "mcens" to compute 
-#'@param group the group variable
-#'@return An object of class "survfit."
-#'@keywords misc
-#'@export
+#' @importFrom survival survfit Surv
+#' @param x an object of "mcens" to compute 
+#' @param group the group variable
+#' @return An object of class "survfit."
+#' @keywords misc
+#' @export
 mcenKM <- function(x, group) {
   ## Coding history:
   ##    2012Jan22 DLLorenz Initial Coding.

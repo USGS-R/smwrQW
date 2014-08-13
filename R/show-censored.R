@@ -1,23 +1,16 @@
-#'Show Methods for \code{WSqw} objects
+#' @title Show Methods for \code{WSqw} objects
 #'
-#'Prints the object.
+#' @description Prints the object.
 #'
-#'@name show-methods
-#'@aliases show-methods show,lcens-method show,mcens-method
-#'show,qw-method
-#'@docType methods
-#'@section Methods: \describe{
-#'
-#'\item{list("signature(object = \"lcens\")")}{ Prints the value and detection 
-#'limit }
-#'
-#'\item{list("signature(object = \"mcens\")")}{ Prints the minimum and maximum
-#'values }
-#'
-#'\item{list("signature(object = \"qw\")")}{ Prints the minimum and maximum
-#'values, and other attributes of the data } }
-#'@keywords methods manip
-#'@exportMethod show
+#' @include mcens-class.R lcens-class.R qw-class.R
+#' @name show-censored
+#' @param object the object to show.
+#' @return The object is retruned invisibly.
+#' @keywords methods manip
+#' @exportMethod show
+
+#' @rdname show-censored
+#' @aliases show,lcens-method
 setMethod("show",  "lcens", function(object) {
   if(length(object)) {
     vals <- as.character(signif(object@.Data[, 1], 4))
@@ -33,7 +26,8 @@ setMethod("show",  "lcens", function(object) {
   invisible(object) }
 )
 
-#'@exportMethod show
+#' @rdname show-censored
+#' @aliases show,mcens-method
 setMethod("show",  "mcens", function(object) {
   if(length(object)) {
     Lower <- as.character(signif(object@.Data[, 1L], 4))
@@ -47,7 +41,8 @@ setMethod("show",  "mcens", function(object) {
   invisible(object) }
 )
 
-#'@exportMethod show
+#' @rdname show-censored
+#' @aliases show,qw-method
 setMethod("show", "qw", function(object) {
   if(length(object)) {
     xval <- object@.Data

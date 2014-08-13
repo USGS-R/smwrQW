@@ -9,13 +9,13 @@
 #'@param set.up set up the graphics page?
 #'@param \dots additional arguments passed to \code{xyPlot}.
 #'@return A plot is created and the data are invisibly returned.
-#'@seealso \code{\link{timePlot.lcens}}
+#'@seealso \code{\link{timePlot-censored}}
 #'@keywords hplot censored
 #'@examples
 #'
 #'## see vignettes
 #'
-#'@S3method plot qw
+#' @export
 #'@method plot qw
 plot.qw <- function(x, which='All', set.up=TRUE, ...) {
   ## Coding History:

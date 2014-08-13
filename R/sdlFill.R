@@ -4,11 +4,15 @@
 #'
 #'@param x the data to estimate, Missing values permitted and ignored.
 #'Must be an object of class "lcens," a numeric vector, or the output from censpp.
-#'@param method the method to use, either "MLE" or "log MLE."
-#'@param alpha the offset for plotting postion (not used).
+#'@param method the method to use, either "fill" or "log fill"
+#'@param alpha the offset for plotting postion (not used, required for other methods).
 #'@return A list containing the mean and standard deviation, filled in
 #'values for the censored values, and the maximum censor level.
-#'@references Gleit, A., 1985, Estiamtion for smll normal data sets with detection limits:
+#'@note This function uses the method of Gleit (1985). That method computes
+#'the mean and standard deviation of the data, estimates synthetic values for
+#'the censored values using a method similar to ROS, and repeats the process until the 
+#'mean and standard deviation stabilize.
+#'@references Gleit, A., 1985, Estimation for smll normal data sets with detection limits:
 #'Environmental Science and Technology, v. 19, no. 12, p. 1201--1206.
 #'@keywords misc
 #'@export

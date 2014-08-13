@@ -31,6 +31,7 @@ countNWISqw <- function(sites, by="summary") {
   ##    2012Dec28 DLLorenz Roxygenized
   ##    2012Dec28          This version
   ##
+	warning("coundNWISqw is deprecated, it will be moved and possibly renamed in USGSwsDataRetrieval.")
   ## Pack sites and get the data
   sitel <- paste(sites, collapse="%0D%0A")
   by <- match.arg(by, c("summary", "total", "group", "pcode"))

@@ -6,6 +6,7 @@
 #'as those for uncensored data, \code{Plot}. See \code{\link{setPlot}} for
 #'details.
 #'
+#' @aliases probPlot.lcens probPlot.qw
 #' @param x the data to plot. Missing values are removed before plotting.
 #' @param truncate not used for left-censored data.
 #' @param FLIP if TRUE, the plot the cumumlative distribution. Otherwise, plot
@@ -45,7 +46,8 @@
 #'}
 #'
 #' @importFrom USGSwsGraphs probPlot
-#' @S3method probPlot lcens
+#' @rdname probPlot.lcens
+#' @export
 #' @method probPlot lcens
 probPlot.lcens <- function(x, truncate, 
                            FLIP=FALSE, distribution="normal",
@@ -132,3 +134,41 @@ probPlot.lcens <- function(x, truncate,
   retval$yaxis.log=yaxis.log
   invisible(c(retval, xtrans=qdist, xtargs=list(...), yax=yax, xax=pax))
 }
+
+#' @rdname probPlot.lcens
+#' @export
+#' @method probPlot qw
+probPlot.qw <- function(x, truncate, 
+												FLIP=FALSE, distribution="normal",
+												alpha=0.4, # data specification
+												Plot=list(name="Uncensored", what='points', type='solid',
+																	width='standard', symbol='circle', filled=TRUE,
+																	size=0.09, color='black'),
+												yaxis.log=TRUE, yrange=c(NA, NA), # y-axis controls
+												ylabels=11,  xlabels=11, CDF=TRUE, # labels
+												xtitle='Cumulative Probability', RI, RItitle,
+												ytitle=deparse(substitute(x)), # axis titles
+												caption="", # caption
+												margin=c(NA, NA, NA, NA), # margin control
+												Censored=list(name="Left censored", what='points', symbol='circle',
+																			filled=FALSE, size=0.09, color='black'), # plot controls
+												...) { # distribution parameters and method args
+	## Coding History:
+	##    2014May22 DLLorenz Original coding
+	##
+	ytitle <- ytitle # needed to 'set' names
+	retval <- probPlot.lcens(as.lcens(x),
+													 truncate=truncate, 
+													 FLIP=FLIP, distribution=distribution,
+													 alpha=alpha,
+													 Plot=Plot,
+													 yaxis.log=yaxis.log, yrange=yrange,
+													 ylabels=ylabels,  xlabels=xlabels, CDF=CDF,
+													 xtitle=xtitle, RI, RItitle,
+													 ytitle=ytitle,
+													 caption=caption,
+													 margin=margin,
+													 Censored=Censored, ...)
+	invisible(retval)
+}
+	

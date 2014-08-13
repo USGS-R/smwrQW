@@ -28,13 +28,13 @@ censoring <- function(x) {
 }
 
 #' @rdname censoring
-#' @S3method censoring default
+#' @export
 #' @method censoring default
 censoring.default <- function(x)
   "none"
 
 #' @rdname censoring
-#' @S3method censoring lcens
+#' @export
 #' @method censoring lcens
 censoring.lcens <- function(x) {
   if(any(x@censor.codes, na.rm=TRUE))
@@ -44,7 +44,7 @@ censoring.lcens <- function(x) {
 }
 
 #' @rdname censoring
-#' @S3method censoring mcens
+#' @export
 #' @method censoring mcens
 censoring.mcens <- function(x) {
   if(any(x@censor.codes > 0, na.rm=TRUE) || any(x@interval, na.rm=TRUE))
@@ -56,7 +56,7 @@ censoring.mcens <- function(x) {
 }
 
 #' @rdname censoring
-#' @S3method censoring qw
+#' @export
 #' @method censoring qw
 censoring.qw <- function(x) {
   if(any(x@remark.codes %in% c(">", "I"), na.rm=TRUE))

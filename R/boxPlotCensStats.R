@@ -14,7 +14,6 @@ boxPlotCensStats <- function(x, Box, yaxis.log) {
   ##    2013Jan11 DLLorenz Roxygenized ans censortype to censorstyle
   ##    2014Jan27 DLLorenz Added censor level to exaplanation
   ##
-	print(Box)
   type <- match.arg(Box$type, c("tukey", "truncated", "simple", "extended"))
   ctype <- match.arg(Box$censorstyle, c("censored", "estimated"))
   cval <- Box$censorbox

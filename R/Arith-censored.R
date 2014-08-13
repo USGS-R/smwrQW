@@ -1,46 +1,25 @@
-#'Arithmetic Methods for \code{lcens}, \code{mcens}, and \code{qw} objects
+#' @title Arithmetic Methods for \code{lcens}, \code{mcens}, and \code{qw} objects
 #'
-#'Some limited arithemtic methods are possible and well-defined for
-#'lcensored and water-quality data. 
+#' @description Some limited arithmetic methods are possible and well-defined for
+#'censored data. Water-quality data require specialized functions to maintain data
+#'integrity.
 #'
-#' @name Arith-methods
-#' @aliases Arith-methods Arith,lcens,numeric-method Arith,numeric,lcens-method
-#'Arith,lcens,lcens-method Arith,mcens,numeric-method Arith,numeric,mcens-method
-#'Arith,mcens,mcens-method
-#' @docType methods
-#' @section Methods: \describe{
-#'
-#'\item{list(signature(e1 = "lcens", e2 = "numeric"))}{ Multiplication
-#'and division (positive values only) and addition and subtraction are defined.
-#'}
-#'
-#'\item{list(signature(e1 = "numeric", e2 = "lcens"))}{ Multiplication
-#'(positive values only) and addition are defined for this combination. }
-#'
-#'\item{list(signature(e1 = "lcens", e2 = "lcens"))}{ Addition
-#'only is defined for this combination. }
-#'
-#'\item{list(signature(e1 = "mcens", e2 = "numeric"))}{ Multiplication,
-#'division, addition, and subtraction are defined. }
-#'
-#'\item{list(signature(e1 = "numeric", e2 = "mcens"))}{ Multiplication,
-#'division, addition, and subtraction are defined. }
-#'
-#'\item{list(signature(e1 = "mcens", e2 = "mcens"))}{ Multiplication,
-#'division, addition, and subtraction are defined. }
-#'
-#'\item{list(signature(e1 = "qw", e2 = "numeric"))}{ No mathematical
-#'operation defined. See \code{add}.}
-#'
-#'\item{list(signature(e1 = "numeric", e2 = "qw"))}{ No mathematical
-#'operation defined. }
-#'
-#'\item{list(signature(e1 = "qw", e2 = "qw"))}{ No mathematical
-#'operation defined. See \code{add}. }
-#'}
-#' @seealso \code{\link{add}}
+#' @include mcens-class.R lcens-class.R qw-class.R
+#' @name Arith-censored
+#' @param e1,e2 numeric, censored, or water-quality data. Missing values are permitted in 
+#'either argument and result in a missing value in the output.
+#' @return An object of the appropriate class for the data.
+#' @import methods
+#' @seealso \code{\link{add}}, \code{\link{ratio}}
 #' @keywords methods manip
-#' @export
+#' @exportMethod Arith
+#' @examples
+#'as.lcens(c(1, 3), 2) + 1
+#'as.lcens(c(1, 3), 2) * 2
+#'
+
+#' @rdname Arith-censored
+#' @aliases Arith,lcens,numeric-method
 setMethod("Arith", signature(e1="lcens", e2="numeric"), function(e1, e2) {
   if(.Generic %in% c("%%", "%/%", "^"))
     stop(gettextf("'%s' not defined for 'lcens' objects", .Generic),
@@ -53,7 +32,8 @@ setMethod("Arith", signature(e1="lcens", e2="numeric"), function(e1, e2) {
   e1}
 )
 
-#' @export
+#' @rdname Arith-censored
+#' @aliases Arith,numeric,lcens-method
 setMethod("Arith", signature(e1="numeric", e2="lcens"), function(e1, e2) {
   if(.Generic %in% c("%%", "%/%", "^", "-", "/"))
     stop(gettextf("'%s' not defined for 'lcens' objects", .Generic),
@@ -66,7 +46,8 @@ setMethod("Arith", signature(e1="numeric", e2="lcens"), function(e1, e2) {
   e2}
 )
 
-#' @export
+#' @rdname Arith-censored
+#' @aliases Arith,lcens,lcens-method
 setMethod("Arith", signature(e1="lcens", e2="lcens"), function(e1, e2) {
   if(.Generic == "+") {
     e1@censor.codes <- e1@censor.codes | e2@censor.codes
@@ -81,7 +62,8 @@ setMethod("Arith", signature(e1="lcens", e2="lcens"), function(e1, e2) {
          domain=NA)
 })
 
-#' @export
+#' @rdname Arith-censored
+#' @aliases Arith,mcens,numeric-method
 setMethod("Arith", signature(e1="mcens", e2="numeric"), function(e1, e2) {
 	if(.Generic %in% c("%%", "%/%", "^"))
 		stop(gettextf("'%s' not defined for 'mcens' objects", .Generic),
@@ -102,7 +84,8 @@ setMethod("Arith", signature(e1="mcens", e2="numeric"), function(e1, e2) {
 	e1}
 )
 
-#' @export
+#' @rdname Arith-censored
+#' @aliases Arith,numeric,mcens-method
 setMethod("Arith", signature(e1="numeric", e2="mcens"), function(e1, e2) {
 	if(.Generic %in% c("%%", "%/%", "^"))
 		stop(gettextf("'%s' not defined for 'mcens' objects", .Generic),
@@ -148,7 +131,8 @@ setMethod("Arith", signature(e1="numeric", e2="mcens"), function(e1, e2) {
 	e2}
 )
 
-#' @export
+#' @rdname Arith-censored
+#' @aliases Arith,mcens,mcens-method
 setMethod("Arith", signature(e1="mcens", e2="mcens"), function(e1, e2) {
 	if(length(e1) > 1L && length(e2) > 1L && length(e1) != length(e2))
 		stop("length of arguments must be 1 or equal")
@@ -223,19 +207,22 @@ setMethod("Arith", signature(e1="mcens", e2="mcens"), function(e1, e2) {
 	return(e1)
 })
 
-#' @export
+#' @rdname Arith-censored
+#' @aliases Arith,qw,numeric-method
 setMethod("Arith", signature(e1="qw", e2="numeric"), function(e1, e2) {
 		stop(gettextf("'%s' not defined for 'qw' objects", .Generic),
 				 domain=NA)
 })
 
-#' @export
+#' @rdname Arith-censored
+#' @aliases Arith,numeric,qw-method
 setMethod("Arith", signature(e1="numeric", e2="qw"), function(e1, e2) {
 	stop(gettextf("'%s' not defined for 'qw' objects", .Generic),
 			 domain=NA)
 })
 
-#' @export
+#' @rdname Arith-censored
+#' @aliases Arith,qw,qw-method
 setMethod("Arith", signature(e1="qw", e2="qw"), function(e1, e2) {
 	stop(gettextf("'%s' not defined for 'qw' objects", .Generic),
 			 domain=NA)

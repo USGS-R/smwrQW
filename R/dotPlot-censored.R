@@ -1,27 +1,43 @@
-#'Censored Data Methods for Function \code{dotPlot}
+#' @title Censored Data Methods for Function \code{dotPlot}
 #'
-#'Produce a dor plot of censored data.
+#' @description Produce a dot plot of censored data.
 #'
+#' @details The \code{what} component of the \code{Plot} argument must be either
+#'"points" or "none."
 #'
-#' @name dotPlot-methods
-#' @aliases dotPlot-methods dotPlot,mcens-method dotPlot.mcens
-#' dotPlot,qw-method dotPlot.qw
-#' @docType methods
-#' @section Methods: \describe{
-#'
-#'\item{list('signature(x = "mcens", y = "ANY")')}{ This is the method for
-#'multiply-censored data, \code{x} must be class "mcens." 
-#'See \code{\link{dotPlot}} for details about the arguments. There is an 
-#'optional argument \code{Censored} that controls how the censored data are 
-#'plotted. It functions like the \code{Plot} argument, but has an additional 
-#'argument \code{bar}, which draws a connecting line if set to \code{TRUE}. }
-#'
-#'\item{list('signature(x = "qw", y = "ANY")')}{ This is the method for
-#'water-quality data, \code{x} must be class "qw." It simply converts \code{x}
-#'to class "mcens" and executes that method. } }
+#' @include mcens-class.R qw-class.R
+#' @name dotPlot-censored
+#' @param x the x-axis data
+#' @param y the y-axis data, expected to be be either character or factor.
+#' @param Plot control parameters for uncensored values of the plot, see 
+#'\code{link{setMultiPlot}} and \bold{Details} for details.
+#' @param yaxis.orient orientation of the y-axis values, must be either "table"
+#'or "grid." "Table" is sorted from top to bottom, "grid" is sorted from
+#'bottom to top.
+#' @param yaxis.order the order of the y-axis values, must be one of "none,"
+#'"ascending," or "descending."
+#' @param yaxis.grid draw grid lines?
+#' @param xaxis.log log-transform the x axis?
+#' @param xaxis.range set the range of the x-axis
+#' @param ylabels set up y-axis labels.
+#' @param xlabels set up x-axis labels.
+#' @param xtitle x-axis title.
+#' @param ytitle y-axis title.
+#' @param caption the figure caption.
+#' @param margin the parameters of the margin.
+#' @param jitter.y adjust \code{y} values to reduce overlap for each group?
+#' @param Censored control parameters for censored values of the plot.
+#' @param ... arguments for specific methods.
+#' @return Information about the graph.
+#' @note A call should be made to \code{setPage} to set up the graphics
+#'environment before calling \code{dotPlot}.
 #' @keywords methods hplot
 #' @importMethodsFrom USGSwsGraphs dotPlot
 #' @exportMethod dotPlot
+#' @seealso \code{\link{setPage}}
+
+#' @rdname dotPlot-censored
+#' @aliases dotPlot,mcens-method
 setMethod("dotPlot", signature("mcens"), # "ANY" ingnored in last position
 function(x, y, # data
          Plot=list(name="", what="points", type="solid",
@@ -140,8 +156,8 @@ function(x, y, # data
 }
 )
 
-#' @rdname dotPlot-methods
-#' @exportMethod dotPlot
+#' @rdname dotPlot-censored
+#' @aliases dotPlot,qw-method
 setMethod("dotPlot", signature("qw"), # "ANY" ingnored in last position
 function(x, y, # data
          Plot=list(name="", what="points", type="solid",

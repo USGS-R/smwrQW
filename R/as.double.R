@@ -30,7 +30,7 @@
 #'as.numeric(Test.qw)
 #'
 #' @rdname as.double
-#' @S3method as.double qw
+#' @export
 #' @method as.double qw
 as.double.qw <- function(x, ...) {
   Cen <- censoring(x)

@@ -5,9 +5,10 @@
 #'The argument what for either \code{LineRef} or \code{Line1.1} may be set to
 #'"none" to suppress drawing of either line.
 #'
+#' @aliases qqPlot.lcens qqPlot.qw
 #' @param x the x-axis data, or data to plot if y is missing. Must be of class
-#'"lcens."
-#' @param y the y-axis data. If missing, then produce a quantile-normal quantile
+#'"lcens" or "qw."
+#' @param y the y-axis data. If missing, then produce a quantile-normal 
 #'plot from the data in x.
 #' @param alpha the alpha value of the function for computing plotting
 #'positions.
@@ -44,7 +45,8 @@
 #'}
 #'
 #' @importFrom USGSwsGraphs qqPlot
-#' @S3method qqPlot lcens
+#' @rdname qqPlot.lcens
+#' @export
 #' @method qqPlot lcens
 qqPlot.lcens <- function(x, y, # data
                          alpha=0.4,
@@ -189,4 +191,49 @@ qqPlot.lcens <- function(x, y, # data
   retval$yax <- yax
   retval$xax <- xax
   invisible(retval)
+}
+
+#' @rdname qqPlot.lcens
+#' @export
+#' @method qqPlot qw
+qqPlot.qw <- function(x, y, # data
+												 alpha=0.4,
+												 Plot=list(name="", what='points', type='solid',
+												 					width='standard', symbol='circle', filled=TRUE,
+												 					size=0.09, color='black'),
+												 LineRef=list(name='', what='lines', color='black'),
+												 Line1.1=list(name='Line of equality', what='lines',
+												 						 color='gray'), # plot controls
+												 yaxis.log=FALSE, yaxis.range=c(NA,NA), # y-axis controls
+												 xaxis.log=FALSE, xaxis.range=c(NA,NA), # x-axis controls
+												 ylabels=7, xlabels=7, # labels
+												 xtitle,
+												 ytitle, # axis titles, missing out of necessity
+												 caption='', # caption 
+												 margin=c(NA, NA, NA, NA),
+												 Censored=list(name="", what='points', symbol='circle',
+												 							filled=FALSE, size=0.09, color='black'),
+												 Projected=list(name="", what='points', symbol='plus',
+												 							 filled=FALSE, size=0.09, color='black'), ...) { # margin controls
+	## Coding History:
+	##    2014May22 DLLorenz Original coding
+	##
+	## Just pass to qq after converting y
+	if(!missing(y))
+		y <- as.lcens(y)
+	retval <- qqPlot.lcens(x, y,
+												 alpha=alpha,
+												 Plot=Plot,
+												 LineRef=LineRef,
+												 Line1.1=Line1.1,
+												 yaxis.log=yaxis.log, yaxis.range=yaxis.range,
+												 xaxis.log=xaxis.log, xaxis.range=xaxis.range,
+												 ylabels=ylabels, xlabels=xlabels,
+												 xtitle,
+												 ytitle,
+												 caption=caption,
+												 margin=margin,
+												 Censored=Censored,
+												 Projected=Projected, ...)
+	invisible(retval)
 }

@@ -24,7 +24,7 @@
 #'@return The object \code{x} is returned invisibly.
 #'@seealso \code{\link{censReg}}
 #'@keywords regression hplot
-#'@S3method plot summary.censReg
+#' @export
 #'@method plot summary.censReg
 plot.summary.censReg <- function(x, which='All', set.up=TRUE, span=1.0, ...) {
   ## Coding history:
@@ -62,7 +62,7 @@ plot.summary.censReg <- function(x, which='All', set.up=TRUE, span=1.0, ...) {
   ## Final plot (7) residuals vs predictors
   ## Extract weights and other data needed later
   Fits <- x$diagstats$yhat # needed for later plots
-  Resids <- x$diagstats$resid
+  Resids <- x$diagstats$resids
   Cens <- x$diagstats$ycen
   wt.showCD <- if(is.null(x$object$weights))
     rep(1,length(Fits))

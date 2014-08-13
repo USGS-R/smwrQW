@@ -40,7 +40,7 @@
 #'Joint Statistical Meeting, Boston, August 9--13, 1992, p. 142--151.
 #' @seealso \code{\link{censReg}}, \code{\link{predictMVUE}}
 #' @method predict censReg
-#' @S3method predict censReg
+#' @export
 predict.censReg <- function(object, newdata, type=c("response", "link", "mean"),
   se.fit=c("none", "estimate", "prediction"), 
   interval=c("none", "confidence", "prediction"), level=0.95,

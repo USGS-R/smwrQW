@@ -18,7 +18,7 @@
 #'\code{\link{genWilcox.test}}
 #' @keywords utilities
 #'
-#' @S3method print censMCT
+#' @export
 #' @method print censMCT
 print.censMCT <- function(x, digits=4, ...) {
   ## Coding history:

@@ -13,7 +13,7 @@
 #' @return The object \code{x} is returned invisibly.
 #' @seealso \code{\link{censReg}}
 #' @keywords regression hplot
-#' @S3method plot censReg
+#' @export
 #' @method plot censReg
 plot.censReg <- function(x, which='All', set.up=TRUE, ...) {
   ## Coding history:

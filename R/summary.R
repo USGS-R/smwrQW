@@ -22,7 +22,7 @@
 #'summary(importNWISqw("05330000", "00608"))
 #'}
 #'
-#'@S3method summary lcens
+#' @export
 #'@method summary lcens
 summary.lcens <- function(object, ...) {
   ## Arguments:
@@ -37,7 +37,7 @@ summary.lcens <- function(object, ...) {
 }
 
 #'@rdname summary
-#'@S3method summary mcens
+#' @export
 #'@method summary mcens
 summary.mcens <- function(object, ...) {
   ## Arguments:
@@ -52,7 +52,7 @@ summary.mcens <- function(object, ...) {
 }
 
 #'@rdname summary
-#'@S3method summary qw
+#' @export
 #'@method summary qw
 summary.qw <- function(object, details=FALSE, ...) {
   ## Arguments:

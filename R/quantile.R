@@ -11,7 +11,7 @@
 #'Cohn (1988).  The methods "ROS" and "MLE" are similar to "log ROS" and "log
 #'MLE" except that no log- and back-transforms are made on the data.
 #'
-#' @aliases quantile.lcens quantile.mcens
+#' @aliases quantile.lcens quantile.mcens quantile.qw
 #' @param x an object of a censored-data class whose sample quantiles are
 #'wanted.  \code{NA} and \code{NaN} values are not allowed unless \code{na.rm}
 #'is \code{TRUE}.
@@ -43,7 +43,7 @@
 #'
 #' @importFrom stats quantile
 #' @rdname quantile
-#' @S3method quantile lcens
+#' @export
 #' @method quantile lcens
 quantile.lcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE, names=TRUE,
                            method="flipped K-M", type=2, alpha=0.4, ...) {
@@ -84,7 +84,7 @@ quantile.lcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE, names=TRUE,
 }
 
 #' @rdname quantile
-#' @S3method quantile mcens
+#' @export
 #' @method quantile mcens
 quantile.mcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE, names=TRUE,
                            method="flipped K-M", type=2, alpha=0.4, ...) {
@@ -117,4 +117,20 @@ quantile.mcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE, names=TRUE,
   }
   ## No other valid methods for version dated 2013Aug19
   return(retval)
+}
+
+#' @rdname quantile
+#' @export
+#' @method quantile qw
+quantile.qw <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE, names=TRUE,
+												method="flipped K-M", type=2, alpha=0.4, ...) {
+	if(censoring(x) == "multiple") {
+		retval <- quantile.mcens(as.mcens(x), probs=probs, na.rm=na.rm,
+														 names=names, method=method, type=type,
+														 alpha=alpha, ...)
+	} else
+		retval <- quantile.lcens(as.lcens(x), probs=probs, na.rm=na.rm,
+														 names=names, method=method, type=type,
+														 alpha=alpha, ...)
+	return(retval)
 }

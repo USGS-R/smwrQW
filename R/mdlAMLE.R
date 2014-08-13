@@ -1,15 +1,21 @@
 #'Estimate Statistics
 #'
-#'Support function for computing statistics for left-censored data.
+#'Support function for computing statistics for left-censored data using the
+#'adjusted maximum-likelihood method (Cohn, 1988)
 #'
-#'@param x the data to estimate, Missing values permitted and ignored.
+#' @param x the data to estimate, Missing values permitted and ignored.
 #'Must be an object of class "lcens," a numeric vector, or the output from censpp.
-#'@param method the method to use, either "AMLE" or "log AMLE."
-#'@param alpha the offset for plotting postion (not used).
-#'@return A list containing the mean and standard deviation, filled in
-#'values for the censored values, and the maximum censor level.
-#'@keywords misc
-#'@export
+#' @param method the method to use, either "AMLE" or "log AMLE."
+#' @param alpha the offset for plotting postion, used to compute the filled in values.
+#' @return A list containing the mean and standard deviation, filled in
+#'values for the censored values, and the maximum censor level. If \code{method}
+#'is "log AMLE," then the list also contains the mean and standard deviation of the 
+#'natural log-transformed values computed by maximum likelihood.
+#' @references Cohn, T.A., 1988, Adjusted maximum likelihood estimation of the moments
+#'of lognormal populations from type 1 censored samples\: U.S. Geological Survey 
+#'Open-File Report 88-350, 34 p.
+#' @keywords misc
+#' @export
 mdlAMLE <- function(x, method="AMLE", alpha=0.4) {
   ## Coding history:
   ##    2012Apr04 DLLorenz original coding

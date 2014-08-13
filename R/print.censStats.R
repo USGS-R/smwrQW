@@ -11,7 +11,7 @@
 #'deviation of the log-transformed values.
 #' @keywords utilities
 #'
-#' @S3method print censStats
+#' @export
 #' @method print censStats
 print.censStats <- function(x, digits=4, ...) {
   ## Coding history:

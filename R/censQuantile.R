@@ -55,7 +55,7 @@ censQuantile <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE, method="ROS",
   UseMethod("censQuantile")
 }
 
-#'@S3method censQuantile default
+#' @export
 #'@method censQuantile default
 #'@rdname censQuantile
 censQuantile.default <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE,
@@ -75,7 +75,7 @@ censQuantile.default <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE,
   return(retval)
 }
 
-#'@S3method censQuantile lcens
+#' @export
 #'@method censQuantile lcens
 #'@rdname censQuantile
 censQuantile.lcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE,
@@ -99,7 +99,7 @@ censQuantile.lcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE,
   return(retval)
 }
 
-#'@S3method censQuantile mcens
+#' @export
 #'@method censQuantile mcens
 #'@rdname censQuantile
 censQuantile.mcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE,
@@ -128,7 +128,7 @@ censQuantile.mcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE,
   return(retval)
 }
 
-#'@S3method censQuantile qw
+#' @export
 #'@method censQuantile qw
 #'@rdname censQuantile
 censQuantile.qw <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE,
@@ -136,12 +136,12 @@ censQuantile.qw <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE,
   ## Convert to appropriate type and use that method
   Cens <- censoring(x)
   if(Cens == "none")
-    return(censQuantile.default(as.numeric(x)), probs=probs, na.rm=na.rm,
-           type=type) # method ignored
+    return(censQuantile.default(as.numeric(x), probs=probs, na.rm=na.rm,
+           type=type)) # method ignored
   if(Cens == "left")
-    return(censQuantile.lcens(as.lcens(x)), probs=probs, na.rm=na.rm,
-           type=type, method=method, alpha=alpha)
+    return(censQuantile.lcens(as.lcens(x), probs=probs, na.rm=na.rm,
+           type=type, method=method, alpha=alpha))
   ## Else
-  return(censQuantile.mcens(as.mcens(x)), probs=probs, na.rm=na.rm,
-           type=type, method=method, alpha=alpha)
+  return(censQuantile.mcens(as.mcens(x), probs=probs, na.rm=na.rm,
+           type=type, method=method, alpha=alpha))
 }

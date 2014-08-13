@@ -1,7 +1,8 @@
-#'Correlation
+#' @title Correlation
 #'
-#'Compute the correlation between left-censored data using MLE
+#' @description Compute the correlation between left-censored data using MLE
 #'
+#' @details
 #'\code{Full} may be either logical or a numeric vector. If \code{Full} is \code{TRUE},
 #'then estimate the means and standard deviations for \code{x} and \code{y}. 
 #'If \code{Full} is \code{FALSE}, use the intial maximum likelihood estimate for those
@@ -11,12 +12,14 @@
 #'to \code{FALSE} if the optimization fails at large censoring levels or to improve
 #'processing speed for large sample sizes.
 #'
-#'@param x a left-censored data object.
-#'@param y a left-censored data object.
-#'@param Full how to compute  the mean and standard deviation of \code{x} and \code{y}.
+#' @importFrom survival survreg Surv
+#' @importFrom mvtnorm dmvnorm pmvnorm
+#' @param x a left-censored data object.
+#' @param y a left-censored data object.
+#' @param Full how to compute  the mean and standard deviation of \code{x} and \code{y}.
 #'See \bold{Details}.
-#'@param na.rm logical, remove missing values before computing the correlation?
-#'@return A vector with these names:
+#' @param na.rm logical, remove missing values before computing the correlation?
+#' @return A vector with these names:
 #'\item{cor}{ the correlation between \code{x} and \code{y}.}
 #'\item{mnx}{ the mean of \code{x}.}
 #'\item{sdx}{ the standard deviation of \code{x}.}
@@ -28,9 +31,9 @@
 #'\item{n}{ the number of observations.}
 #'\item{ll0}{ the log likelihood for cor=0}
 #'\item{llcor}{ the log likelihood for cor=cor}
-#'@references Lyles and others, Biometrics 2001
-#'@keywords summary censored
-#'@examples
+#' @references Lyles and others, Biometrics 2001
+#' @keywords summary censored
+#' @examples
 #'# Simple no censoring
 #'set.seed(450)
 #'tmp.X <- rnorm(25)
@@ -40,7 +43,7 @@
 #'# Some censoring
 #'censCor(as.lcens(tmp.X, -1), as.lcens(tmp.Y, -1))
 #'
-#'@export
+#' @export
 censCor <- function(x, y, Full=TRUE, na.rm=TRUE) {
   ## Coding history:
   ##   2008Mar?? DLLorenz Initial version, based loosely on code from Lisa Newton

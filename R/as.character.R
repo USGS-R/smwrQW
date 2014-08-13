@@ -8,7 +8,7 @@
 #'@param \dots further arguments passed to or from other methods.
 #'@return Creates a character representation of \code{x}.
 #'@keywords manip
-#'@S3method as.character lcens
+#'@export
 #'@method as.character lcens
 as.character.lcens <- function(x, ...) {
   vals <- as.character(x@.Data[, 1])
@@ -17,7 +17,7 @@ as.character.lcens <- function(x, ...) {
   return(paste(rmks, vals, sep=''))
 }
 
-#'@S3method as.character mcens
+#'@export
 #'@method as.character mcens
 #'@rdname as.character.lcens
 as.character.mcens <- function(x, ...) {
@@ -43,7 +43,7 @@ as.character.mcens <- function(x, ...) {
   return(retval)
 }
 
-#'@S3method as.character qw
+#'@export
 #'@method as.character qw
 #'@rdname as.character.lcens
 as.character.qw <- function(x, ...) {

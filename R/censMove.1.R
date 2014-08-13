@@ -33,7 +33,7 @@
 #' @references will need some.
 #' @keywords regression censored
 #' @examples
-#'/dontrun{
+#'\dontrun{
 #'library(USGSwsData)
 #'data(IonBalance)
 #'# Build model for non missing Alkalinity

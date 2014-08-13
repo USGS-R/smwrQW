@@ -35,6 +35,7 @@ pcodeNWISqw <- function(params="All", group=TRUE, name=TRUE, CASRN=FALSE, short=
   ##    2012Dec28 DLLorenz Roxygenized
   ##    2012Dec28          This version
   ##
+	warning("pcodeNWISqw is deprecated, use readNWISpcode in USGSwsDataRetrieval.")
   ## The index of short names to NWIS group names
   grpcd <- c("Information"="information",
              "Physical"="physical",

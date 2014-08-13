@@ -1,6 +1,6 @@
 Package: USGSwsQW
-Version: 0.5
-Date: 2013-08-01
+Version: 0.6.1
+Date: 2014-08-08
 Title: Tools for censored data analysis
 Author: Dave Lorenz <lorenz@usgs.gov>.
 Maintainer: Dave Lorenz <lorenz@usgs.gov>
@@ -8,10 +8,11 @@ Depends:
     USGSwsBase,
     USGSwsGraphs,
     USGSwsStats,
+Imports:
     survival,
     methods,
-    XML,
-    mvtnorm
+    mvtnorm,
+    XML
 Suggests:
     USGSwsData
 Description: This package provides tools for the analysis and graphing
@@ -21,46 +22,49 @@ Description: This package provides tools for the analysis and graphing
 License: file LICENSE
 LazyLoad: yes
 Collate:
-    '000lcens-class.R'
-    '000mcens-class.R'
-    '000qw-class.R'
-    '00as.lcens.R'
-    '00as.mcens.R'
-    '00as.qw.R'
-    '0as.lcens-methods.R'
-    '0as.mcens-methods.R'
-    '0as.qw-methods.R'
+    'qw-class.R'
+    'mcens-class.R'
+    'lcens-class.R'
+    'Arith-censored.R'
+    'Compare-censored.R'
+    'Math-censored.R'
+    'USGSwsQW-package.R'
     'add.R'
-    'Arith-methods.R'
     'as.character.R'
     'as.data.frame.R'
     'as.double.R'
+    'as.lcens.R'
+    'as.mcens.R'
+    'as.qw.R'
     'boxPlot.lcens.R'
     'boxPlotCensStats.R'
     'c.R'
     'censCor.R'
     'censKSample.test.R'
+    'censMove.1.R'
     'censMulticomp.test.R'
+    'censPPCC.test.R'
+    'censQuantile.R'
+    'censReg.R'
+    'censReg.fit.R'
+    'censReg.pred.R'
+    'censStats.R'
+    'censSumStats.R'
     'censoring.R'
     'censorlevels.R'
     'censpp.R'
-    'censPPCC.test.R'
-    'censQuantile.R'
-    'censReg.fit.R'
-    'censReg.pred.R'
-    'censReg.R'
-    'censStats.R'
-    'censSumStats.R'
     'coef.censReg.R'
     'convert2qw.R'
+    'convertFqw.R'
     'countNWISqw.R'
     'dlimit.R'
-    'dotPlot-methods.R'
+    'dotPlot-censored.R'
     'ecdfPlot.R'
     'extractAIC.censReg.R'
     'fillIn.R'
     'fitted.censReg.R'
     'format.R'
+    'gehanScores.R'
     'genWilcox.test.R'
     'importNWISqw.R'
     'importQW.R'
@@ -69,7 +73,6 @@ Collate:
     'length.R'
     'logLik.censReg.R'
     'makeColNames.R'
-    'Math-methods.R'
     'mcenKM.R'
     'mdlAMLE.R'
     'mdlKM.R'
@@ -82,6 +85,7 @@ Collate:
     'nobs.censReg.R'
     'pcodeColNames.R'
     'pcodeNWISqw.R'
+    'pctCens.R'
     'plot.censReg.R'
     'plot.htest.R'
     'plot.qw.R'
@@ -97,22 +101,21 @@ Collate:
     'probPlot.R'
     'qqPlot.R'
     'quantile.R'
+    'qw2mcens.R'
+    'ratio.R'
     'rbindQW.R'
     'readNWISqw.R'
     'readNWQLdl.R'
     'residuals.censReg.R'
     'rmse.censReg.R'
     'sdlFill.R'
-    'show-methods.R'
+    'show-censored.R'
     'sort.censored.R'
     'str.R'
     'subset.R'
-    'summary.censReg.R'
     'summary.R'
-    'timePlot-methods.R'
-    'USGSwsQW-package.R'
-    'vif.censReg.R'
-    'pctCens.R'
-    'qw2mcens.R'
-    'gehanScores.R'
+    'summary.censReg.R'
+    'timePlot-censored.R'
     'vcov.censReg.R'
+    'vif.censReg.R'
+    'z%eq%.R'

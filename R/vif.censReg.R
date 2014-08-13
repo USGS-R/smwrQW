@@ -1,6 +1,6 @@
-#'Variance Inflation Factors
+#' @title Variance Inflation Factors
 #'
-#'Computes the variance inflation factor (Helsel and Hirsch, 2002) for each
+#' @description Computes the variance inflation factor (Helsel and Hirsch, 2002) for each
 #'variable in an AMLE/MLE regression.
 #'
 #' @param model an object of class "censReg"---output from \code{censReg}.
@@ -13,7 +13,7 @@
 #' Investigations, book 4, chap. A3, 522 p.
 #' @keywords regression
 #' @importFrom USGSwsStats vif
-#' @S3method vif censReg
+#' @export
 #' @method vif censReg
 vif.censReg <- function(model, ...) {
   ## Coding history:

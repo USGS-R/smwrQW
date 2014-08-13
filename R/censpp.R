@@ -56,7 +56,7 @@ censpp <- function(x, a=.44) {
 }
 
 #' @rdname censpp
-#' @S3method censpp default
+#' @export
 #' @method censpp default
 censpp.default <- function(x, a=0.44) {
   if(length(x) == 1)
@@ -67,7 +67,7 @@ censpp.default <- function(x, a=0.44) {
 }
 
 #' @rdname censpp
-#' @S3method censpp lcens
+#' @export
 #' @method censpp lcens
 censpp.lcens <- function(x, a=0.44) {
   ## Sort the data
@@ -155,7 +155,7 @@ censpp.lcens <- function(x, a=0.44) {
 }
 
 #' @rdname censpp
-#' @S3method censpp mcens
+#' @export
 #' @method censpp mcens
 censpp.mcens <- function(x, a=0.44) {
   ## Censored plotting positions by K-M method, a is ignored

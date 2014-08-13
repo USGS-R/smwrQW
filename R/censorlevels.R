@@ -32,7 +32,7 @@ censorLevels <- function(x, type="left") {
 }
 
 #' @rdname censorLevels
-#' @S3method censorLevels default
+#' @export
 #' @method censorLevels default
 censorLevels.default <- function(x, type="left") {
   type <- match.arg(type, c("left", "right"))
@@ -43,7 +43,7 @@ censorLevels.default <- function(x, type="left") {
 }
 
 #' @rdname censorLevels
-#' @S3method censorLevels lcens
+#' @export
 #' @method censorLevels lcens
 censorLevels.lcens <- function(x, type="left") {
   type <- match.arg(type, c("left", "right"))
@@ -58,7 +58,7 @@ censorLevels.lcens <- function(x, type="left") {
 }
 
 #' @rdname censorLevels
-#' @S3method censorLevels mcens
+#' @export
 #' @method censorLevels mcens
 censorLevels.mcens <- function(x, type="left") {
   type <- match.arg(type, c("left", "right"))
@@ -76,7 +76,7 @@ censorLevels.mcens <- function(x, type="left") {
 }
 
 #' @rdname censorLevels
-#' @S3method censorLevels qw
+#' @export
 #' @method censorLevels qw
 censorLevels.qw <- function(x, type="left") {
   type <- match.arg(type, c("left", "right"))

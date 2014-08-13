@@ -10,7 +10,7 @@
 #'the AIC for \code{fit}.
 #'@seealso \code{\link{censReg}}, \code{\link{extractAIC}}
 #'@keywords regression
-#'@S3method extractAIC censReg
+#' @export
 #'@method extractAIC censReg
 extractAIC.censReg <- function(fit, scale=0, k=2, ...) {
   ## Coding history:

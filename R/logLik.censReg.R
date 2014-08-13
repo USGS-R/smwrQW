@@ -7,7 +7,7 @@
 #'@return An object of class "logLik" containing the log-likelihood and
 #'the attributes "df" (degrees of freedom) and "nobs" (number of observations).
 #'@seealso \code{\link{censReg}},
-#'@S3method logLik censReg
+#' @export
 #'@method logLik censReg
 logLik.censReg <- function(object, ...) {
   ## Coding history:

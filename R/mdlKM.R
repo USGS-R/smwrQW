@@ -1,12 +1,13 @@
-#'Estimate Statistics
+#' @title Estimate Statistics
 #'
-#'Support function for computing statistics for left-censored data.
+#' @description Support function for computing statistics for left-censored data.
 #'
-#'@param x an object of "lcens" to compute 
-#'@param group the group variable
-#'@return An object of class "survfit."
-#'@keywords misc
-#'@export
+#' @importFrom survival survfit Surv
+#' @param x an object of "lcens" to compute 
+#' @param group the group variable
+#' @return An object of class "survfit."
+#' @keywords misc
+#' @export
 mdlKM <- function(x, group) {
   ## Coding history:
   ##    2005Mar09 DLLorenz Initial Coding.

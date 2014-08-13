@@ -13,7 +13,7 @@
 #'c(as.lcens(c(1,3), 2), 2)
 #'
 #' @rdname c
-#' @S3method c lcens
+#' @export
 #' @method c lcens
 c.lcens <- function (..., recursive=FALSE) {
   all.lcens <- lapply(list(...), as.lcens)
@@ -27,7 +27,7 @@ c.lcens <- function (..., recursive=FALSE) {
 }
 
 #' @rdname c
-#' @S3method c mcens
+#' @export
 #' @method c mcens
 c.mcens <- function (..., recursive=FALSE) {
   all.mcens <- lapply(list(...), as.mcens)
@@ -42,7 +42,7 @@ c.mcens <- function (..., recursive=FALSE) {
 }
 
 #' @rdname c
-#' @S3method c qw
+#' @export
 #' @method c qw
 c.qw <- function (..., recursive=FALSE) {
   all.qw <- list(...)

@@ -1,36 +1,37 @@
-#'Test for difference in left-censored samples
+#' @title Test for difference in left-censored samples
 #'
-#'This function tests for differences in paired left-censored samples from 2
+#' @description This function tests for differences in paired left-censored samples from 2
 #'groups.
 #'
-#'The O'Brien-Fleming adjustment forces the score for all paired censored
+#' @details The O'Brien-Fleming adjustment forces the score for all paired censored
 #'values to be equal to each other. It also forces equality between observed
 #'values that are less than the detection limit in the paried sample by setting
 #'the value to less than the detection limit.
 #'
-#'@param x the paired samples to \code{y}. Forced to class "lcens." Missing 
+#' @importFrom survival survfit Surv
+#' @param x the paired samples to \code{y}. Forced to class "lcens." Missing 
 #'values are removed before the analysis.
-#'@param y the paired values to \code{x}. Missing values are removed before
+#' @param y the paired values to \code{x}. Missing values are removed before
 #'the analysis.
-#'@param alternative character string describing the alternative hypothesis.
+#' @param alternative character string describing the alternative hypothesis.
 #'Must be one of "two.sided," "greater," or "less."
-#'@param OBrienFleming should the O'Brien-Flemming adjustment be made? See
+#' @param OBrienFleming should the O'Brien-Flemming adjustment be made? See
 #'\bold{Details}.
-#'@param data.names character string to be used to explain the data. Default
+#' @param data.names character string to be used to explain the data. Default
 #'names are derived from the data arguments.
-#'@return An object of class "htest" that inherits "ppw."
-#'@note The \code{ppw.test}
+#' @return An object of class "htest" that inherits "ppw."
+#' @note The \code{ppw.test}
 #'function uses the \code{survfit} function. Helsel (2012) describes flipping
 #'the left-censored data so that small values become large and left-censored
 #'values become right-censored values and adapt nonparametric techniques from
 #'survival analysis.\cr
 #'A \code{plot} method is supported for the returned object.
 #'
-#'@section Null Hypothesis: The null hypothesis is that the
+#' @section Null Hypothesis: The null hypothesis is that the
 #'distributions are not different from one another.
-#'@seealso \code{\link{survdiff}}, \code{\link{survfit}},
+#' @seealso \code{\link{survdiff}}, \code{\link{survfit}},
 #'\code{\link{lcens-class}}
-#'@references Gehan, E.A., 1965, A generalized Wilcoxon test for comparing
+#' @references Gehan, E.A., 1965, A generalized Wilcoxon test for comparing
 #'arbitraritly singly censored samples: Biometrika, v. 52, p. 203-223.\cr
 #'
 #'Harrington, D.P., and Fleming, T.R., 1982, A class of rank test procedures
@@ -49,8 +50,8 @@
 #'Prentice, R.L., and Marke, P., 1979, A qualitative discrepancy between
 #'censored data rank tests: Biometrika, v. 35, p. 861-867.\cr
 #'
-#'@keywords censored htest
-#'@examples
+#' @keywords censored htest
+#' @examples
 #'
 #'# Compare uncensored results
 #'set.seed(699)
@@ -60,7 +61,7 @@
 #'ppw.test(Xu, Yu)
 #'wilcox.test(Xu, Yu, paired=TRUE)
 #'
-#'@export
+#' @export
 ppw.test <- function(x, y, alternative="two.sided", OBrienFleming=TRUE,
                      data.names) {
   ## Coding history:

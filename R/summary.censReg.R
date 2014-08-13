@@ -21,7 +21,7 @@
 #'Sociology, v. 4, no. 1, p. 103--120.
 #' @seealso \code{\link{censReg}}
 #' @keywords regression
-#' @S3method summary censReg
+#' @export
 #' @method summary censReg
 summary.censReg <- function(object, correlation=FALSE, ...) {
   ## Coding history:

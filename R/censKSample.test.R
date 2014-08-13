@@ -1,18 +1,19 @@
-#'Test for difference in left-censored samples
+#' @title Test for difference in left-censored samples
 #'
-#'This function tests for differences in left-censored samples from 2 or more
+#' @description This function tests for differences in left-censored samples from 2 or more
 #'groups.
 #'
-#'@param x the samples from each group. Forced to class "lcens." Missing values
+#' @importFrom survival survdiff Surv
+#' @param x the samples from each group. Forced to class "lcens." Missing values
 #'are removed before the analysis.
-#'@param groups the group identifier for each sample. Missing values are
+#' @param groups the group identifier for each sample. Missing values are
 #'removed before the analysis.
-#'@param type the string "Peto" or "log-rank," depending on the desired type of
+#' @param type the string "Peto" or "log-rank," depending on the desired type of
 #'test. Default is "Peto."
-#'@param data.names character string to be used to explain the data. Default
+#' @param data.names character string to be used to explain the data. Default
 #'names are derived from the data arguments.
-#'@return An object of class "htest."
-#'@note The \code{censKSample.test} function use the \code{survdiff} function
+#' @return An object of class "htest."
+#' @note The \code{censKSample.test} function use the \code{survdiff} function
 #'to test for differences. Helsel (2012) describes flipping
 #'the left-censored data so that small values become large and left-censored
 #'values become right-censored values and adapt nonparametric techniques from
@@ -24,10 +25,10 @@
 #'equal weight to each failure." For flipped data, earlier failures translates
 #'to larger uncensored values. In general, the Peto test gives results that are
 #'more similar to the Wilcoxon test if all data are uncensored.
-#'@section Null Hypothesis: The null hypothesis is that the
+#' @section Null Hypothesis: The null hypothesis is that the
 #'distributions in each group are not different from one another.
-#'@seealso \code{\link{survdiff}}, \code{\link{lcens-class}}
-#'@references Helsel, D.R. 2012, Statistics for censored environmental data 
+#' @seealso \code{\link{survdiff}}, \code{\link{lcens-class}}
+#' @references Helsel, D.R. 2012, Statistics for censored environmental data 
 #'using Minitab and R: New York, Wiley, 324 p.\cr
 #'
 #'Peto, R., and Peto, J., 1972, Asymptotically efficient rank invariant test
@@ -42,8 +43,8 @@
 #'
 #'Tableman, M., and Kim, J.S., 2004, Survival analysis using S---analysis of
 #'time-to-event data: Boca Raton, Fla., Chapman and Hall, 280 p.\cr
-#'@keywords censored htest
-#'@examples
+#' @keywords censored htest
+#' @examples
 #'
 #'# Compare uncensored results
 #'set.seed(69)
@@ -56,7 +57,7 @@
 #'# Censor the data at 1
 #'censKSample.test(as.lcens(c(Xu, Yu, Zu), 1), Gu)
 #'
-#'@export
+#' @export
 censKSample.test <- function(x, groups, type="Peto", data.names) {
   ## Coding history:
   ##    2005Jul14 DLLorenz Initial dated version

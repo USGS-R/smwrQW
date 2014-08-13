@@ -13,7 +13,7 @@
 #'is.na(as.lcens(c(1,3, NA), 2))
 #'
 #' @rdname is.na
-#' @S3method is.na lcens
+#' @export
 #' @method is.na lcens
 is.na.lcens <- function(x) {
   ## Any value or censor code missing is missing data, detection limits can be missing!
@@ -21,13 +21,13 @@ is.na.lcens <- function(x) {
 }
 
 #' @rdname is.na
-#' @S3method is.na mcens
+#' @export
 #' @method is.na mcens
 is.na.mcens <- function(x)
   return(is.na(x@.Data[, 1L]))
 
 #' @rdname is.na
-#' @S3method is.na qw
+#' @export
 #' @method is.na qw
 is.na.qw <- function(x) {
   ## Any pair value

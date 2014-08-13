@@ -85,7 +85,7 @@ convert2qw <- function(data, scheme="booker") {
         reporting.method=as.character(data[[paste(i, "rmt", sep=".")]]),
         reporting.units=as.character(data[[paste(i, "unt", sep=".")]]),
         analyte.method=as.character(data[[paste(i, "mth", sep=".")]]), 
-        analyte.name=as.character(data[[paste(i, "name", sep=".")]]),
+        analyte.name=as.character(data[[paste(i, "nam", sep=".")]]),
         unique.code=as.character(data[[paste(i, "pcd", sep=".")]]), 
         rounding=c(2L,3L),
         names=as.character(seq(ncol(mat))))

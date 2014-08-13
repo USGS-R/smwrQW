@@ -1,8 +1,8 @@
-#'Extract Model Residuals
+#' @title Extract Model Residuals
 #'
-#'Extract the residuals of an AMLE/MLE regression.
+#' @description Extract the residuals of an AMLE/MLE regression.
 #'
-#'The value for \code{type} can be any one of the following:
+#' @details The value for \code{type} can be any one of the following:
 #'\tabular{ll}{ Value \tab Description\cr
 #'"working" \tab Residuals with censored residuals replaced by their expected
 #'values\cr
@@ -17,17 +17,18 @@
 #'are defined in the table above, in keeping with older versions of
 #'\code{censReg}.
 #'
-#'@param object an object of class "censReg"---output from \code{censReg}
-#'@param type The type of residuals, see \bold{Details}.
-#'@param suppress.na.action logical, suppress the effects of the
+#' @importFrom survival survreg Surv
+#' @param object an object of class "censReg"---output from \code{censReg}
+#' @param type The type of residuals, see \bold{Details}.
+#' @param suppress.na.action logical, suppress the effects of the
 #'\code{na.action} in the call to \code{censReg} and return only the fitted
 #'values corresponding to the fitted data.
-#'@param \dots further arguments passed to or from other methods.
-#'@return The residuals from the regression as specified by \code{type}.
-#'@seealso \code{\link{censReg}}
-#'@keywords regression
-#'@S3method residuals censReg
-#'@method residuals censReg
+#' @param \dots further arguments passed to or from other methods.
+#' @return The residuals from the regression as specified by \code{type}.
+#' @seealso \code{\link{censReg}}
+#' @keywords regression
+#' @export
+#' @method residuals censReg
 residuals.censReg <- function(object , type="working",
                               suppress.na.action=FALSE, ...) {
   ## Coding history:

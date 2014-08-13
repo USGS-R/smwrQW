@@ -13,13 +13,13 @@
 #' @seealso \code{\link{censStats}}
 #' @keywords censored univariate
 #' @rdname meanStats
-#' @S3method mean lcens
+#' @export
 #' @method mean lcens
 mean.lcens <- function(x, ...)
   stop("mean not supported for objects of class 'lcens' use censStats")
 
 #' @rdname meanStats
-#' @S3method mean mcens
+#' @export
 #' @method mean mcens
 mean.mcens <- function(x, ...)
   stop("mean not supported for objects of class 'mcens' use censStats")

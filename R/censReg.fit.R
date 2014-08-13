@@ -1,9 +1,9 @@
-#'Support Functions for Censored Regression
+#' @title Support Functions for Censored Regression
 #'
-#'These are support functions for fitting censored regression. They perform
+#' @description These are support functions for fitting censored regression. They perform
 #'either AMLE or MLE regression.
 #'
-#'
+#' @importFrom survival survreg Surv
 #' @aliases censReg_AMLE.fit censReg_MLE.fit
 #' @param Y the response data.
 #' @param X a matrix of the explanatory variables, including the intercept term.

@@ -12,7 +12,7 @@
 #'@seealso \code{\link{censReg}}, \code{\link{coef.censReg}}
 #'@keywords utilities
 #'
-#'@S3method print censReg
+#' @export
 #'@method print censReg
 print.censReg <- function(x, digits=4, ...) {
   ## Coding history:

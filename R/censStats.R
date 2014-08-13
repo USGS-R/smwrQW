@@ -1,15 +1,18 @@
-#'Mean and Standard Deviation
+#' @title Mean and Standard Deviation
 #'
-#'Compute the mean and standard deviation of censored data.
+#' @description Compute the mean and standard deviation of censored data.
 #'
-#'The methods available in the current version are "log MLE," "MLE," "log ROS,"
+#' @details The methods available in the current version are "log MLE," "MLE," "log ROS,"
 #'"ROS," "log AMLE," "AMLE," and "flipped K-M." The method "flipped K-M"
 #'produces statistics using the Kaplan-Meier method on flipped data described
 #'by Helsel (2012). The methods "log ROS," "log MLE," and "log AMLE" are
 #'described by Helsel (2012) and Helsel and Cohn (1988).  The methods "ROS,"
 #'"MLE," and "AMLE" are similar to the previous except that no log- and
-#'back-transforms are made on the data.
+#'back-transforms are made on the data. For "log" methods, if any value in
+#'\code{x} is negative, then a warning is generated and the returned list 
+#'contains missing values.
 #'
+#' @importFrom survival survreg Surv
 #' @aliases censStats censStats.default censStats.lcens censStats.qw
 #'censStats.mcens
 #' @param x an object of a censored-data class whose sample mean and standard
@@ -23,7 +26,8 @@
 #' @return A list with one component for mean and sd. If "log" methods are
 #'specified, then the meanlog amd meansd components are also included. The
 #'values returned for \code{method}="flipped K-M" can be of class "mcens."
-#' @seealso \code{\link{help}}
+#' @seealso \code{\link{mdlAMLE}}, \code{\link{mdlKM}}, \code{\link{mdlKMstats}}, 
+#'\code{\link{mdlMLE}}, \code{\link{mdlROS}}
 #' @references Helsel, D.R. 2012, Blah blah: some place, Wiley, some pages.\cr
 #'Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics for
 #'multiply censored water quality data,\: Water Resources Research v. 24, n.
@@ -51,19 +55,27 @@ censStats <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
 }
 
 #' @rdname censStats
-#' @S3method censStats default
+#' @export
 #' @method censStats default
 censStats.default <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
+	## Trap missings
   if(all(is.na(x)) || (!na.rm && any(is.na(x)))) {
     if(substring(method, 1, 3) == "log")
-      retval <- list(mean=as.numeric(NA), sd=as.numeric(NA),
-                     meanlog=as.numeric(NA),sdlog=as.numeric(NA))
+      retval <- list(mean=NA_real_, sd=NA_real_,
+                     meanlog=NA_real_,sdlog=NA_real_)
     else
-      retval <- list(mean=as.numeric(NA), sd=as.numeric(NA))
+      retval <- list(mean=NA_real_, sd=NA_real_)
     class(retval) <- "censStats"
     return(retval)
   } else 
     x <- x[!is.na(x)]
+  ## Trap nonpositives if log
+  if(substring(method, 1, 3) == "log" && any(x <= 0, na.rm=TRUE)) {
+  	warning("Non positive values for method ", method)
+  	return(list(mean=NA_real_, sd=NA_real_,
+  							meanlog=NA_real_,sdlog=NA_real_))
+  }
+  	
   ## Treat x as numeric
   method <- match.arg(method, c("log MLE", "MLE", "log ROS", "ROS",
                                 "log AMLE", "AMLE", "flipped K-M"))
@@ -90,19 +102,24 @@ censStats.default <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
 }
 
 #' @rdname censStats
-#' @S3method censStats lcens
+#' @export
 #' @method censStats lcens
 censStats.lcens <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
   method <- match.arg(method, c("log MLE", "MLE", "log ROS", "ROS",
                                 "log AMLE", "AMLE", "flipped K-M"))
   if(all(is.na(x)) || (!na.rm && any(is.na(x)))) {
     if(substring(method, 1, 3) == "log")
-      retval <- list(mean=as.numeric(NA), sd=as.numeric(NA),
-                     meanlog=as.numeric(NA),sdlog=as.numeric(NA))
+      retval <- list(mean=NA_real_, sd=NA_real_,
+                     meanlog=NA_real_,sdlog=NA_real_)
     else
-      retval <- list(mean=as.numeric(NA), sd=as.numeric(NA))
+      retval <- list(mean=NA_real_, sd=NA_real_)
     class(retval) <- "censStats"
     return(retval)
+  }
+  if(substring(method, 1, 3) == "log" && any(x@.Data[, 1L] <= 0, na.rm=TRUE)) {
+  	warning("Non positive values for method ", method)
+  	return(list(mean=NA_real_, sd=NA_real_,
+  							meanlog=NA_real_,sdlog=NA_real_))
   }
   ## These methods automatically remove NAs
   retval <- switch(method,
@@ -140,20 +157,31 @@ censStats.lcens <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
 }
 
 #' @rdname censStats
-#' @S3method censStats mcens
+#' @export
 #' @method censStats mcens
 censStats.mcens <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
   if(all(is.na(x)) || (!na.rm && any(is.na(x)))) {
     if(substring(method, 1, 3) == "log")
-      retval <- list(mean=as.numeric(NA), sd=as.numeric(NA),
-                     meanlog=as.numeric(NA),sdlog=as.numeric(NA))
+      retval <- list(mean=NA_real_, sd=NA_real_,
+                     meanlog=NA_real_,sdlog=NA_real_)
     else
-      retval <- list(mean=as.numeric(NA), sd=as.numeric(NA))
+      retval <- list(mean=NA_real_, sd=NA_real_)
     class(retval) <- "censStats"
     return(retval)
   }
+  if(substring(method, 1, 3) == "log" && 
+  	 	any(apply(x@.Data, 1L, function(y) min(y[is.finite(y)])) <= 0, na.rm=TRUE)) {
+  	warning("Non positive values for method ", method)
+  	return(list(mean=NA_real_, sd=NA_real_,
+  							meanlog=NA_real_,sdlog=NA_real_))
+  }
   ## Only MLE and log MLE are valid
   method <- match.arg(method, c("log MLE", "MLE"))
+  if(substring(method, 1, 3) == "log" && any(x <= 0, na.rm=TRUE)) {
+  	warning("Non positive values for method ", method)
+  	return(list(mean=NA_real_, sd=NA_real_,
+  							meanlog=NA_real_,sdlog=NA_real_))
+  }
   ## Convert to Surv
   time <-  miss2na(x@.Data[, 1L], -Inf)
   time2 <- miss2na(x@.Data[, 2L], Inf)
@@ -175,7 +203,7 @@ censStats.mcens <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
 }
 
 #' @rdname censStats
-#' @S3method censStats qw
+#' @export
 #' @method censStats qw
 censStats.qw <- function(x, method="log MLE", na.rm=FALSE, alpha=0.4) {
   ## Coding history:
@@ -186,10 +214,10 @@ censStats.qw <- function(x, method="log MLE", na.rm=FALSE, alpha=0.4) {
   ## Deal with missing values
   if(all(is.na(x)) || (!na.rm && any(is.na(x)))) {
     if(substring(method, 1, 3) == "log")
-      retval <- list(mean=as.numeric(NA), sd=as.numeric(NA),
-                     meanlog=as.numeric(NA),sdlog=as.numeric(NA))
+      retval <- list(mean=NA_real_, sd=NA_real_,
+                     meanlog=NA_real_,sdlog=NA_real_)
     else
-      retval <- list(mean=as.numeric(NA), sd=as.numeric(NA))
+      retval <- list(mean=NA_real_, sd=NA_real_)
     class(retval) <- "censStats"
     return(retval)
   }

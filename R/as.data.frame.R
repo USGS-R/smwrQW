@@ -16,7 +16,7 @@
 #' @seealso \code{\link{data.frame}}
 #' @keywords manip
 #' @rdname as.data.frame
-#' @S3method as.data.frame lcens
+#' @export
 #' @method as.data.frame lcens
 as.data.frame.lcens <- function(x, row.names = NULL, optional = FALSE,
                                 ..., nm = deparse(substitute(x))) {
@@ -37,7 +37,7 @@ as.data.frame.lcens <- function(x, row.names = NULL, optional = FALSE,
 }
 
 #' @rdname as.data.frame
-#' @S3method as.data.frame mcens
+#' @export
 #' @method as.data.frame mcens
 as.data.frame.mcens <- function(x, row.names = NULL, optional = FALSE,
                                 ..., nm = deparse(substitute(x))) {
@@ -58,7 +58,7 @@ as.data.frame.mcens <- function(x, row.names = NULL, optional = FALSE,
 }
 
 #' @rdname as.data.frame
-#' @S3method as.data.frame qw
+#' @export
 #' @method as.data.frame qw
 as.data.frame.qw <- function (x, row.names = NULL, optional = FALSE, ...,
                               nm = deparse(substitute(x)),

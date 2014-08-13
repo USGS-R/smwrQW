@@ -3,7 +3,7 @@
 #'Computes the variance-covariance matrix of the main parameters of a 
 #'fitted censored-regression model object.
 #'
-#' @param objects an object of class "censReg"---output from \code{censReg}.
+#' @param object an object of class "censReg"---output from \code{censReg}.
 #' @param \dots not used, further arguments passed to or from other methods.
 #' @return A matrix of the estimated covariances between the parameter 
 #'estimates for each main parameter of the model. The matrix has row and 
@@ -11,7 +11,7 @@
 #' @seealso \code{\link{censReg}}
 #' @keywords regression
 #' @importFrom stats vcov
-#' @S3method vcov censReg
+#' @export
 #' @method vcov censReg
 vcov.censReg <- function(object, ...) {
   ## Coding history:
