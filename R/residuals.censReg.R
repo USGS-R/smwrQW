@@ -50,7 +50,7 @@ residuals.censReg <- function(object , type="working",
     else
       MT <- object$survreg
       MT$na.action <- NULL # Controlled below
-    Residuals <- residuals(MT, type=types)
+    Residuals <- residuals(MT, type=type)
     if(is.null(object$na.action) || suppress.na.action)
       return(Residuals)
     else return(naresid(object$na.action, Residuals))

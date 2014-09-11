@@ -175,29 +175,27 @@ censStats.mcens <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
   	return(list(mean=NA_real_, sd=NA_real_,
   							meanlog=NA_real_,sdlog=NA_real_))
   }
-  ## Only MLE and log MLE are valid
-  method <- match.arg(method, c("log MLE", "MLE"))
+  ## ROS and MLE with log are valid
+  method <- match.arg(method, c("log MLE", "MLE", "ROS", "log ROS"))
   if(substring(method, 1, 3) == "log" && any(x <= 0, na.rm=TRUE)) {
   	warning("Non positive values for method ", method)
   	return(list(mean=NA_real_, sd=NA_real_,
   							meanlog=NA_real_,sdlog=NA_real_))
   }
-  ## Convert to Surv
-  time <-  miss2na(x@.Data[, 1L], -Inf)
-  time2 <- miss2na(x@.Data[, 2L], Inf)
-  Resp <- Surv(time, time2, type="interval2")
   retval <- switch(method,
-                   "log MLE"={step1 <- survreg(Resp ~ 1, dist="lognormal")
-                              meanlog <- as.vector(coefficients(step1))
-                              sdlog <- step1$scale
-                              mn <- exp(meanlog + 0.5*sdlog^2)
-                              vr <- (exp(sdlog^2) - 1)*
-                                exp(2*meanlog + sdlog^2)
-                              list(mean=mn, sd=sqrt(vr), meanlog=meanlog,
-                                   sdlog=sdlog)},
-                   "MLE"={step1 <- survreg(Resp ~ 1, dist="gaussian")
-                          list(mean=as.vector(coefficients(step1)),
-                               sd=step1$scale)})
+  				   "log MLE"={step1 <- mcenMLE(x, method=method, alpha=alpha)
+                              mn <- exp(step1$meanlog + 0.5*step1$sdlog^2)
+                              vr <- (exp(step1$sdlog^2) - 1)*
+                                     exp(2*step1$meanlog + step1$sdlog^2)
+                              list(mean=mn, sd=sqrt(vr), meanlog=step1$meanlog,
+                                sdlog=step1$sdlog)},
+  				   "MLE"={step1 <- mcenMLE(x, method=method, alpha=alpha)
+  							   list(mean=step1$mean, sd=step1$sd)},
+  				   "log ROS"={step1 <- mcenROS(x, method=method, alpha=alpha)
+                          list(mean=mean(step1$fitted), sd=sd(step1$fitted),
+                            meanlog=step1$meanlog, sdlog=step1$sdlog)},
+                   "ROS"={step1 <- mcenROS(x, method=method, alpha=alpha)
+                          list(mean=step1$mean, sd=step1$sd)})
   class(retval) <- "censStats"
   return(retval)
 }
@@ -228,12 +226,15 @@ censStats.qw <- function(x, method="log MLE", na.rm=FALSE, alpha=0.4) {
   if(Cens == "left")
     return(censStats.lcens(as.lcens(x), method=method, na.rm=na.rm,
                            alpha=alpha))
-  if(method %in% c("log ROS", "log AMLE")) {
+  if(method == "log AMLE") {
     warning("method: ", method, " not supported for multiply censored data,",
             ' using "log MLE"')
     method <- "log MLE"
-  }
-  else if(method %in% c("ROS", "AMLE", "flipped K-M")) {
+  } else if(method == "flipped K-M") {
+    warning("method: ", method, " not supported for multiply censored data,",
+            ' using "ROS"')
+    method <- "ROS"
+  } else if(method == "AMLE") {
     warning("method: ", method, " not supported for multiply censored data,",
             ' using "MLE"')
     method <- "MLE"

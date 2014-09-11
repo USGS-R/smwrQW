@@ -12,6 +12,9 @@
 #' @include mcens-class.R lcens-class.R qw-class.R
 #' @param lower.val The lower limit of the actual value, the special value of
 #'\code{-Inf} or \code{NA} can be used to indicate left-censoring.
+#'A vector of character strings is allowed when the remark code is
+#'combined with the value; blank values are treated as missing values, any other value
+#'is converted to a missing value with a warning. See \bold{Examples}.
 #' @param upper.val The upper limit of the actual value, the special value of
 #'\code{Inf} or \code{NA} can be used to indicate right-censoring.
 #' @param censor.codes optional codes if \code{upper.val} is missing. Any
@@ -29,7 +32,8 @@
 #'## Create one of each type of censoring, including uncensored
 #'# the last value is missing
 #'as.mcens(c(-Inf, 2, 2, 5, NA), c(1, 2, 3, Inf, NA))
-#'
+#'# For combined remark and values:
+#'as.mcens(c("<1", "1", ">3", "1", "2"))
 setGeneric("as.mcens", function(lower.val, upper.val, censor.codes)
            standardGeneric("as.mcens")
            ## Coding history:
@@ -163,3 +167,13 @@ setMethod("as.mcens", signature(lower.val="qw", upper.val="missing",
   								names="")
   	retval@names <- as.character(seq(nrow(mat)))
   	return(retval) } )
+
+#' @rdname as.mcens
+setMethod("as.mcens", signature(lower.val="character", upper.val="missing",
+																censor.codes="missing"),
+  function(lower.val, upper.val, censor.codes) {
+  	# Split data into remarks and values and call the correct converter
+  	values <- splitQual(lower.val, "X")
+  	return(as.mcens(values$X, censor.codes=values$X.rmk))
+  }
+)

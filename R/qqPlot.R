@@ -44,7 +44,7 @@
 #'qqPlot(as.lcens(Xu, 1.0), yaxis.log=TRUE)
 #'}
 #'
-#' @importFrom USGSwsGraphs qqPlot
+#' @import USGSwsGraphs 
 #' @rdname qqPlot.lcens
 #' @export
 #' @method qqPlot lcens

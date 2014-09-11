@@ -45,7 +45,7 @@
 #'probPlot(as.lcens(Xu, 1.0))
 #'}
 #'
-#' @importFrom USGSwsGraphs probPlot
+#' @import USGSwsGraphs 
 #' @rdname probPlot.lcens
 #' @export
 #' @method probPlot lcens

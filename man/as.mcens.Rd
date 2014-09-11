@@ -2,6 +2,7 @@
 \docType{methods}
 \name{as.mcens}
 \alias{as.mcens}
+\alias{as.mcens,character,missing,missing-method}
 \alias{as.mcens,lcens,missing,missing-method}
 \alias{as.mcens,mcens,missing,missing-method}
 \alias{as.mcens,numeric,missing,character-method}
@@ -27,10 +28,16 @@ as.mcens(lower.val, upper.val, censor.codes)
   censor.codes)
 
 \S4method{as.mcens}{qw,missing,missing}(lower.val, upper.val, censor.codes)
+
+\S4method{as.mcens}{character,missing,missing}(lower.val, upper.val,
+  censor.codes)
 }
 \arguments{
 \item{lower.val}{The lower limit of the actual value, the special value of
-\code{-Inf} or \code{NA} can be used to indicate left-censoring.}
+\code{-Inf} or \code{NA} can be used to indicate left-censoring.
+A vector of character strings is allowed when the remark code is
+combined with the value; blank values are treated as missing values, any other value
+is converted to a missing value with a warning. See \bold{Examples}.}
 
 \item{upper.val}{The upper limit of the actual value, the special value of
 \code{Inf} or \code{NA} can be used to indicate right-censoring.}
@@ -58,6 +65,8 @@ treated as missing.
 ## Create one of each type of censoring, including uncensored
 # the last value is missing
 as.mcens(c(-Inf, 2, 2, 5, NA), c(1, 2, 3, Inf, NA))
+# For combined remark and values:
+as.mcens(c("<1", "1", ">3", "1", "2"))
 }
 \references{
 Lorenz, D.L., in preparation

@@ -40,6 +40,12 @@ is "commonlog," then the response data are transformed using \code{log10}
 and those residuals are assumed to be normally distributed. No back
 transformation is made for predicted values.
 }
+\note{
+A special feature of \code{censReg} is the ability to expand
+the formula passed as a variable rather than as an expressly entered
+formula. This feature is intended to facilitate certain kinds of scripts that
+construct a formula from combinations of vairabales in a dataset.
+}
 \examples{
 set.seed(345)
 X <- runif(24, 1, 5)
@@ -48,10 +54,17 @@ lm(Y ~ X) # the uncensored regression
 censReg(as.lcens(Y, 1) ~ X) # censored at 1
 }
 \references{
-will need some.
+Lorenz, 2015, USGSwsQW.\cr
+Breen, R., 1996, Regression models: censored, sample selected, or truncated data:
+Sage University Paper series on Qunatitative Applications in the Social Sciences,
+07-111, Thousand Oaks, CA,
+Cohn, T.A., 1988, Adjusted maximum likelihood estimation of moments
+of lognormal populations from type I censored samples:
+U.S. Geological Survey Open-File Report 88-350, 34 p.\cr
+#'
 }
 \seealso{
-\code{\link{lm}}
+\code{\link{lm}}, \code{\link{survreg}}
 }
 \keyword{censored}
 \keyword{regression}

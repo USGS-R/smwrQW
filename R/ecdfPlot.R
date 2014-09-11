@@ -30,7 +30,7 @@
 #'ecdfPlot(as.lcens(Xu, 1.0))
 #'}
 #'
-#' @importFrom USGSwsGraphs ecdfPlot
+#' @import USGSwsGraphs 
 #' @export
 #' @method ecdfPlot lcens
 ecdfPlot.lcens <- function(x, group=NULL, # data specification

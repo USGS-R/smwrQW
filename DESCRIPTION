@@ -1,13 +1,13 @@
 Package: USGSwsQW
-Version: 0.6.1
-Date: 2014-08-08
+Version: 0.6.2
+Date: 2014-09-11
 Title: Tools for censored data analysis
 Author: Dave Lorenz <lorenz@usgs.gov>.
 Maintainer: Dave Lorenz <lorenz@usgs.gov>
 Depends:
     USGSwsBase,
     USGSwsGraphs,
-    USGSwsStats,
+    USGSwsStats
 Imports:
     survival,
     methods,
@@ -50,6 +50,7 @@ Collate:
     'censReg.pred.R'
     'censStats.R'
     'censSumStats.R'
+    'censor.R'
     'censoring.R'
     'censorlevels.R'
     'censpp.R'
@@ -74,6 +75,8 @@ Collate:
     'logLik.censReg.R'
     'makeColNames.R'
     'mcenKM.R'
+    'mcenMLE.R'
+    'mcenROS.R'
     'mdlAMLE.R'
     'mdlKM.R'
     'mdlKMstats.R'
@@ -111,6 +114,7 @@ Collate:
     'sdlFill.R'
     'show-censored.R'
     'sort.censored.R'
+    'splitQual.R'
     'str.R'
     'subset.R'
     'summary.R'

@@ -87,7 +87,8 @@ censQuantile.lcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE,
     class(retval) <- "censQuantile"
     return(retval)
   }
-  retval <- as.list(quantile(x, probs=probs, method=method, type=type, alpha=alpha))
+  retval <- as.list(quantile(x, probs=probs, method=method, type=type, 
+  													 alpha=alpha, na.rm=na.rm))
   ## The names of retval indicate whether the results is left-censored or not
   nrvl <- names(retval)
   censored <- substring(nrvl, nchar(nrvl)) == "*"
@@ -111,7 +112,8 @@ censQuantile.mcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE,
     class(retval) <- "censQuantile"
     return(retval)
   }
-  retval <- as.list(quantile(x, probs=probs, method=method, type=type, alpha=alpha))
+  retval <- as.list(quantile(x, probs=probs, method=method, type=type, 
+  													 alpha=alpha, na.rm=na.rm))
   ## The names of retval indicate whether the results is left-censored or not
   nrvl <- names(retval)
   censored <- substring(nrvl, nchar(nrvl)) == "*" # left

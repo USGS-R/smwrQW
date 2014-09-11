@@ -1,11 +1,11 @@
-#'Estimate Statistics
+#' @title Estimate Statistics
 #'
-#'Support function for computing statistics for left-censored data using the 
-#'"fill-in" probability plotting procedure method (Helsel and Cohn, 1988), 
-#'now known as regression on order statistics.
+#' @description Support function for computing statistics for multiply-censored
+#'data extended from the "fill-in" probability plotting procedure method 
+#'(Helsel and Cohn, 1988), now known as regression on order statistics.
 #'
 #' @param x the data to estimate, Missing values permitted and ignored.
-#'Must be an object of class "lcens," a numeric vector, or the output from censpp.
+#'Must be an object of class "mcens," a numeric vector, or the output from censpp.
 #' @param method the method to use, either "ROS" or "log ROS."
 #' @param alpha the offset for plotting postion.
 #' @return A list containing the mean and standard deviation, filled in
@@ -17,11 +17,9 @@
 #'12, pp.1997-2004
 #' @keywords misc
 #' @export
-mdlROS <- function(x, method="ROS", alpha=0.4) {
+mcenROS <- function(x, method="ROS", alpha=0.4) {
   ## Coding history:
-  ##    2012Mar09 DLLorenz original coding
-  ##    2013Jan05 DLLorenz Roxygenized
-  ##    2013Jan05          This version
+  ##    2014Sep06 DLLorenz original coding from mdlROS
   ##
   method <- match.arg(method, c("ROS", "log ROS"))
   if(class(x) == "list")
@@ -31,19 +29,21 @@ mdlROS <- function(x, method="ROS", alpha=0.4) {
   if(method == "ROS") {
     step2 <- with(step1, lm(x ~ qnorm(pp)))
     step3 <- predict(step2, newdata=data.frame(pp=step1$ppcen))
-    step4 <- as.vector(c(step3, step1$x))
+	step4 <- predict(step2, newdata=data.frame(pp=step1$pprcn))
+    step5 <- as.vector(c(step3, step1$x, step4))
     coefs <- as.vector(coef(step2))
-    retval <- list(mean=coefs[1], sd=coefs[2], fitted=step4)
+    retval <- list(mean=coefs[1], sd=coefs[2], fitted=step5)
   }
   else {
     step2 <- with(step1, lm(log(x) ~ qnorm(pp)))
     step3 <- predict(step2, newdata=data.frame(pp=step1$ppcen))
-    step4 <- as.vector(c(exp(step3), step1$x))
+	step4 <- predict(step2, newdata=data.frame(pp=step1$pprcn))
+    step5 <- as.vector(c(exp(step3), step1$x, exp(step4)))
     coefs <- as.vector(coef(step2))
     retval <- list(meanlog=coefs[1], sdlog=coefs[2], fitted=step4)
   }
   if(length(step1$xcen) > 0)
-    retval$censorlevels <- step1$xcen
+    retval$censorlevels <- c(step1$xcen, step1$xrcn)
   else
     retval$censorlevels  <- -Inf
   return(retval)

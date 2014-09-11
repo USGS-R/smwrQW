@@ -29,13 +29,12 @@ removed from \code{x} before the quantiles are computed.}
 \item{method}{the method to use for computing quantiles. See \bold{Details}.}
 
 \item{type}{an integer between 1 and 9 selecting one of the nine quantile
-algorithms detailed below to be used. See \code{\link{quantile}} for a
-description of the types.}
+algorithms described in \code{\link{quantile}}.}
 
 \item{alpha}{the offset fraction to be used, depending on \code{method};
-typically in [0,1].}
+typically in [0, 0.5].}
 
-\item{\dots}{further arguments passed to or from other methods.}
+\item{\dots}{not used, required for other methods.}
 }
 \value{
 An optionally named vector of the requested probabilities. The names
@@ -49,7 +48,7 @@ to a probability of 0 and the largest to a probability of 1.
 \details{
 The methods available in the current version are "flipped K-M," "log ROS,"
 "ROS," "log MLE," and "MLE." The method "flipped K-M" produces quantiles
-using the Kaplan-Meier method on fliiped data described by Helsel (2012). The
+using the Kaplan-Meier method on flipped data described by Helsel (2012). The
 methods "log ROS" and "log MLE" are described by Helsel, 2012 and Helsel and
 Cohn (1988).  The methods "ROS" and "MLE" are similar to "log ROS" and "log
 MLE" except that no log- and back-transforms are made on the data.

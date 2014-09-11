@@ -6,7 +6,7 @@
 #'
 #' The methods available in the current version are "flipped K-M," "log ROS,"
 #'"ROS," "log MLE," and "MLE." The method "flipped K-M" produces quantiles
-#'using the Kaplan-Meier method on fliiped data described by Helsel (2012). The
+#'using the Kaplan-Meier method on flipped data described by Helsel (2012). The
 #'methods "log ROS" and "log MLE" are described by Helsel, 2012 and Helsel and
 #'Cohn (1988).  The methods "ROS" and "MLE" are similar to "log ROS" and "log
 #'MLE" except that no log- and back-transforms are made on the data.
@@ -21,11 +21,10 @@
 #' @param names logical; if true, the result has a names attribute.
 #' @param method the method to use for computing quantiles. See \bold{Details}.
 #' @param type an integer between 1 and 9 selecting one of the nine quantile
-#'algorithms detailed below to be used. See \code{\link{quantile}} for a
-#'description of the types.
+#'algorithms described in \code{\link{quantile}}.
 #' @param alpha the offset fraction to be used, depending on \code{method};
-#'typically in [0,1].
-#' @param \dots further arguments passed to or from other methods.
+#'typically in [0, 0.5].
+#' @param \dots not used, required for other methods.
 #' @return An optionally named vector of the requested probabilities. The names
 #'of values that would be left-censored are marked with "*."
 #' @seealso \code{\link{quantile}}, \code{\link{censQuantile}}
@@ -89,13 +88,14 @@ quantile.lcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE, names=TRUE,
 quantile.mcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE, names=TRUE,
                            method="flipped K-M", type=2, alpha=0.4, ...) {
   ##    2013Jan22 DLLorenz Original Coding for quantile.mcens
+  ##    2014Sep06 DLLorenz Additional methods
   ##
-  method <- match.arg(method, c("flipped K-M")) # only valid method 2013Jan22
+  method <- match.arg(method, c("flipped K-M", "log ROS", "ROS", "log MLE", "MLE")) 
   if(!na.rm)
     if(any(is.na(x)))
       stop("missing values and NaN's not allowed if 'na.rm' is FALSE")
   if(all(is.na(x))) 
-    return(quantile(NA_real_, na.rm=TRUE, names=names))
+    return(quantile(NA_real_, probs=probs, na.rm=TRUE, names=names))
   if(method == "flipped K-M") {
     if(type != 2)
 	  warning('type forced to 2 for method="flipped K-M"')
@@ -114,8 +114,18 @@ quantile.mcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE, names=TRUE,
           names(retval)[sel] <- paste(names(retval)[sel], "!", sep="")
       }
     }
+  } else { # Remaining methods are all set from the corresponding mcen function
+    retval <- try(switch(method,
+                     "log ROS"=mcenROS(x, method=method, alpha=alpha),
+                     "ROS"=mcenROS(x, method=method, alpha=alpha),
+                     "log MLE"=mcenMLE(x, method=method, alpha=alpha),
+                     "MLE"=mcenMLE(x, method=method, alpha=alpha)), silent=TRUE)
+    if(class(retval)[1L] == "try-error") {
+      retval <- quantile(NA_real_, probs=probs, na.rm=TRUE, names=names)
+    } else
+      retval <- quantile(retval$fitted, probs=probs, type=type, names=names)
   }
-  ## No other valid methods for version dated 2013Aug19
+
   return(retval)
 }
 

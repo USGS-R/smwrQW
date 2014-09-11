@@ -45,7 +45,7 @@
 #'boxPlot(as.lcens(Xu, 1.0))
 #'}
 #'
-#' @importFrom USGSwsGraphs boxPlot
+#' @import USGSwsGraphs
 #' @rdname boxPlot.lcens
 #' @export
 #' @method boxPlot lcens

@@ -2,6 +2,7 @@
 \docType{methods}
 \name{as.lcens}
 \alias{as.lcens}
+\alias{as.lcens,character,missing,missing-method}
 \alias{as.lcens,lcens,missing,missing-method}
 \alias{as.lcens,numeric,missing,character-method}
 \alias{as.lcens,numeric,missing,logical-method}
@@ -32,10 +33,14 @@ as.lcens(values, detlim, censor.codes)
 \S4method{as.lcens}{qw,missing,missing}(values, detlim, censor.codes)
 
 \S4method{as.lcens}{qw,numeric,missing}(values, detlim, censor.codes)
+
+\S4method{as.lcens}{character,missing,missing}(values, detlim, censor.codes)
 }
 \arguments{
 \item{values}{numeric values representing "raw" values. Missing values
-are permitted.}
+are permitted. A vector of character strings is allowed when the remark code is
+combined with the value; blank values are treated as missing values, any other value
+is converted to a missing value with a warning. See \bold{Examples}.}
 
 \item{detlim}{the corresponding detection limit of the sensor. Missing values
 are permitted. Detection limits are required for each non-missing value in \code{values};
@@ -66,6 +71,8 @@ as.lcens(c(1,3), 2)
 ## Set the first value to censored at that level and the detection limit is
 # carried forward
 as.lcens(c(1,3), censor.codes=c("<", ""))
+# For combined remark and values:
+as.lcens(c("<1", "1", "<1", "1", "2"))
 }
 \references{
 Lorenz, D.L., in preparation
