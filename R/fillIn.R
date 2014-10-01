@@ -58,7 +58,7 @@ fillIn.lcens <- function(x, method="ROS", alpha=.4) {
 								 "MLE" = mdlMLE(x, method=method, alpha=alpha),
 								 "log MLE" = mdlMLE(x, method=method, alpha=alpha),
 								 "triangular" = {CL <- censorLevels(x)
-								 								if(length(CL) > 2L)
+								 								if(length(CL) > 1L)
 								 									stop("triangular method only for single detction limit")
 								 								if(CL == -Inf)
 								 									return(list(fitted=sort(x@.Data[, 1L]),
@@ -66,6 +66,9 @@ fillIn.lcens <- function(x, method="ROS", alpha=.4) {
 								 								## Create fill-in values assuming a triangular distribution
 								 								x <- x[!is.na(x)]
 								 								xu <- sort(x@.Data[!x@censor.codes, 1L])
+								 								## protect against uncensored values less than CL
+								 								if(any(xu < CL))
+								 									warning("uncensored values less than the detection limit: results may be invalid")
 								 								xc <- sqrt(ppoints(sum(x@censor.codes), alpha)) * CL
 								 								list(fitted=c(xc, xu),
 								 										 censorlevels=rep(CL, length(xc)))
