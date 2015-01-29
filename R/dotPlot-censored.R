@@ -32,7 +32,7 @@
 #' @note A call should be made to \code{setPage} to set up the graphics
 #'environment before calling \code{dotPlot}.
 #' @keywords methods hplot
-#' @importMethodsFrom USGSwsGraphs dotPlot
+#' @importMethodsFrom smwrGraphs dotPlot
 #' @exportMethod dotPlot
 #' @seealso \code{\link{setPage}}
 

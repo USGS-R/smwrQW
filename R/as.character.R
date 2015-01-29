@@ -8,7 +8,7 @@
 #'@param \dots further arguments passed to or from other methods.
 #'@return Creates a character representation of \code{x}.
 #'@keywords manip
-#'@import USGSwsBase
+#'@import smwrBase
 #'@export
 #'@method as.character lcens
 as.character.lcens <- function(x, ...) {

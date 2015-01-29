@@ -23,7 +23,7 @@
 #'sample. Column names for the water-quality constituents are generated 
 #'automatically. Other columns are retained unchanged.
 #'@seealso \code{\link{readNWISqw}}, \code{\link{makeColNames}}
-#'@references Lorenz, D.L., 2014, USGSwsQW OFR.\cr See information about discrete
+#'@references Lorenz, D.L., 2014, smwrQW OFR.\cr See information about discrete
 #'samples at \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
 #'@keywords datasets IO
 #'@examples

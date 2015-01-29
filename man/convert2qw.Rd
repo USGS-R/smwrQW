@@ -43,7 +43,7 @@ tmp.dum <- data.frame(sta=c("A", "B"),
 convert2qw(tmp.dum, scheme="partial")
 }
 \references{
-Lorenz, D.L., 2014, USGSwsQW OFR.\cr See information about discrete
+Lorenz, D.L., 2014, smwrQW OFR.\cr See information about discrete
 samples at \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
 }
 \seealso{

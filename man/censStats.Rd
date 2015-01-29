@@ -58,9 +58,10 @@ censStats(Y, method="log MLE")
 censStats(as.lcens(Y, 1), method="log MLE")
 }
 \references{
-Helsel, D.R. 2012, Blah blah: some place, Wiley, some pages.\cr
+Helsel, D.R. 2012, Statistics for censored environmental data
+using Minitab and R: New York, Wiley, 324 p.\cr
 Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics for
-multiply censored water quality data,\: Water Resources Research v. 24, n.
+multiply censored water quality data: Water Resources Research v. 24, n.
 12, pp.1997-2004
 }
 \seealso{

@@ -12,7 +12,7 @@
 #' water resources: U.S. Geological Survey Techniques of Water-Resources 
 #' Investigations, book 4, chap. A3, 522 p.
 #' @keywords regression
-#' @importFrom USGSwsStats vif
+#' @importFrom smwrStats vif
 #' @export
 #' @method vif censReg
 vif.censReg <- function(model, ...) {

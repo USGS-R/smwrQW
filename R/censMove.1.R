@@ -34,7 +34,7 @@
 #' @keywords regression censored
 #' @examples
 #'\dontrun{
-#'library(USGSwsData)
+#'library(smwrData)
 #'data(IonBalance)
 #'# Build model for non missing Alkalinity
 #'IB.move <- move.1(Anion_sum ~ Cation_sum, data=IonBalance, 

@@ -18,9 +18,9 @@ fillIn(x, method, alpha)
 \item{x}{an object of class "lcens." Missing values are ignored.}
 
 \item{method}{the method to use for estimating censored values:
-"ROS," "log ROS," "MLE," "log MLE," or "triangular" are valid for left-
-censored data; "ROS," "log ROS," "MLE," or "log MLE,"are valid for multiply
-censored data; ignored for uncensored data.}
+"ROS," "log ROS," "MLE," or "log MLE" are valid for any left-
+or multiply-censored data ; "triangular" is valid for left-censored data
+with a single detection limit; \code{method} is ignored for uncensored data.}
 
 \item{alpha}{the offset fraction to be used; typically in [0,0.5].}
 }
@@ -33,7 +33,7 @@ Estimates values of censored data.
 }
 \details{
 The methods of Regression on Order Statistics (ROS) and MLE is
-explained in Helsel (2012). The "log ROS" first log-transform the data and
+explained in Helsel (2012). The "log ROS" first log-transforms the data and
 back-transforms the estimated values. The triangular method distributes the
 censored value assuming a triangular distribution between 0 and the single
 detection limit. Quinn and Keogh (2003) describe alternatives to simple
@@ -50,7 +50,8 @@ rbind(XR, XF)
 #Note that this is unusual because all 10 random values were less than the mean!
 }
 \references{
-Helsel, D.R. 2012, Blah blah: some place, Wiley, some pages.\cr
+Helsel, D.R. 2012, Statistics for censored environmental data
+using Minitab and R: New York, Wiley, 324 p.\cr
 Quinn, G.P. and Keogh, M.J., 2003, Experimental design and data analysis for
 biologists, Cambridge University Press, Cambridge, UK, 539 p.
 }

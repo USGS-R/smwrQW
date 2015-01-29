@@ -27,7 +27,7 @@ readNWQLdl <- function(parm_cd) {
   ##
   if(missing(parm_cd))
     stop("parm_cd is required")
-  parm_cd <- zeropad(parm_cd)
+  parm_cd <- zeroPad(parm_cd)
   myurl <- paste("http://nwql.cr.usgs.gov/usgs/ltmdl/ltmdl.cfm?st=p&ss=",
                  parm_cd, sep="")
   retval <- readHTMLTable(myurl, stringsAsFactors=FALSE)[[3]] # that is the one

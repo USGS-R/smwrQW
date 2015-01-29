@@ -16,7 +16,6 @@
 #'either argument and result in a missing value in the output.
 #' @return A logical vector the represents the result of the comparison between each
 #'element in \code{e1} and \code{e2}.
-#' # fails, why? @seealso \code{\link{"\%~=\%"}}
 #' @keywords methods manip
 #' @exportMethod Compare
 #' @examples

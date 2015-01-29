@@ -26,7 +26,7 @@ now known as regression on order statistics.
 }
 \references{
 Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics
-for multiply censored water quality data,\: Water Resources Research v. 24, n.
+for multiply censored water quality data: Water Resources Research v. 24, n.
 12, pp.1997-2004
 }
 \keyword{misc}

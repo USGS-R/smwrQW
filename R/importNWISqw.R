@@ -2,10 +2,12 @@
 #'
 #'Import discrete sample water-quality data from NWISweb.
 #'
-#'Valid groups are "All," "information," "physical," "cations," "anions,"
-#'"nutrients," "microbiological," "biological," "metals," "nonmetals,"
+#' @description Valid groups are "all," "information," "physical," "cations," 
+#'"anions," "nutrients," "microbiological," "biological," "metals," "nonmetals,"
 #'"toxicity," "pesticides," "pcbs," "other organics," "radio chemicals,",
-#'"stable isotopes," "sediment," and "population/community."
+#'"stable isotopes," "sediment," and "population/community." Subject to
+#'availability in the \code{readNWISqw} function in the \code{dataRetrieval}
+#'package.
 #'
 #' @param sites a vector of the USGS station identifiers.
 #' @param params A character string contains the name of a group of parameter
@@ -39,7 +41,7 @@
 #'remark codes.
 #'
 #' @seealso \code{\link{readNWISqw}}
-#' @references Lorenz, D.L., 2014, USGSwsQW OFR.\cr See information about discrete
+#' @references Lorenz, D.L., 2014, smwrQW OFR.\cr See information about discrete
 #'samples at \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
 #' @keywords datasets IO
 #' @examples
@@ -47,21 +49,21 @@
 #'\dontrun{
 #'importNWISqw("05330000", "00608") # Ammonia samples from the Minnesota River at Jordan.
 #'}
-#'
+#' @import dataRetrieval
 #' @export
-importNWISqw <- function(sites, params="All", begin.date="", end.date="",
+importNWISqw <- function(sites, params="all", begin.date="", end.date="",
                          keep=NULL, use.pnames=FALSE) {
   ## Coding history:
   ##    2012Sep17 DLLorenz original Coding
   ##    2013Jan26 DLLorenz Added option to use Pcode names
   ##    2014Oct07 DLLorenz Added pcodes to convert to numeric
 	##
-	## Numeric pcodes: These are all INFO and many PHYSICAL groups
+	## Numeric pcodes: These are almost all INFO and many PHYSICAL groups
 	NPCd <- c("00001","00002","00003","00004","00005","00008","00009","00010","00011","00012","00013","00014",
 						"00020","00021","00022","00023","00024","00025","00028","00029","00030","00031","00032","00034",
 						"00035","00036","00041","00042","00045","00046","00047","00048","00049","00050","00051","00052",
 						"00053","00054","00055","00056","00058","00059","00060","00061","00062","00063","00064","00065",
-						"00067","00072","00074","00075","00077","00078","00085","00086","00090","00094","00095","00096",
+						"00067","00072","00074","00075","00085","00086","00090","00094","00095","00096",
 						"00098","00100","00115","00117","00118","00119","00120","00121","00122","00123","00124","00125",
 						"00126","00127","00128","00129","00132","00134","00135","00164","00193","00196","00197","00198",
 						"00199","00200","00201","00206","00207","00325","00330","00400","00401","00403","00408","00434",
@@ -206,7 +208,8 @@ importNWISqw <- function(sites, params="All", begin.date="", end.date="",
 						"99962","99963","99964","99965","99966","99967","99968","99969","99970","99971","99972","99973",
 						"99974","99975","99976","99978","99979","99980","99982","99983","99984","99986","99987","99988",
 						"99989","99990","99991","99992","99993","99994","99995","99996","99997")
-  ByResult <- readNWISqw(sites, params, begin.date, end.date)
+  ByResult <- readNWISqw(sites, params, begin.date, end.date, 
+  											 expanded=TRUE, reshape=FALSE)
   if(use.pnames) {
     Extra <- pcodeNWISqw(params, group=FALSE, name=FALSE, CASRN=FALSE,
                        short=TRUE, units=TRUE, col.name=FALSE)

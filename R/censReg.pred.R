@@ -8,7 +8,7 @@
 #'@param XPRED a matrix of the prediction variables.
 #'@return A list containing the output from the FORTRAN code.
 #'@seealso \code{\link{censReg}},
-#'@useDynLib USGSwsQW predaml
+#'@useDynLib smwrQW predaml
 #'@export
 censReg_AMLE.pred <- function(fit, XPRED) {
   ## Coding history:

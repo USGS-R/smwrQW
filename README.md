@@ -1,7 +1,7 @@
-USGSwsQW
+smwrQW
 ========
 
-Water quality USGS water science R functions.
+R functions to support water-quality data analysis for statistical methods in water resources.
 
 Disclaimer
 ----------
@@ -14,6 +14,6 @@ This software is provided "AS IS."
 Installation
 ----------
 
-    install.packages(c("USGSwsQW"), 
+    install.packages(c("smwrQW"), 
     repos=c("http://usgs-r.github.com","http://cran.us.r-project.org"), 
     dependencies=TRUE)

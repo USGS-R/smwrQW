@@ -68,8 +68,9 @@ arbitrary values can be used.
 Need some notes
 }
 \examples{
-# Convert the stacked qw data supplied in USGSwsData
-library(USGSwsData)
+\dontrun{
+# Convert the stacked qw data supplied in smwrData
+library(smwrData)
 data(QWstacked)
 QWstacked$result_va <- as.numeric(QWstacked$result_va) # raw data are character
 # The units are both mg/l, no analyte name, generate column names from parameter codes
@@ -80,6 +81,7 @@ head(importQW(QWstacked, c("site_no", "sample_dt", "sample_tm", "medium_cd"),
 data(QW05078470)
 importQW(QW05078470, c("DATES", "TIMES"), "P00665", "R00665", "", 0.005, "User",
 "mg/l", "Unk", "Dissolved Phosporus", "00665", "DissP")
+}
 }
 \references{
 Lorenz, D.L., 2014, USGSqw OFR.\cr See information about discrete

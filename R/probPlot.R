@@ -1,6 +1,3 @@
-# Note yaxis.range set for smwrGraphs, not USGSwsGraphs
-
-
 #'Probability Plot
 #'
 #'Produce a probability plot of censored data.
@@ -48,7 +45,7 @@
 #'probPlot(as.lcens(Xu, 1.0))
 #'}
 #'
-#' @import USGSwsGraphs 
+#' @import smwrGraphs 
 #' @rdname probPlot.lcens
 #' @export
 #' @method probPlot lcens

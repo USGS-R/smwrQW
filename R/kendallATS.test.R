@@ -37,7 +37,7 @@
 #'# Some censoring
 #'kendallATS.test(as.lcens(tmp.X, -1), as.lcens(tmp.Y, -1))
 #'
-#'@useDynLib USGSwsQW ktau
+#'@useDynLib smwrQW ktau
 #'@export
 kendallATS.test <- function(x, y, na.rm=TRUE) {
   ## Coding History:

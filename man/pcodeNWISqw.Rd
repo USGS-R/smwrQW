@@ -3,7 +3,7 @@
 \alias{pcodeNWISqw}
 \title{Parameter Code Information}
 \usage{
-pcodeNWISqw(params = "All", group = TRUE, name = TRUE, CASRN = FALSE,
+pcodeNWISqw(params = "all", group = TRUE, name = TRUE, CASRN = FALSE,
   short = TRUE, units = TRUE, col.name = FALSE)
 }
 \arguments{
@@ -27,10 +27,10 @@ codes, or a vector of pamater codes. See \bold{Details}.}
 A data frame with the parameter codes and the selected columns.
 }
 \description{
-Get information about USGS parameter codes.
+Support function for \code{importNWISqw}.
 }
 \details{
-Valid groups for \code{param} are "All," "information," "physical,"
+Valid groups for \code{param} are "all," "information," "physical,"
 "cations," "anions,"
 "nutrients," "microbiological," "biological," "metals," "nonmetals,"
 "toxicity," "pesticides," "pcbs," "other organics," "radio chemicals,",
@@ -42,8 +42,11 @@ pcodeNWISqw("00925")
 }
 }
 \references{
-Lorenz, D.L., 2014, USGSqw OFR.\cr See information about discrete
+Lorenz, D.L., 2014, smwrQW OFR.\cr See information about discrete
 samples at \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
+}
+\seealso{
+\code{\link[dataRetrieval]{readNWISpCode}}
 }
 \keyword{IO}
 \keyword{datasets}

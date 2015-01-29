@@ -29,7 +29,7 @@
 #'formula. This feature is intended to facilitate certain kinds of scripts that 
 #'construct a formula from combinations of vairabales in a dataset.
 #' @seealso \code{\link{lm}}, \code{\link{survreg}}
-#' @references Lorenz, 2015, USGSwsQW.\cr
+#' @references Lorenz, 2015, smwrQW.\cr
 #'Breen, R., 1996, Regression models: censored, sample selected, or truncated data:
 #'Sage University Paper series on Qunatitative Applications in the Social Sciences, 
 #'07-111, Thousand Oaks, CA, 

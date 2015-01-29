@@ -1,13 +1,14 @@
-Package: USGSwsQW
-Version: 0.6.4
-Date: 2014-11-25
+Package: smwrQW
+Version: 0.7.0
+Date: 2015001-29
 Title: Tools for censored data analysis
 Author: Dave Lorenz <lorenz@usgs.gov>.
 Maintainer: Dave Lorenz <lorenz@usgs.gov>
 Depends:
-    USGSwsBase,
-    USGSwsGraphs,
-    USGSwsStats
+    dataRetrieval,
+    smwrBase,
+    smwrGraphs,
+    smwrStats
 Imports:
     survival,
     methods,
@@ -30,7 +31,6 @@ Collate:
     'Arith-censored.R'
     'Compare-censored.R'
     'Math-censored.R'
-    'USGSwsQW-package.R'
     'add.R'
     'as.character.R'
     'as.data.frame.R'
@@ -61,7 +61,6 @@ Collate:
     'coef.censReg.R'
     'convert2qw.R'
     'convertFqw.R'
-    'countNWISqw.R'
     'dlimit.R'
     'dotPlot-censored.R'
     'ecdfPlot.R'
@@ -113,12 +112,12 @@ Collate:
     'qw2mcens.R'
     'ratio.R'
     'rbindQW.R'
-    'readNWISqw.R'
     'readNWQLdl.R'
     'residuals.censReg.R'
     'rmse.censReg.R'
     'sdlFill.R'
     'show-censored.R'
+    'smwrQW-package.R'
     'sort.censored.R'
     'splitQual.R'
     'str.R'

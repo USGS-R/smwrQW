@@ -27,7 +27,7 @@
 #'Royston, P., 1993, A toolkit for testing for non-normality in complete and
 #'censored samples: The Statistician, v. 42, p. 37--43.
 #' @keywords htest
-#' @useDynLib USGSwsQW ppcctest
+#' @useDynLib smwrQW ppcctest
 #' @export
 censPPCC.test <- function(x) {
   ## Coding history:

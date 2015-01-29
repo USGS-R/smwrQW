@@ -29,7 +29,6 @@ either argument and result in a missing value in the output.}
 \value{
 A logical vector the represents the result of the comparison between each
 element in \code{e1} and \code{e2}.
-# fails, why?
 }
 \description{
 Comprisons are possible and well-defined between numeric and
@@ -48,7 +47,7 @@ as.lcens(c(1, 3), 2) > 1
 as.lcens(c(1, 3), 2) < 4
 }
 \seealso{
-\code{\link{"\%~=\%"}}
+\code{\link{zeq}}
 }
 \keyword{manip}
 \keyword{methods}

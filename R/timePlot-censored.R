@@ -28,7 +28,7 @@
 #' @return Information about the graph.
 
 #' @keywords methods hplot
-#' @importMethodsFrom USGSwsGraphs timePlot
+#' @importMethodsFrom smwrGraphs timePlot
 #' @exportMethod timePlot
 
 #' @rdname timePlot-censored

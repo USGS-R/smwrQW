@@ -54,7 +54,7 @@ lm(Y ~ X) # the uncensored regression
 censReg(as.lcens(Y, 1) ~ X) # censored at 1
 }
 \references{
-Lorenz, 2015, USGSwsQW.\cr
+Lorenz, 2015, smwrQW.\cr
 Breen, R., 1996, Regression models: censored, sample selected, or truncated data:
 Sage University Paper series on Qunatitative Applications in the Social Sciences,
 07-111, Thousand Oaks, CA,

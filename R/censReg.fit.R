@@ -13,7 +13,7 @@
 #'survreg.
 #' @seealso \code{\link{censReg}}, \code{\link{survreg}}
 #' @keywords censored utilities
-#' @useDynLib USGSwsQW evalaml
+#' @useDynLib smwrQW evalaml
 #' @rdname censReg.fit
 #' @export
 censReg_AMLE.fit <- function(Y, X, dist="normal") {

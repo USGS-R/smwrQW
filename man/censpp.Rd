@@ -50,7 +50,7 @@ censpp(as.lcens(ppoints(7, .44), 0.5))
 }
 \references{
 Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive
-statistics for multiply censored water quality data,\: Water Resources
+statistics for multiply censored water quality data: Water Resources
 Research v. 24, n. 12, pp.1997-2004
 }
 \seealso{

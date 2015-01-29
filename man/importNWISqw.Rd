@@ -3,7 +3,7 @@
 \alias{importNWISqw}
 \title{Water-Quality Data}
 \usage{
-importNWISqw(sites, params = "All", begin.date = "", end.date = "",
+importNWISqw(sites, params = "all", begin.date = "", end.date = "",
   keep = NULL, use.pnames = FALSE)
 }
 \arguments{
@@ -31,13 +31,15 @@ automatically, but can be set by the user,
 see \code{\link{makeColNames}}.
 }
 \description{
-Import discrete sample water-quality data from NWISweb.
+Valid groups are "all," "information," "physical," "cations,"
+"anions," "nutrients," "microbiological," "biological," "metals," "nonmetals,"
+"toxicity," "pesticides," "pcbs," "other organics," "radio chemicals,",
+"stable isotopes," "sediment," and "population/community." Subject to
+availability in the \code{readNWISqw} function in the \code{dataRetrieval}
+package.
 }
 \details{
-Valid groups are "All," "information," "physical," "cations," "anions,"
-"nutrients," "microbiological," "biological," "metals," "nonmetals,"
-"toxicity," "pesticides," "pcbs," "other organics," "radio chemicals,",
-"stable isotopes," "sediment," and "population/community."
+Import discrete sample water-quality data from NWISweb.
 }
 \note{
 The sample information columns that are automatically retained are the
@@ -62,7 +64,7 @@ importNWISqw("05330000", "00608") # Ammonia samples from the Minnesota River at 
 }
 }
 \references{
-Lorenz, D.L., 2014, USGSwsQW OFR.\cr See information about discrete
+Lorenz, D.L., 2014, smwrQW OFR.\cr See information about discrete
 samples at \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
 }
 \seealso{

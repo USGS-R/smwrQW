@@ -13,7 +13,7 @@
 #' @param group character string, the name of the column in the data frame to indicate
 #'a group for imputation. See \bold{Details}
 #' @param type the type of estimate, "MLE" for maximum likelihood estimates, or "robust"
-#'for robust estimation methods. See \code{\link[zCompositions]{lrME}} for details.
+#'for robust estimation methods. See \code{\link[zCompositions]{lrEM}} for details.
 #' @param initial the method to use for the initial log-ratio covariance matrix, either
 #'"complete.obs" that uses only the rows with no censored data to construct the matrix, or
 #'"multRepl" that uses simple substitution of censored values to compute the matrix.

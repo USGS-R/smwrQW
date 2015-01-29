@@ -8,7 +8,7 @@
 #' @return The estimated root-mean-squared error, also know as the residual
 #'standard error.
 #' @seealso \code{\link{censReg}}
-#' @importFrom USGSwsStats rmse
+#' @importFrom smwrStats rmse
 #' @export
 #' @method rmse censReg
 rmse.censReg <- function(x, ...) {

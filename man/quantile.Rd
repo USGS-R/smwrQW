@@ -62,7 +62,7 @@ quantile(as.lcens(Xu, 0))
 Helsel, D.R. 2012, Statistics for censored environmental data
 using Minitab and R: New York, Wiley, 324 p.\cr
 Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics for
-multiply censored water quality data,\: Water Resources Research v. 24, n.
+multiply censored water quality data: Water Resources Research v. 24, n.
 12, pp. 1997-2004
 }
 \seealso{

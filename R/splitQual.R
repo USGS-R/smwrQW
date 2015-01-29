@@ -5,7 +5,7 @@
 #' @param x a character vector, missing values are permitted and result in missing values in the output
 #' @param name a character string giving the names of the output columns.
 #' @return A data frame with 2 columns, containing the numeric values and the qualification codes.
-#' @import USGSwsGraphs
+#' @import smwrGraphs
 #' @examples
 #'splitQual(c("<1", "1", "<1", "1", "2"), name="Dummy")
 #'
@@ -15,7 +15,7 @@ splitQual <- function(x, name = deparse(substitute(x))) {
   ## Find first numeric character
   qual.codes <- substring(x, 1, qual.index - 1)
   qual.codes <- ifelse(qual.index > 1, qual.codes, " ")
-  ## Replace incorrect and force to character (strip.blanks in in USGSwsGraphs)
+  ## Replace incorrect and force to character (strip.blanks in in smwrGraphs)
   qual.codes <- strip.blanks(qual.codes)
   qual.codes <- as.vector(qual.codes)
   ## Remove unnecessary blanks

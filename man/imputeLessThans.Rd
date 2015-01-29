@@ -16,7 +16,7 @@ imputeLessThans(..., type = c("MLE", "robust"), initial = c("complete.obs",
 }
 \arguments{
 \item{type}{the type of estimate, "MLE" for maximum likelihood estimates, or "robust"
-for robust estimation methods. See \code{\link[zCompositions]{lrME}} for details.}
+for robust estimation methods. See \code{\link[zCompositions]{lrEM}} for details.}
 
 \item{initial}{the method to use for the initial log-ratio covariance matrix, either
 "complete.obs" that uses only the rows with no censored data to construct the matrix, or

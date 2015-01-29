@@ -25,7 +25,7 @@ adjusted maximum-likelihood method (Cohn, 1988)
 }
 \references{
 Cohn, T.A., 1988, Adjusted maximum likelihood estimation of the moments
-of lognormal populations from type 1 censored samples\: U.S. Geological Survey
+of lognormal populations from type 1 censored samples: U.S. Geological Survey
 Open-File Report 88-350, 34 p.
 }
 \keyword{misc}
