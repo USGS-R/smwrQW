@@ -1,3 +1,6 @@
+# Note yaxis.range set for smwrGraphs, not USGSwsGraphs
+
+
 #'Probability Plot
 #'
 #'Produce a probability plot of censored data.
@@ -19,7 +22,7 @@
 #' @param Plot control parameters of the uncensored data plot.
 #' @param Censored control parameters of the left-censored data plot.
 #' @param yaxis.log log-transform the y axis?
-#' @param yrange set the range of the y axis.
+#' @param yaxis.range set the range of the y axis.
 #' @param ylabels set the y-axis labels. See \code{\link{linearPretty}} for
 #'details.
 #' @param xlabels set the x-axis labels. See \code{\link{probPretty}} for
@@ -55,7 +58,7 @@ probPlot.lcens <- function(x, truncate,
                            Plot=list(name="Uncensored", what='points', type='solid',
                              width='standard', symbol='circle', filled=TRUE,
                              size=0.09, color='black'),
-                           yaxis.log=TRUE, yrange=c(NA, NA), # y-axis controls
+                           yaxis.log=TRUE, yaxis.range=c(NA, NA), # y-axis controls
                            ylabels=11,  xlabels=11, CDF=TRUE, # labels
                            xtitle='Cumulative Probability', RI, RItitle,
                            ytitle=deparse(substitute(x)), # axis titles
@@ -79,7 +82,7 @@ probPlot.lcens <- function(x, truncate,
   ## set up the axes and transform data
   if(dev.cur() == 1)
     setGD("ProbabilityPlot")
-  yax <- setAxis(x, yrange, yaxis.log, FALSE, ylabels)
+  yax <- setAxis(x, yaxis.range, yaxis.log, FALSE, ylabels)
   x <- yax$data
   if(yaxis.log)
     xcen <- log10(xcen)
@@ -144,7 +147,7 @@ probPlot.qw <- function(x, truncate,
 												Plot=list(name="Uncensored", what='points', type='solid',
 																	width='standard', symbol='circle', filled=TRUE,
 																	size=0.09, color='black'),
-												yaxis.log=TRUE, yrange=c(NA, NA), # y-axis controls
+												yaxis.log=TRUE, yaxis.range=c(NA, NA), # y-axis controls
 												ylabels=11,  xlabels=11, CDF=TRUE, # labels
 												xtitle='Cumulative Probability', RI, RItitle,
 												ytitle=deparse(substitute(x)), # axis titles
@@ -162,7 +165,7 @@ probPlot.qw <- function(x, truncate,
 													 FLIP=FLIP, distribution=distribution,
 													 alpha=alpha,
 													 Plot=Plot,
-													 yaxis.log=yaxis.log, yrange=yrange,
+													 yaxis.log=yaxis.log, yaxis.range=yaxis.range,
 													 ylabels=ylabels,  xlabels=xlabels, CDF=CDF,
 													 xtitle=xtitle, RI, RItitle,
 													 ytitle=ytitle,

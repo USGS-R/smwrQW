@@ -13,7 +13,7 @@
 #'is "log ROS," then the list also contains the mean and standard deviation of the 
 #'natural log-transformed values computed by regression on order statistics.
 #' @references Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics 
-#'for multiply censored water quality data,\: Water Resources Research v. 24, n.
+#'for multiply censored water quality data: Water Resources Research v. 24, n.
 #'12, pp.1997-2004
 #' @keywords misc
 #' @export
@@ -27,20 +27,20 @@ mcenROS <- function(x, method="ROS", alpha=0.4) {
   else
     step1 <- censpp(x, a=alpha)
   if(method == "ROS") {
-    step2 <- with(step1, lm(x ~ qnorm(pp)))
-    step3 <- predict(step2, newdata=data.frame(pp=step1$ppcen))
-	step4 <- predict(step2, newdata=data.frame(pp=step1$pprcn))
-    step5 <- as.vector(c(step3, step1$x, step4))
+  	step2 <- with(step1, lm(x ~ qnorm(pp)))
+  	step3 <- predict(step2, newdata=data.frame(pp=step1$ppcen))
+  	step4 <- predict(step2, newdata=data.frame(pp=step1$pprcn))
+  	step5 <- as.vector(c(step3, step1$x, step4))
     coefs <- as.vector(coef(step2))
     retval <- list(mean=coefs[1], sd=coefs[2], fitted=step5)
   }
   else {
-    step2 <- with(step1, lm(log(x) ~ qnorm(pp)))
-    step3 <- predict(step2, newdata=data.frame(pp=step1$ppcen))
-	step4 <- predict(step2, newdata=data.frame(pp=step1$pprcn))
-    step5 <- as.vector(c(exp(step3), step1$x, exp(step4)))
-    coefs <- as.vector(coef(step2))
-    retval <- list(meanlog=coefs[1], sdlog=coefs[2], fitted=step4)
+  	step2 <- with(step1, lm(log(x) ~ qnorm(pp)))
+  	step3 <- predict(step2, newdata=data.frame(pp=step1$ppcen))
+  	step4 <- predict(step2, newdata=data.frame(pp=step1$pprcn))
+  	step5 <- as.vector(c(exp(step3), step1$x, exp(step4)))
+  	coefs <- as.vector(coef(step2))
+  	retval <- list(meanlog=coefs[1], sdlog=coefs[2], fitted=step5)
   }
   if(length(step1$xcen) > 0)
     retval$censorlevels <- c(step1$xcen, step1$xrcn)

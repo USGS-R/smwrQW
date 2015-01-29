@@ -25,7 +25,7 @@
 *
 **********************************************************************
       SUBROUTINE PREDAML(NPAR,PARMLE,PARAML,BIAS,CVX,SBIAS,SCVX,
-     &     XTXINV, LOGNORM,
+     &     XTXINV, login,
      &     NPRED,XLPRED,ESTIM,ESTSEP,ESTSEE,BACKEST,BACKVAR,IERR)
 *     
 *     dimensional parameters and logical devices
@@ -34,14 +34,12 @@
 *
 *     subroutine arguments
 *
-      INTEGER*4 NPRED
+      INTEGER*4 NPRED, login
       INTEGER*4 NPAR,IERR
       DOUBLE PRECISION PARMLE(*),PARAML(*),BIAS(*),SBIAS(*),
      &     CVX(NPAR+1,NPAR+1),SCVX(NPAR+1,NPAR+1),XLPRED(NPRED,*),
      &     XTXINV(NPAR,NPAR)
-      DOUBLE PRECISION ESTIM(*),ESTSEP(*),ESTSEE(*),BACKEST(*),
-     $     BACKVAR(*)
-      LOGICAL LOGNORM
+      DOUBLE PRECISION ESTIM(*),ESTSEP(*),ESTSEE(*),BACKEST(*)
 *
 *     local vars
 *
@@ -49,11 +47,21 @@
       DOUBLE PRECISION XLEST(MAXOBSE,MAXPARMS),PARMS(MAXPARMS+1),
      $     XLDAT(MAXOBSC,MAXPARMS+1),MTEVAR, XTEMP
       DOUBLE PRECISION CV(MAXPARMS+1,MAXPARMS+1),
-     $     SCV(MAXPARMS+1,MAXPARMS+1),XTX_INV(MAXPARMS,MAXPARMS)
+     $     SCV(MAXPARMS+1,MAXPARMS+1),XTX_INV(MAXPARMS,MAXPARMS),
+     $     BACKVAR(*)
+      LOGICAL LOGNORM
 *
 *     local function
 *
       DOUBLE PRECISION PRED
+*
+*     Convert to logicals
+*
+      if(login .eq. 1) then
+        LOGNORM = .TRUE.
+      else
+        LOGNORM = .FALSE.
+      endif
 *
 *     set initial values and check limits
 *

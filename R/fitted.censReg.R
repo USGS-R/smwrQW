@@ -32,7 +32,7 @@ fitted.censReg <- function(object, suppress.na.action=FALSE,
 		if(type == "link" && object$LogNorm)
 			fits <- exp(fits)
 	}
-	if(is.null(object$na.action) || !suppress.na.action)
+	if(is.null(object$na.action) || suppress.na.action)
     return(fits)
   else return(naresid(object$na.action, fits))
 }

@@ -10,7 +10,7 @@
 #'be either "left" or "right."
 #' @return A numeric vector of the sorted censoring levels. If all data are
 #'uncensored, then -Inf is returned for \code{type} = "left" and Inf is
-#'retruned for \code{type} = "right."
+#'returned for \code{type} = "right."
 #' @note Interval censoring is not characterized by a single value, so it is not
 #'an option for \code{type}.
 #' @seealso \code{\link{censoring}}

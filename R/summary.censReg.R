@@ -27,6 +27,7 @@ summary.censReg <- function(object, correlation=FALSE, ...) {
   ## Coding history:
   ##    2012Dec31 DLLorenz Initial Coding
 	##    2014Jan06 DLLorenz Added pseudo R2
+	##    2014Oct16 DLLorenz bug fix on flagobs
   ##
 	## Pseudo R-squared McKelvey-Zavoina method, which tries to replicate
   ## the R-squared of OLS
@@ -56,7 +57,7 @@ summary.censReg <- function(object, correlation=FALSE, ...) {
   cvlev <- 3*p/n
   cvcook <- qf(.5,p+1,n-p)
   cvs <- c(leverage=cvlev, cooksD=cvcook)
-  pck <- c(diagstats$leveerage > cvlev | diagstats$cooksD > cvcook)
+  pck <- c(diagstats$leverage > cvlev | diagstats$cooksD > cvcook)
   ## Pack it up
   retval <- list(object=object, vif=vif(object), R2=R2,
                  diagstats=diagstats, crit.val=cvs, flagobs=pck)

@@ -78,9 +78,11 @@ censReg_MLE.fit <- function(Y, X, Wt, dist="normal") {
   if(class(Y)[1L] == "lcens") {
     time <- time2 <- Y@.Data[, 1L]
     time[Y@censor.codes] <- NA
+    c.codes <- 0 - Y@censor.codes # Change to mcens logic
   } else if(class(Y)[1L] == "mcens") {
     time <-  miss2na(Y@.Data[, 1L], -Inf)
     time2 <- miss2na(Y@.Data[, 2L], Inf)
+    c.codes <- Y@censor.codes
   } else {
     stop("Unable to process objects of class ", class(Y))
   }
@@ -114,7 +116,7 @@ censReg_MLE.fit <- function(Y, X, Wt, dist="normal") {
   ll <- sr$loglik[length(sr$loglik)] # Prtect against null model
   ## Construct "working" residuals
   fits <- predict(update(sr, na.action=na.omit), type="linear") # Force no NAs
-  CENSFLAG <- Y@censor.codes
+  CENSFLAG <- c.codes
   RESID <- YLCAL - fits
   sigma <- sr$scale*sqrt(bcor)
   for(i in seq(NOBSC)) {

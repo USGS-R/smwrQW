@@ -13,7 +13,7 @@
 #'is "log ROS," then the list also contains the mean and standard deviation of the 
 #'natural log-transformed values computed by regression on order statistics.
 #' @references Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics 
-#'for multiply censored water quality data,\: Water Resources Research v. 24, n.
+#'for multiply censored water quality data: Water Resources Research v. 24, n.
 #'12, pp.1997-2004
 #' @keywords misc
 #' @export

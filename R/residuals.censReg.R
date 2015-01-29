@@ -59,25 +59,25 @@ residuals.censReg <- function(object , type="working",
   if(type == "working")
     Residuals <- object$RESID
   else if(type == "response")
-    Residuals <- object$YLCAL - fitted(object)
+    Residuals <- object$YLCAL - fitted(object, suppress.na.action = TRUE)
   else if(type == "S-L") { # return sqrt(abs(Resids)) (SAR)
-    Residuals <- object$YLCAL - fitted(object)
+    Residuals <- object$YLCAL - fitted(object, suppress.na.action = TRUE)
     Cens <- object$CENSFLAG
     Rmse <- rmse(object)
     ## Modify censored residuals with the expected value of the SAR
     if(object$method == "AMLE") {
       for(i in which(Cens))
-        Residuals[i] <- integrate(function(x) sqrt(abs(x))*dnorm(x),
-                                  -Inf, Residuals[i]/Rmse)$value * Rmse
+        Residuals[i] <- integrate(function(x) sqrt(abs(x))*dnorm(x,0,Rmse),
+                                  -Inf, Residuals[i]/Rmse)$value
       Residuals[!Cens] <- sqrt(abs(Residuals[!Cens]))
     }
     else {
       for(i in which(Cens < 0L))
-        Residuals[i] <- integrate(function(x) sqrt(abs(x))*dnorm(x),
-                                  -Inf, Residuals[i]/Rmse)$value * Rmse
+        Residuals[i] <- integrate(function(x) sqrt(abs(x))*dnorm(x,0,Rmse),
+                                  -Inf, Residuals[i]/Rmse)$value
       for(i in which(Cens > 0L))
-        Residuals[i] <- integrate(function(x) sqrt(abs(x))*dnorm(x),
-                                  Residuals[i]/Rmse, Inf)$value * Rmse
+        Residuals[i] <- integrate(function(x) sqrt(abs(x))*dnorm(x,0,Rmse),
+                                  Residuals[i]/Rmse, Inf)$value
       Residuals[Cens == 0L] <- sqrt(abs(Residuals[Cens == 0L]))
     }
   }

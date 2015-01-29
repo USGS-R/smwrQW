@@ -13,7 +13,7 @@
 #' @param e2 any vector that can be converted to class "mcens."
 #' @return A logical vector that matches the length of the longer of \code{e1} or 
 #'\code{e2}, set to \code{TRUE} is there is overlap in the values, and \code{FALSE}
-#'otehrwise.
+#'otherwise.
 #' @seealso \code{\link{Compare,qw,numeric-method}}
 #' @keywords manip
 #' @examples

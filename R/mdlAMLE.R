@@ -12,7 +12,7 @@
 #'is "log AMLE," then the list also contains the mean and standard deviation of the 
 #'natural log-transformed values computed by maximum likelihood.
 #' @references Cohn, T.A., 1988, Adjusted maximum likelihood estimation of the moments
-#'of lognormal populations from type 1 censored samples\: U.S. Geological Survey 
+#'of lognormal populations from type 1 censored samples: U.S. Geological Survey 
 #'Open-File Report 88-350, 34 p.
 #' @keywords misc
 #' @export

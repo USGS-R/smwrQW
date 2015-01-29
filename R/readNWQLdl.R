@@ -3,6 +3,7 @@
 #' @description Import the historical reporting limits for all methods for a parameter code.
 #'
 #' @importFrom XML readHTMLTable
+#' @importFrom lubridate today
 #' @param parm_cd the parameter code.
 #' @return A data frame of the analyte, methods, begin and end date for each
 #'reporting level change, the reporting level type used, the long-term

@@ -24,9 +24,11 @@
 #' @param margin set up the plot area margins.
 #' @return Information about the graph.
 #' @note The censored style box plot truncates the boxplot at the largest value
-#'of the detection limit. The estimated style box plot estimates values for
+#'of the reporting level. The estimated style box plot estimates values for
 #'left-censored data and uses those estimates to construct the full boxplot;
-#'the range of estimated values is shown in gray.
+#'the range of estimated values is shown in gray. The maximum reporting level, 
+#'except for some simple heuristics for identifying elevated reporting levels, 
+#'is used for the censoring level when there are multiple reporting levels.
 #'
 #'The \code{fillIn} function is used to estimate values that are censored.
 #'If \code{yaxis.log} is \code{TRUE}, then the "log ROS" method is used to
@@ -114,7 +116,7 @@ boxPlot.lcens <- function(..., group=NULL, # data
       if(dev.cur() == 1L)
         setGD("BoxPlot")
   statsret <- boxPlotCensStats(dots, Box, yaxis.log)
-  ## What gets passed from statsret?
+  ##
   retval <- renderBoxPlot(xtoplot, statsret$boxes, Box, statsret$explan, statsret$z,
                           yaxis.log, yaxis.range, xrange, ylabels, xlabels, xlabels.rotate,
                           xtitle, ytitle, caption, margin)
@@ -139,7 +141,7 @@ boxPlot.qw <- function(..., group=NULL, # data
   ##                        (copied from uncensored version)
   ##    2012Sep18 DLLorenz Added fill option
   ##    2013Jan11 DLLorenz Roxygenized
-  ##    2013Jan11          This version.
+  ##    2015Jan16 DLLorenz Accept type == "tukey" if all censoring is none
   ##
   ## Process data to plot, all should be lcens. If only 1, then can be grouped
   dots <- list(...)
@@ -160,7 +162,7 @@ boxPlot.qw <- function(..., group=NULL, # data
       } # end of xrange logic
     }
     else
-      stop("Multiple lcens objects cannot be grouped by boxPlot")
+      stop("Multiple qw objects cannot be grouped by boxPlot")
   }
   else {
     xrange <- c(0, length(dots) + 1)
@@ -171,25 +173,40 @@ boxPlot.qw <- function(..., group=NULL, # data
     call <- as.character(call)
     names(dots) <- call[seq(length(dots))]
   }
-  ## Convert to lcens
-  dots <- lapply(dots, as.lcens)
-  ## Fix defaults for Box
-  Box <- setDefaults(Box, type="truncated", show.counts=TRUE, censorbox=NA,
-                     censorstyle="censored", nobox=5, width="Auto", 
-                     fill="none", truncated=c(10,90))
-  Box$type <- match.arg(Box$type, c("truncated", "simple",
-  																	"tukey", "extended"))
-  Box$censorstyle <- match.arg(Box$censorstyle,
-  														 c("censored", "estimated"))
-  if(Box$type == "tukey" && Box$censorstyle == "censored") {
-    warning("censored tukey boxplot not possible; creating estimated tukey boxplot")
-    Box$censorstyle <- "estimated"
+  ## Convert to lcens, stop if other than left or no censoring
+  dots.cens <- sapply(dots, censoring)
+  if(any(dots.cens == "multiple"))
+  	stop("Right- or interval-censored data cannot be plotted")
+  dots.lcens <- any(dots.cens == "left")
+  if(dots.lcens) {
+  	dots <- lapply(dots, as.lcens)
+  	## Fix defaults for Box
+  	Box <- setDefaults(Box, type="truncated", show.counts=TRUE, censorbox=NA,
+  										 censorstyle="censored", nobox=5, width="Auto", 
+  										 fill="none", truncated=c(10,90))
+  	Box$type <- match.arg(Box$type, c("truncated", "simple",
+  																		"tukey", "extended"))
+  	Box$censorstyle <- match.arg(Box$censorstyle,
+  															 c("censored", "estimated"))
+  	if(Box$type == "tukey" && Box$censorstyle == "censored") {
+  		warning("censored tukey boxplot not possible; creating estimated tukey boxplot")
+  		Box$censorstyle <- "estimated"
+  	}
+  	statsret <- boxPlotCensStats(dots, Box, yaxis.log)
+  } else {
+  	dots <- lapply(dots, as.numeric)
+  	## Fix defaults for Box
+  	Box <- setDefaults(Box, type="truncated", show.counts=TRUE, 
+  										 nobox=5, width="Auto", 
+  										 fill="none", truncated=c(10,90))
+  	Box$type <- match.arg(Box$type, c("truncated", "simple",
+  																		"tukey", "extended"))
+  	statsret <- boxPlotStats(dots, Box, yaxis.log)
   }
-  ## Compute the stats and produce the boxplot
-      if(dev.cur() == 1L)
-        setGD("BoxPlot")
-  statsret <- boxPlotCensStats(dots, Box, yaxis.log)
-  ## What gets passed from statsret?
+  ## Produce the boxplot
+  if(dev.cur() == 1L)
+  	setGD("BoxPlot")
+  ##
   retval <- renderBoxPlot(xtoplot, statsret$boxes, Box, statsret$explan, statsret$z,
                           yaxis.log, yaxis.range, xrange, ylabels, xlabels, xlabels.rotate,
                           xtitle, ytitle, caption, margin)

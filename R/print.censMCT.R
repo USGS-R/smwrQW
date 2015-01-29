@@ -38,7 +38,9 @@ print.censMCT <- function(x, digits=4, ...) {
   cat("Table of paired comparisons, attained p-values less than",
       x$alpha, "are flagged by '*'\n", sep=" ")
   pmat <- format(round(x$table, digits))
-  pmat <- cbind(pmat, flag=select(x$table[, 2L] < x$alpha, "*", " ", na=" "))
+  flag <- ifelse(x$table[, 2L] < x$alpha, "*", " ")
+  flag[is.na(flag)] <- " "
+  pmat <- cbind(pmat, flag=flag)
   print(pmat, quote=FALSE)
   cat("\n")
   invisible(x)

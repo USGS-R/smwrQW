@@ -18,7 +18,11 @@
 #' @include qw-class.R
 #' @param values the uncensored values and optionally the censored values.
 #' @param remark.codes the remarks codes: " " or "" indicated uncensored, "<"
-#'indicates left-censoring, ">" indicates right censoring. Other values have a
+#'indicates left-censoring, ">" indicates right censoring. The special remark
+#'code "M" is created when the value is rounded to 0 by NWIS. In this case, the value 
+#'is set to less than the reporting level if the reporting level is not the missing
+#'value \code{NA}, otherwise the value is set to missing \code{NA} and "M" is
+#'retained as the remark code. Other codes have a
 #'special meaning that can be modified by \code{value.codes}.
 #' @param value.codes special value qualifier codes. See Lorenz and others, 2014
 #'for a description of these codes and the special \code{remark.codes}.
@@ -90,6 +94,16 @@ setMethod("as.qw", signature(values="numeric", remark.codes="character",
   	## Logic check on remarks--only "<", ">", and " " make sense
   	remark.codes[is.na(remark.codes)] <- " "
   	remark.codes[remark.codes == ""] <- " "
+  	## Special check on remark code "M"
+  	if(any(pickM <- remark.codes == "M")) { # recode to < RL if possible
+  		picks <- !is.na(reporting.level) & pickM
+  		if(any(picks)) {
+  			remark.codes[picks] <- "<"
+  			value2[picks] <- reporting.level[picks]
+  			values[picks] <- 0
+  			warning("Special remark code M converted to less-than value")
+  		}
+  	}
   	remarks.uniq <- unique(remark.codes)
   	remarks.ignore <- !(remarks.uniq %in% c("<", ">", " "))
   	if(any(remarks.ignore))

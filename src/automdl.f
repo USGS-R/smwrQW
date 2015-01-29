@@ -1,5 +1,5 @@
-      SUBROUTINE automdl(obs, Censflag, detlim, nobs, zmu, zsig, nlt, 
-     $     uselog, ierr)
+      SUBROUTINE automdl(obs, Censin, detlim, nobs, zmu, zsig, nlt, 
+     $     uselogin, ierr)
 C
 C       AUTOMDL:   Estimate of Summary Statistics for Data With
 c               Multiple Detection Limits
@@ -37,12 +37,12 @@ C     the dimensions in the following statement must be modified for the
 c     subroutine, to nobs and nqtile
       double precision obs(*),  detlim(*)
       double precision zmu(2), zsig(2)
-      logical Censflag(*), uselog
+      integer Censin(*), uselogin
       integer nobs, nlt, nqtile, ierr
 c
 c     Local variables
 c
-
+      logical CENSFLAG(MAXOBSC), USELOG
       REAL*8 X(MAXOBSC)/MAXOBSC*0.0/, XLT(MAXOBSC)/MAXOBSC*0.0/
       INTEGER M,I
       REAL*8 XX(MAXOBSC),FX(MAXOBSC,2)
@@ -54,11 +54,22 @@ c
       real test
 C
 C     convert data to format needed by the called routines
+C     Includes converting integer 0/1 to logical FALSE/TRUE
 C
       IERR=0
       M=0
       NLT=0
+      if(uselogin .eq. 1) then
+         USELOG = .TRUE.
+      else
+         USELOG = .FALSE.
+      endif
       DO I=1,NOBS
+         if(Censin(I) .eq. 1) then
+           CENSFLAG(I) = .TRUE.
+         else
+           CENSFLAG(I) = .FALSE.
+         endif
          IF(.NOT. CENSFLAG(I)) THEN
             M=M+1
             X(M) = OBS(I)

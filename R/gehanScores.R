@@ -1,9 +1,11 @@
-#' Gehan Test Scores
+#' @title Gehan Test Scores
 #' 
-#' Compute Gehan test scores that compare the values in one
+#' @description Compute Gehan test scores that compare the values in one
 #'group to the values in another group.
 #'
-#' Details
+#' @details If \code{y} is missing, then \code{x} is compared to itself 
+#'(with \code{NA}s removed) and the output is a linear transform of the
+#'rank of \code{x}. 
 #' 
 #' @param x any object that can be converted to class "mcens."
 #'Missing values are permitted and result in corresponding 
@@ -31,7 +33,10 @@
 gehanScores <- function(x, y, na.rm=FALSE) {
   ## Coding history:
   ##    2014Jan02 DLLorenz Initial Coding.
-  ##
+  ##    2014Oct07 DLLorenz debugging for NAs
+	##
+	x <- na.exclude(x)
+	xomit <- attr(x, "na.action")
   xm <- as.mcens(x)
   x <- xm@.Data
   # Adjust less-thans and greater-thans
@@ -46,6 +51,10 @@ gehanScores <- function(x, y, na.rm=FALSE) {
     y <- x
     M <- N
   } else { # Repeat processing for y
+  	# Remove missings from y if indicated
+  	if(na.rm) {
+  		y <- y[!is.na(y)]
+  	}
     ym <- as.mcens(y)
     y <- ym@.Data
     yv <- sort(unique(as.vector(y)))
@@ -55,16 +64,12 @@ gehanScores <- function(x, y, na.rm=FALSE) {
     y[ym@censor.codes == 1L, 1L] <- y[ym@censor.codes == 1L, 1L] + adjust
     M <- nrow(y)
   }
-  # Remove missings from y if indicated
-  if(na.rm) {
-    y <- y[!is.na(y[, 1L]), ]
-    M <- nrow(y)
-  }
+
   # Check for y all missing
   if(M == 0L)
     return(rep(NA_real_, N))
   # Compute the number strictly less than or strictly greater than each value
   L <- rowSums(x[, 1L] > matrix(y[, 2L], nrow=N, ncol=M, byrow=TRUE))
   G <- rowSums(x[, 2L] < matrix(y[, 1L], nrow=N, ncol=M, byrow=TRUE))
-  return(L - G)
+  return(naresid(xomit, L - G))
 }

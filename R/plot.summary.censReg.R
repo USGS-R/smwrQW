@@ -58,16 +58,24 @@ plot.summary.censReg <- function(x, which='All', set.up=TRUE, span=1.0, ...) {
     xnames <- which
     do7 <- TRUE
   }
+  ## Fix soon
+  warning("Replace isDateLike with correct reference after converting to smwrQW")
+  isDateLike <- function(x) {
+  	return(class(x)[1L] %in% c("Date", "POSIX", "POSIXct", "POSIXlt"))
+  }
   ## Anything else produces all plots
   ## Final plot (7) residuals vs predictors
   ## Extract weights and other data needed later
   Fits <- x$diagstats$yhat # needed for later plots
   Resids <- x$diagstats$resids
   Cens <- x$diagstats$ycen
-  wt.showCD <- if(is.null(x$object$weights))
-    rep(1,length(Fits))
-  else 
-    x$object$weights
+  Weighted <- !(is.null(x$object$weights) || all(x$object$weights == 1))
+  wt.showCD <- if(Weighted) {
+  	x$object$weights
+  } else 
+  	rep(1,length(Fits))
+  ## For selected plots use weighted residuals, scaled to mean of 1
+  Res <- Resids * sqrt(wt.showCD/mean(wt.showCD))
   if(doPlot[7L]) {
     xpred <- x$object$XLCAL[, -1L, drop=FALSE]
     xparm <- x$object$PARAML[-1L]
@@ -77,7 +85,7 @@ plot.summary.censReg <- function(x, which='All', set.up=TRUE, span=1.0, ...) {
     ## Residual dependence plots
     if(do7 || length(xnames) > 1L) {
       for(i in xnames) {
-        presid <- Resids + xparm[i] * xpred[, i]
+        presid <- Res + xparm[i] * xpred[, i]
         xyPlot(xpred[, i], presid,
                Plot=list(what="points", size=0.05),
                xtitle=i, ytitle="Partial Residual",
@@ -88,6 +96,7 @@ plot.summary.censReg <- function(x, which='All', set.up=TRUE, span=1.0, ...) {
                 Plot=list(what="lines", width="standard", type="dashed"))
         ## The p-value of the second order fit on the residuals almost matches
         ## the p-value of adding the second order term to the regression
+        presid <- Resids + xparm[i] * xpred[, i]
         nl.p <- summary(lm(presid ~ poly(xpred[,i], 2L),
                            weights=wt.showCD, model=TRUE), FALSE)
         nl.p <- nl.p$coefficients[3L, 4L]
@@ -120,11 +129,15 @@ plot.summary.censReg <- function(x, which='All', set.up=TRUE, span=1.0, ...) {
     }
   } # end of Influence plot
   ## Q-normal of standardized residuals (H&H criterion 4)
+  ytitle <- if(Weighted) {
+  	"Weighted Standardized Residuals"
+  } else
+  	"Standardized Residuals"
   if(doPlot[5L]) {
-    sresid <- Resids / sqrt(x$object$PARAML[x$object$NPAR+1])
+    sresid <- Res / sqrt(x$object$PARAML[x$object$NPAR+1])
     qqPlot(sresid, Plot=list(size=0.05, filled=FALSE),
            yaxis.log=FALSE, ylabels=7,
-           ytitle="Standardized Residual",
+           ytitle=ytitle,
            margin=c(NA, NA, 2.4, NA), mean=0, sd=1)
     ## Add the uncensored values in solid
     ord <- order(sresid)
@@ -134,8 +147,6 @@ plot.summary.censReg <- function(x, which='All', set.up=TRUE, span=1.0, ...) {
     ct <- Cens[ord] == 0
     addXY(xt[ct], yt[ct], Plot=list(what="points", size=0.05, filled=TRUE))
   }
-  ## for the next plots use weighted residuals
-  Res <- Resids * sqrt(wt.showCD)
   ## If possible, plot a correlogram--requires finding 1 datelike column in
   ## the data
   if(doPlot[4L] && !is.null(x$object$call$data)) {
@@ -174,10 +185,14 @@ plot.summary.censReg <- function(x, which='All', set.up=TRUE, span=1.0, ...) {
   } # end of S-L 
   ## 2nd plot response vs. fit
   if(doPlot[2L]) {
+  	ytitle <- if(Weighted) {
+  		"Weighted Working Residuals"
+  	} else
+  		"Working Residuals"
     xyPlot(Fits, Res,
            Plot=list(what="points", size=0.05),
            xtitle="Fitted",
-           ytitle="Residuals")
+           ytitle=ytitle)
     if(span > 0)
       addSmooth(Fits, Res, family="sym", span=span)
     refLine(horizontal=0, Plot=list(what="lines", width="standard", type="dashed"))
@@ -194,18 +209,18 @@ plot.summary.censReg <- function(x, which='All', set.up=TRUE, span=1.0, ...) {
     refLine(coefficients=c(0,1), Plot=list(what="lines", width="standard", type="dashed"))
     ## Add data details
     if(x$object$method == "AMLE")
-      status <- 1L + x$object$CENSFLAG
+      status <- 0L - x$object$CENSFLAG
     else # method is MLE
-      status <- x$object$survreg$y[, 3L]
-    addXY(Fits[status == 1L], Act2[status == 1L],
+      status <- x$object$CENSFLAG
+    addXY(Fits[status == 0L], Act2[status == 0L],
       Plot=list(what="points", size=0.07, filled=TRUE))
-    if(any(status == 0L)) # Greater thans
-      for(i in which(status == 0L))
+    if(any(status == 1L)) # Greater thans
+      for(i in which(status == 1L))
         refLine(vertical=Fits[i], yrange=c(Act2[i], NA))
-    if(any(status == 0L)) # Less thans
-      for(i in which(status == 2L))
+    if(any(status == -1L)) # Less thans
+      for(i in which(status == -1L))
         refLine(vertical=Fits[i], yrange=c(NA, Act2[i]))
-    ## Leave interval as open circle
+    ## Leave interval as filled circle at midpoint
     ## Add some details, regression eqn and RSE
     Eqn <- coefficients(x$object, summary=FALSE)
     names(Eqn)[1L] <- ""

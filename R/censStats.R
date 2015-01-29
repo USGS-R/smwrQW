@@ -28,9 +28,10 @@
 #'values returned for \code{method}="flipped K-M" can be of class "mcens."
 #' @seealso \code{\link{mdlAMLE}}, \code{\link{mdlKM}}, \code{\link{mdlKMstats}}, 
 #'\code{\link{mdlMLE}}, \code{\link{mdlROS}}
-#' @references Helsel, D.R. 2012, Blah blah: some place, Wiley, some pages.\cr
+#' @references Helsel, D.R. 2012, Statistics for censored environmental data 
+#'using Minitab and R: New York, Wiley, 324 p.\cr
 #'Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics for
-#'multiply censored water quality data,\: Water Resources Research v. 24, n.
+#'multiply censored water quality data: Water Resources Research v. 24, n.
 #'12, pp.1997-2004
 #' @keywords univariate
 #' @examples
@@ -136,21 +137,23 @@ censStats.lcens <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
                             meanlog=step1$meanlog, sdlog=step1$sdlog)},
                    "ROS"={step1 <- mdlROS(x, method=method, alpha=alpha)
                           list(mean=step1$mean, sd=step1$sd)},
-                   "log AMLE"=mdlAMLE(x, method=method, alpha=alpha)[1:4],
-                   "AMLE"=mdlAMLE(x, method=method, alpha=alpha)[1:2],
-                   "flipped K-M"={step1 <- mdlKMstats(mdlKM(x))[[1]]
-                                  ## Compute the upper limit of the variance by
-                                  ##   the simple method
-                                  ## Compute total SS for min censor level
-                                  TSS <- step1$stdev^2*(step1$obs[1] - 1)
-                                  ## Adjust for substitute 0 for min censor level
-                                  TSS <- TSS - step1$obs[1]*step1$censored*step1$mean[3]^2
-                                  ## Account for difference in means
-                                  TSS <- TSS + step1$obs[1]*(2*step1$mean[1] -
-                                                             step1$mean[2])*step1$mean[2]
-                                  sdmax <- sqrt(TSS/(step1$obs[1] - 1))
-                                  list(mean=as.mcens(step1$mean[1] -  step1$mean[2], step1$mean[1]),
-                                       sd=as.mcens(step1$stdev, sdmax))}
+  								 "log AMLE"=mdlAMLE(x, method=method, alpha=alpha)[1:4],
+  								 "AMLE"=mdlAMLE(x, method=method, alpha=alpha)[1:2],
+  								 "flipped K-M"={step1 <- mdlKMstats(mdlKM(x))[[1]]
+  								 							 ## Compute the upper limit of the variance by
+  								 							 ##   the simple method
+  								 							 ## Compute total SS for min censor level
+  								 							 TSS <- step1$stdev^2*(step1$obs[1] - 1)
+  								 							 ## Adjust for substitute 0 for min censor level
+  								 							 TSS <- TSS - step1$obs[1]*step1$censored*step1$mean[3]^2
+  								 							 ## Account for difference in means
+  								 							 TSS <- TSS + step1$obs[1]*(2*step1$mean[1] -
+  								 							 													 	step1$mean[2])*step1$mean[2]
+  								 							 sdmax <- sqrt(TSS/(step1$obs[1] - 1))
+  								 							 # occasionally computations can set sdmax less than step1$stdev
+  								 							 sdmax <- max(sdmax, step1$stdev)
+  								 							 list(mean=as.mcens(step1$mean[1] -  step1$mean[2], step1$mean[1]),
+  								 							 		 sd=as.mcens(step1$stdev, sdmax))}
                    )
   class(retval) <- "censStats"
   return(retval)

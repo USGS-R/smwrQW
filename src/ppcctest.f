@@ -22,11 +22,11 @@
 *     error and the results are not valid.
 *
 ************************************************************************
-      SUBROUTINE ppcctest(CENSFLAG,NOBSC,RESID,R,PLEV,NUNCEN,IERR)
+      SUBROUTINE ppcctest(censin,NOBSC,RESID,R,PLEV,NUNCEN,IERR)
 *
 *     subroutine arguments
 *
-      LOGICAL CENSFLAG(*)
+      integer censin(*)
       INTEGER*4 NOBSC, NUNCEN, IERR
       DOUBLE PRECISION R,PLEV,RESID(*)
 *
@@ -37,12 +37,22 @@
       DOUBLE PRECISION DELTA,RSMOOTH(3),ZSMOOTH(3),MU,SIGMA
       INTEGER, DIMENSION(NOBSC) :: IX
       DOUBLE PRECISION, DIMENSION(NOBSC) :: X,Y,PP,QQ
-      LOGICAL, DIMENSION(NOBSC) :: XC
+      LOGICAL, DIMENSION(NOBSC) :: XC, CENSFLAG
       INTEGER, DIMENSION(:), ALLOCATABLE :: AJ, BJ, CJ
 *
 *     FUNCTION DECLARATION
 *
       DOUBLE PRECISION QNORM01, CORR, ERFC
+*
+*     Convert to logicals
+*
+      do i = 1, NOBSC
+        if(censin(i) .eq. 1) then
+          CENSFLAG(i) = .TRUE.
+        else
+          CENSFLAG(i) = .FALSE.
+        endif
+      enddo
 *
 *     SORT THE DATA AND COUNT UNIQUE DLS
 *

@@ -28,9 +28,9 @@ plot.qw <- function(x, which='All', set.up=TRUE, ...) {
   Rmks <- x@remark.codes
   Vals <- x@.Data[,2L]
   N <- length(Vals)
-  Ydata <- unique(x@analyte.name)
+  Ydata <- unique(na.omit(x@analyte.name))
   if(length(Ydata) == 1) { # good a single analyte
-    Yunits <- unique(x@reporting.units)
+    Yunits <- unique(na.omit(x@reporting.units))
     if(length(Yunits) == 1)
       Ydata <- paste(Ydata, Yunits, sep=", in ")
   }
@@ -63,7 +63,7 @@ plot.qw <- function(x, which='All', set.up=TRUE, ...) {
   if(all(is.na(DLs)))
     warning("No reporting levels")
   else {
-    X <- c(X, N+1) - 0.5
+    X <- c(X, N+1)
     DLs <- c(DLs, DLs[N])
     Ms <- x@analyte.method
     Ms <- c(Ms, Ms[N])

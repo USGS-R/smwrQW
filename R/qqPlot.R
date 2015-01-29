@@ -219,6 +219,7 @@ qqPlot.qw <- function(x, y, # data
 	##    2014May22 DLLorenz Original coding
 	##
 	## Just pass to qq after converting y
+	x <- as.lcens(x)
 	if(!missing(y))
 		y <- as.lcens(y)
 	retval <- qqPlot.lcens(x, y,

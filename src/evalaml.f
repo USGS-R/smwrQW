@@ -63,10 +63,10 @@
 *     IERR     error code
 *
 **********************************************************************
-      SUBROUTINE EVALAML(NOBSC,NPAR,XLCAL,YLCAL,YD,CENSFLAG,
+      SUBROUTINE EVALAML(NOBSC,NPAR,XLCAL,YLCAL,YD,censin,
      &     PARMLE,PARAML,BIAS,CVX,SBIAS,SCVX,
      &     STDDEV,PVAL,COV,RESID,RSQ,LLR,SCORR,LLRAML,
-     $     PLEVAML,DF,LOGNORM,YPRED,AIC,SPPC,IERR)
+     $     PLEVAML,DF,login,YPRED,AIC,SPPC,IERR)
 *     
 *     dimensional parameters
 *
@@ -74,7 +74,7 @@
 *
 *     subroutine arguments
 *
-      LOGICAL CENSFLAG(*),LOGNORM
+      INTEGER censin(*), login
       INTEGER*4 NOBSC,NPAR,IERR,DF
       DOUBLE PRECISION YD(*),YLCAL(*),RESID(*),PVAL(*)
       DOUBLE PRECISION PARAML(*),PARMLE(*),BIAS(*),SBIAS(*),
@@ -85,6 +85,7 @@
 *
 *     local vars
 *
+      LOGICAL CENSFLAG(MAXOBSC),LOGNORM
       DOUBLE PRECISION TPAR(MAXPARMS+1),XLIKE,XLIKEP
       DOUBLE PRECISION CV(MAXPARMS+1,MAXPARMS+1),YLCAL2(MAXOBSC),
      &     CV_M(MAXPARMS+1,MAXPARMS+1),
@@ -106,6 +107,20 @@
       IF(NOBSC .gt. MAXOBSC) IERR=2
       IF(IERR .ne. 0) RETURN
 *
+*     Convert to logicals
+*
+      if(login .eq. 1) then
+        LOGNORM = .TRUE.
+      else
+        LOGNORM = .FALSE.
+      endif
+      do i = 1, NOBSC
+        if(censin(i) .eq. 1) then
+          CENSFLAG(i) = .TRUE.
+        else
+          CENSFLAG(i) = .FALSE.
+        endif
+      enddo
 *
 *     Copy XLCAL input to X dimensions for all routines
 *
