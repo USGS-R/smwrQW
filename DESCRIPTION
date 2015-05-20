@@ -22,7 +22,7 @@ Description: This package provides tools for the analysis and graphing
     of censored data, focussing on water-quality data. It provides
     a uniform user interface to many different methods for the
     analysis.
-License: file LICENSE
+License: CC0
 LazyLoad: yes
 Collate:
     'qw-class.R'
