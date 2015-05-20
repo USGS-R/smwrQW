@@ -46,7 +46,14 @@
 #' @note The class "qw" is intended to be a flexible and user-friendly
 #'way to store and manage water-quality data. The meta data that are stored
 #'with the numeric and remark data are essential for unbiased statistical
-#'analysis and for reducing other errors in interpretation or computation.
+#'analysis and for reducing other errors in interpretation or computation.\cr
+#'
+#' Objects of class "qw" also have a slot named "rounding" that controls how the 
+#'data are roudend when printed. That slot is an integer vector of length 2, the
+#'first element is the maximum number of significant figures and the second is the
+#'maximum number of decimal places to show. The default value used by \code{as.qw}
+#'is c(2L,3L). It can be changed by specifically modifying the slot value.
+#'
 #' @seealso \code{\link{importNWISqw}}
 #' @references Lorenz, D.L., in preparation
 #' @exportMethod as.qw

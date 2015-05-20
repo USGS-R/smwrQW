@@ -1,5 +1,5 @@
 # A Monte Carlo simulation for summary statistical methods (multiple DL). 
-library(USGSwsQW)
+library(smwrQW)
 # Enter the random seed for reproducibility
 set.seed(343)
 # Enter the number simulations each set of controls
@@ -8,6 +8,7 @@ NR <- 500
 NS <- c(15L, 25L, 50L)
 # Enter the nominal censoring levels
 Cen <- c( .1, .25, .5)
+Ce1 <- sum(Cen)/length(Cen) # The theoretical censoring proportion
 # Enter the log standard deviations of the data
 Sd <- c(.25, .5, .75)
 # Enter the skewness values of the data (0 is log-normal)
@@ -20,7 +21,8 @@ Length <- NR*length(NS)*length(Sd)*length(Skew)
 # The size of the sample
 MCN <- integer(Length)
 # The population stats (of the logs)
-MCPM <- MCPS <- MCPK <- MCPC <- double(Length)
+# Suffix M is mean, suffix S is std. dev., K is skewness, C is censoring
+MCPS <- MCPK <- MCPC <- double(Length)
 # The sample stats (of the data)
 MCSM <- MCSS <- MCSC <- double(Length)
 # The log ROS estimates (of the logs and the data)

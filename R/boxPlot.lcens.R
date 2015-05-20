@@ -7,7 +7,7 @@
 #' If group is numeric, then the boxes will be plotted along a continuous
 #'numeric axis. Otherwise the x-axis will be discrete groups.
 #'
-#' @aliases boxPlot.lcens boxPlot.qw
+#' @aliases boxPlot.lcens boxPlot.qw boxPlot.data.frame
 #' @param \dots the data to plot.
 #' @param group create groups of a single left-censored data vector. Invalid for
 #'anything else
@@ -37,6 +37,8 @@
 #'that are greater than the censoring level. In those cases, a red bar is
 #'drawn on the box plot at the largest estimated value.
 #'
+#'The default method for data frames in smwrGraphs is replaced with a method 
+#'that supports data frames that contain columns of class "qw" or "lcens." 
 #' @keywords hplot
 #' @seealso \code{\link{fillIn}}
 #' @examples
@@ -211,4 +213,53 @@ boxPlot.qw <- function(..., group=NULL, # data
                           yaxis.log, yaxis.range, xrange, ylabels, xlabels, xlabels.rotate,
                           xtitle, ytitle, caption, margin)
   invisible(retval)
+}
+
+#' @rdname boxPlot.lcens
+#' @export
+#' @method boxPlot data.frame
+boxPlot.data.frame <- function(..., group=NULL, # data
+															 Box=list(type="truncated", show.counts=TRUE,
+															 				 censorbox = NA, censorstyle = "censored",
+															 				 nobox=5, width="Auto", fill="none",
+															 				 truncated=c(10,90)), # b&w controls
+															 yaxis.log=FALSE, yaxis.range=c(NA,NA), # y-axis controls
+															 ylabels="Auto", xlabels="Auto",
+															 xlabels.rotate=FALSE, # labels
+															 xtitle="", ytitle="",  caption="", # axis titles and caption
+															 margin=c(NA,NA,NA,NA)) { # margin control
+	## Process data to plot, all must be class "data.frame" and numeric, lcens, or qw
+	##  data will be processed--all other classes of columns skipped.
+	if(!is.null(group))
+		stop("Data frames cannot be grouped by boxPlot")
+	dots <- c(...) # creates a list--drops data.frame attributes
+	dots <- dots[sapply(dots, is.numeric)]
+	anyCens <- any(sapply(dots, censoring) != "none")
+	# Convert all to lcens if necessary
+	if(anyCens) {
+		dots <- lapply(dots, as.lcens)
+	} else { # force to numeric
+		dots <- lapply(dots, as.numeric)
+	}
+	xrange <- c(0, length(dots) + 1)
+	xtoplot <- seq(length(dots))
+	## Fix defaults for Box
+	Box <- setDefaults(Box, type="truncated", show.counts=TRUE, censorbox=NA,
+										 censorstyle="censored", nobox=5, width="Auto",  fill="none",
+										 truncated=c(10,90))
+	Box$type <- match.arg(Box$type, c("truncated", "simple",
+																		"tukey", "extended"))
+	## Compute the stats and produce the boxplot
+	if(dev.cur() == 1L)
+		setGD("BoxPlot")
+	if(anyCens) {
+		statsret <- boxPlotCensStats(dots, Box, yaxis.log)
+	} else {
+		statsret <- boxPlotStats(dots, Box, yaxis.log)
+	}
+	## What gets passed from statsret?
+	retval <- renderBoxPlot(xtoplot, statsret$boxes, Box, statsret$explan, statsret$z,
+													yaxis.log, yaxis.range, xrange, ylabels, xlabels, xlabels.rotate,
+													xtitle, ytitle, caption, margin)
+	invisible(retval)
 }

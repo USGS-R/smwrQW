@@ -14,7 +14,8 @@
 #'length of the water-quality data. See \bold{Details}.
 #' @param analyte the name of the analyte, if not supplied, generated from \dots.
 #' @param pcode the parameter code of the analyte or any othe unique identifier the user chooses.
-#' @param gt0 force values to be strictly non-negative on subtraction?
+#' @param gt0 logical, if \code{TRUE}, then force values to be strictly non-negative on 
+#'subtraction, otherwise negative values are permitted.
 #' @return An object of class "qw" that is the result of the requested operations.
 #' @export add
 add <- function(..., analyte, pcode="", gt0=TRUE) {

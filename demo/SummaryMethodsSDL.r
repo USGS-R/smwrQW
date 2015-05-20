@@ -1,5 +1,5 @@
 # A Monte Carlo simulation for summary statistical methods (single DL). 
-library(USGSwsQW)
+library(smwrQW)
 # Enter the random seed for reproducibility
 set.seed(340)
 # Enter the number simulations each set of controls
@@ -9,7 +9,8 @@ NS <- c(15L, 25L, 50L)
 # Enter the nominal censoring level
 Cen <- c( .1, .25, .5)
 # Enter the log standard deviations of the data
-Sd <- c(.25, .5, .75)# Enter the skewness values of the data (0 is log-normal)
+Sd <- c(.25, .5, .75)
+# Enter the skewness values of the data (0 is log-normal)
 Skew <- c(-.5, -.25, 0, .25, .5)
 # Done with Specs
 # Create a function to convert the "mcens" output to simple numeric
@@ -19,7 +20,8 @@ Length <- NR*length(NS)*length(Cen)*length(Sd)*length(Skew)
 # The size of the sample
 MCN <- integer(Length)
 # The population stats (of the logs)
-MCPM <- MCPS <- MCPK <- MCPC <- double(Length)
+# Suffix M is mean, suffix S is std. dev., K is skewness, C is censoring
+MCPS <- MCPK <- MCPC <- double(Length)
 # The sample stats (of the data)
 MCSM <- MCSS <- MCSC <- double(Length)
 # The log ROS estimates (of the logs and the data)
@@ -101,6 +103,7 @@ for(Sk1 in Skew) {
 
 # Construct dataset of all results
 AllStatsSDL <- data.frame(MCN, MCPS, MCPK, MCPC, MCSM, MCSS, MCSC, LRLM, LRLS, LRM, LRS, 
-													MLLM, MLLS, MLM, MLS, AMLM, AMLS, AMM, AMS, KMM, KMS, SSM, SSS, SDM, SDS)
+													MLLM, MLLS, MLM, MLS, AMLM, AMLS, AMM, AMS, KMM, KMS, SSM, SSS, 
+													SDM, SDS, TFM, TFS)
 
 

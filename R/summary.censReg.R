@@ -26,12 +26,16 @@
 summary.censReg <- function(object, correlation=FALSE, ...) {
   ## Coding history:
   ##    2012Dec31 DLLorenz Initial Coding
-	##    2014Jan06 DLLorenz Added pseudo R2
-	##    2014Oct16 DLLorenz bug fix on flagobs
+  ##    2014Jan06 DLLorenz Added pseudo R2
+  ##    2014Oct16 DLLorenz bug fix on flagobs
+  ##    2015Jan30 DLLorenz Added error stop
   ##
-	## Pseudo R-squared McKelvey-Zavoina method, which tries to replicate
+  if(object$IERR > 0L) {
+    stop("\nFatal error in censReg, error code: ", object$IERR, "\n\n")
+  }
+  ## Pseudo R-squared McKelvey-Zavoina method, which tries to replicate
   ## the R-squared of OLS
-	vmat <- var(object$XLCAL[,-1, drop=FALSE])
+  vmat <- var(object$XLCAL[,-1, drop=FALSE])
   ## Correct to Sum of squares
   vmat <- vmat * (object$NOBSC - 1)
   cf <- object$PARAML[seq(2L, object$NPAR)]

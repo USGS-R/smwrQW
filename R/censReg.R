@@ -27,7 +27,24 @@
 #' @note A special feature of \code{censReg} is the ability to expand
 #'the formula passed as a variable rather than as an expressly entered
 #'formula. This feature is intended to facilitate certain kinds of scripts that 
-#'construct a formula from combinations of vairabales in a dataset.
+#'construct a formula from combinations of variables in a dataset.
+#'
+#' Objects of class "censReg" have these methods:
+#'\describe{
+#'\item{coef}{extract the regression coefficents}
+#'\item{extractAIC}{compute another information criterion (AIC) value}
+#'\item{fitted}{extract the fitted values}
+#'\item{logLik}{compute the log-likelihood of the fitted model}
+#'\item{nobs}{extract the number of observations used to fit the model}
+#'\item{plot}{create some basic diagnostic plots}
+#'\item{predict}{predict new values from the model}
+#'\item{print}{print the model}
+#'\item{residuals}{extract the residuals from the model}
+#'\item{rmse}{compute the root mean squared error (residual standard error)}
+#'\item{summary}{compute summary information about the model}
+#'\item{vcov}{extract the variance-covariance matrix from the model}
+#'\item{vif}{compute the variance inflation factors for the explanatory variables in the model}
+#'}
 #' @seealso \code{\link{lm}}, \code{\link{survreg}}
 #' @references Lorenz, 2015, smwrQW.\cr
 #'Breen, R., 1996, Regression models: censored, sample selected, or truncated data:

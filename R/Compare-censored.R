@@ -28,6 +28,10 @@
 setMethod("Compare", signature(e1 = "lcens", e2="numeric"), function(e1, e2) {
 	e1 <- as.mcens(e1)
 	if(.Generic %in% c("<", "<=", ">", ">=")) {
+		# Tweak upper range if left censored--makes truly less than
+		e1@.Data[,2L] <- ifelse(e1@.Data[,1L] == -Inf, 
+														e1@.Data[,2L] - e1@.Data[,2L] * .Machine$double.eps,
+														e1@.Data[,2L])
 		retval <- callGeneric(e1@.Data[,1L],e2)
 		ret2 <- callGeneric(e1@.Data[,2L],e2)
 		return(ifelse(retval != ret2, NA, retval))
@@ -99,6 +103,10 @@ setMethod("Compare", signature(e1 = "qw", e2="numeric"), function(e1, e2) {
 setMethod("Compare", signature(e1 = "numeric", e2="lcens"), function(e1, e2) {
 	e2 <- as.mcens(e2)
 	if(.Generic %in% c("<", "<=", ">", ">=")) {
+		# Tweak upper range if left censored--makes truly less than
+		e2@.Data[,2L] <- ifelse(e2@.Data[,1L] == -Inf, 
+														e2@.Data[,2L] - e2@.Data[,2L] * .Machine$double.eps,
+														e2@.Data[,2L])
 		retval <- callGeneric(e1, e2@.Data[,1L])
 		ret2 <- callGeneric(e1, e2@.Data[,2L])
 		return(ifelse(retval != ret2, NA, retval))

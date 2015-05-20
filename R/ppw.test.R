@@ -111,7 +111,7 @@ ppw.test <- function(x, y, alternative="two.sided", OBrienFleming=TRUE,
     levels=c("x", "y"))
   data <- c(x, y)
   ## Data must be rounded for computations within survfit
-  data <- signif(data, 9)
+  data@.Data[,1L] <- signif(data@.Data[,1L], 9)
   alternative <- pmatch(alternative, c("two.sided", "greater", "less"))
   if(is.na(alternative))
     stop('Invalid choice for alternative, must match "two.sided", "greater", or "less"')

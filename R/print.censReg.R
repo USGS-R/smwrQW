@@ -19,12 +19,25 @@ print.censReg <- function(x, digits=4, ...) {
   ##    2012Sep25 DLLorenz Initial Coding
   ##    2012Dec31 DLLorenz Roxygenized
   ##    2013Jan21 DLLorenz Added nobs and ncen
-  ##
+  ##    2015Jan30 DLLorenz Added error messages
   cat("Call:\n")
   dput(x$call)
-  if(x$IERR > 0) {
-    cat("\nFatal error in censReg, error code: ", x$IERR, "\n\n", sep='')
-    return(invisible(x))
+  if(x$IERR == -201L) {
+    warning("Excessive censoring, greater than 80%")
+  } else if(x$IERR == -202L) {
+    warning("Excessive censoring, fewer than 3 uncensored values for each parameter")
+  } else if(x$IERR == 1L) {
+    stop("Too many parameters")
+  } else if(x$IERR == 2L) {
+    stop("Too many observations")
+  } else if(x$IERR == 201L) {
+    stop("Excessive censoring, greater than 90%")
+  } else if(x$IERR == 202L) {
+    stop("Excessive censoring, fewer than 1.5 uncensored values for each parameter")
+  } else if(x$IERR == 203L) {
+    stop("Variance of uncensored values is 0")
+  } else if(x$IERR > 0L) {
+    stop("\nFatal error in censReg, error code: ", x$IERR, "\n")
   }
   cat("\nCoefficients:\n")
   ctab <- coef(x, summary=TRUE)
