@@ -57,9 +57,12 @@ c.qw <- function (..., recursive=FALSE) {
   analyte.name <- unlist(lapply(all.qw, function(x) x@analyte.name))
   unique.code <- unlist(lapply(all.qw, function(x) x@unique.code))
   mat <- cbind(values=lower.val, value2=upper.val)
-  return(new("qw", mat, remark.codes=remark.codes, value.codes=value.codes,
-              reporting.level=reporting.level, reporting.method=reporting.method,
-              reporting.units=reporting.units, analyte.method=analyte.method,
-              analyte.name=analyte.name, unique.code=unique.code, rounding=c(2,3),
-              names=as.character(seq(length(lower.val)))))
+  retval <- new("qw", mat, remark.codes=remark.codes, value.codes=value.codes,
+  							reporting.level=reporting.level, reporting.method=reporting.method,
+  							reporting.units=reporting.units, analyte.method=analyte.method,
+  							analyte.name=analyte.name, unique.code=unique.code, rounding=c(2,3),
+  							names=as.character(seq(length(lower.val))))
+  # Not sure why necessary
+  retval@names <- as.character(seq(length(lower.val)))
+  return(retval)
 }

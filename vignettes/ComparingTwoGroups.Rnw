@@ -1,0 +1,129 @@
+\documentclass{article}
+\parskip 6pt
+\usepackage[margin=1.25in]{geometry}
+%\VignetteIndexEntry{Comparing Two Groups}
+%\VignetteDepends{smwrQW}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\raggedright
+\title{Comparing Two Groups}
+
+\author{Dave Lorenz}
+
+\maketitle
+
+These examples demonstrate some of the functions and statistical methods for comparing two groups that are available in the \texttt{smwrQW} pacakge. The examples in this vignette use the CuZn dataset from the \texttt{NADA} package. The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph gets the data and converts the column named ''Zn'' to class ''lcens.'' With the exception of the binary method, only censored data techniques are included in this vignette. Techniques that apply to single reporting limits and can require recensoring and simple substitution are not included, as the censored techniques can be used directly by the functions in \texttt{smwrQW}.
+
+
+<<echo=TRUE>>=
+# Load the smwrQW package
+library(smwrQW)
+# And the data
+data(CuZn, package="NADA")
+# Convert the Zn data, Cu is not used
+CuZn <- transform(CuZn, Zn=as.lcens(Zn, censor.codes=ZnCen))
+@
+
+\eject
+\section{Binary Method}
+
+The binary method simply recodes values as 0 or 1 depending on whether the value is less than or greater than or equal to a specified criterion. The recoded values can then be tabulated and tested for the equality of proportions.
+
+The example below illustates the recoding of values and used the \texttt{prop.test} to test for the equality of proportions between the ''AlluvialFan'' and ''BasinTrough'' geologic zones. The \texttt{code01} function returns a data frame of values with missing values removed from the input arguments. The first step is to subset the CuZn dataset to remove the Cu data and the missing values. The [[1]] extraction from the returned value from the \texttt{code01} function simply converts the data to a vector of 0/1 values rather than a data frame. The data must be tabulated with the rows representing the groups, the first argument to \texttt{table} and the columns the counts of the 0/1 data. The printed output from the \texttt{prop.test} indicates that about 29.85 percent of the AlluvailFan zone are 0, less than the largest reporting level and 24 percent of the BasinTrough zone are 0. The p-value, 0.6222, indicates that the null hypothesis of equal proportions cannot be rejected at the 0.05 significance level.
+
+<<echo=TRUE>>=
+# Subset the data to remove the Cu (columns 1 and 2) and the missing values
+ZnData <- na.omit(CuZn[, 3:5])
+# Add a column of 0/1 values
+ZnData <- transform(ZnData, Zn01=code01(Zn)[[1]])
+# Tabulate the 0/1 data and print it
+ZnTbl <- with(ZnData, table(Zone, Zn01))
+print(ZnTbl)
+# And the test
+prop.test(ZnTbl)
+@
+
+
+\eject
+\section{Maximum Likelihood Estimation Method} 
+
+Comparing two groups using maximum likelihood estimation method extends censored regression as the t-test extends ordinary least squares--the test is constructed by relating a censored response variable to a 2-level factor. 
+
+An important first step in any parametric statitistical analysis is to plot the data. Figure 1 shows 4 graphs, two for each zone, one log-transformed and one untransformed. It is clear that there is no reason to pursue the untransformed approach and the log-transformed approach looks reasonable, but the AlluvialFan Zinc does have one very large outlying value. The coefficient for ZoneBasinTrough is 0.2575, measured in natural log units and represents the difference between the AlluvailFan and the BasinTrough Concentrations of zinc. The p-value, 0.1105, indicates that the null hypothesis of equal means cannot be rejected at the 0.05 significance level.
+
+<<echo=TRUE>>=
+setSweave("graph01", 6 ,6)
+# Set layout for 2 graphs
+AA.lo <- setLayout(num.cols=2, num.rows=2)
+# Create the graphs
+setGraph(1, AA.lo)
+with(subset(CuZn, Zone=="AlluvialFan"), qqPlot(Zn,
+  ytitle="Alluvial Zinc", yaxis.log=FALSE))
+setGraph(2, AA.lo)
+with(subset(CuZn, Zone=="BasinTrough"), qqPlot(Zn,
+  ytitle="BasinTrough Zinc", yaxis.log=FALSE))
+setGraph(3, AA.lo)
+with(subset(CuZn, Zone=="AlluvialFan"), qqPlot(Zn,
+  ytitle="Alluvial Zinc", yaxis.log=TRUE))
+setGraph(4, AA.lo)
+with(subset(CuZn, Zone=="BasinTrough"), qqPlot(Zn,
+  ytitle="BasinTrough Zinc", yaxis.log=TRUE))
+graphics.off()
+@
+
+\includegraphics{graph01.pdf}
+\paragraph{}
+
+\textbf{Figure 1.} Q-normal plots to check log-normal distribution assumption.
+
+The \texttt{censReg} function is used for regression and comparing two groups. It functions much like any modeling function, like \texttt{lm} in R---it constructs the model from a formula and data and has other options similar to \texttt{lm}. Its use for the censored equivalent of the two-sample t-test is shown below. Because the data are only left-censored, it uses adjusted maximum likelihood estimation (AMLE), which eliminates first-order bias from the maximum likelihood estimate.
+
+<<echo=TRUE>>=
+# The two-sample test:
+censReg(Zn ~ Zone, data=CuZn, dist="lognormal")
+@
+
+\eject
+\section{Nonparametric Methods} 
+
+Two nonparametric methods are available in the \texttt{smwrQW} package for comparing two groups---the generalized Wilcoxon test and a test that compares the flipped survival curves. The details for both are described by Helsel (2012).
+
+The generalized Wilcoxon test is illustrated in the example below using the CuZn data. There are two options for the method used to compute the test, ''gehan'' and ''peto.'' The ''gehan'' method computes the Gehan test statistic and ''peto'' computes the Peto-Prentice or Peto-Peto test statistic; both are described by Helsel (2012). The default method selects ''gehan'' if the data are right- or multiply-censored and ''peto'' otherwise. Both methods return p-values less than the 0.05 alpha level and reject the null hypothesis of no difference. Not shown in this example, but data with a single reporting level could use the Wilcoxon rank-sum test using simple substitution for the censored values.
+
+<<echo=TRUE>>=
+# The Gehan two-sample test:
+with(CuZn, genWilcox.test(Zn, Zone, method="gehan"))
+# The Peto-Prentice two-sample test:
+with(CuZn, genWilcox.test(Zn, Zone, method="peto"))
+@
+
+The test that compares flipped survival curves can be used for two or more groups and is executied by the \texttt{censKSample.test}. There are two types of the test, ''Peto'' and ''log-rank''; both are described by Helsel (2012). For these data, the ''Peto'' type returns a p-value less than 0.05 and the ''log-rank'' type returns a p-value greater than 0.05, thus giving conflicting conclusions. 
+
+<<echo=TRUE>>=
+# The Peto type two-sample test
+with(CuZn, censKSample.test(Zn, Zone, type="Peto"))
+# The log-rank type two-sample test
+with(CuZn, censKSample.test(Zn, Zone, type="log-rank"))
+@
+
+\begin{thebibliography}{9}
+
+\bibentry{H12}
+Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab and R: New York, Wiley, 324 p.
+
+\bibentry{HC}
+Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics for multiply censored water quality data: Water Resources Research v. 24, n. 12, p.1997--2004
+
+\bibentry{HH}
+Helsel, D.R., and Hirsch, R.M., 2002, Statistical methods in water resources: U.S. Geological Survey Techniques of Water-Resources Investigations, book 4, chap. A3, 522 p.
+
+\bibentry{DL}
+Lorenz, D.L., 2016, smwrQW--an R package for managing and analyzing water-quality data, version 1.0.0: U.S. Geological Survey Open File Report 2016-XXXX.
+
+\bibentry{S+}
+Lorenz, D.L., Ahearn, E.A., Carter, J.M., Cohn, T.A., Danchuk, W.J., Frey, J.W., Helsel, D.R., Lee, K.E., Leeth, D.C., Martin, J.D., McGuire, V.L., Neitzert, K.M., Robertson, D.M., Slack, J.R., Starn, J., Vecchia, A.V.,Wilkison, D.H., and Williamson, J.E., 2011, USGS library for S-PLUS for Windows---Release 4.0: U.S. Geological Survey Open-File Report 2011-1130.
+
+\end{thebibliography}
+
+\end{document}

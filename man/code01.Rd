@@ -18,10 +18,12 @@ code01(..., criteria)
 in \code{\dots} or not supplied. For any argument in \code{\dots} that does not have
 a critical value, the critical value is the largest censoring level or if the data have
 no censored values, the median. The critical value can never be smaller than
-the largest censoring level and will be changed with a warning message.}
+the largest censoring level and will be changed with a warning message. A special case
+is for integer values that have a minimum of 0---for those data the default criterion is to
+return 0 if the value is 0 and return 1 for any other value.}
 
 \item{\dots}{either a data frame that contains columns of class "qw" or any combination of
-individual vectors of class "numeric," "lcens," or "qw." Missing values are
+individual vectors of class "integer," "numeric," "lcens," or "qw." Missing values are
 removed before processing.}
 }
 \value{

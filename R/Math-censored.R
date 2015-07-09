@@ -19,24 +19,59 @@ setMethod("Math", "lcens", function(x) {
   if(length(x) == 0L)
     return(x) # Do nothing
   switch(.Generic,
-         log={lt0 <- which(x@.Data <= 0)
-              tmp <- log(pmax(x@.Data, 0))
-              tmp[lt0] <- -100
-              x@.Data <- tmp
-              x},
-         log10={lt0 <- which(x@.Data <= 0)
-              tmp <- log10(pmax(x@.Data, 0))
-              tmp[lt0] <- -100
-              x@.Data <- tmp
-                x},
-         sqrt={lt0 <- which(x@.Data < 0)
-               tmp <- log10(pmax(x@.Data, 0))
-               tmp[lt0] <- -100
-               x@.Data <- tmp
-               x},
-         exp={x@.Data <- exp(x@.Data)
+  			 log={lt0 <- which(x@.Data[, 2L] <= 0) # protect against neg DL
+  			 		 tmp <- log(pmax(x@.Data, 0))
+  			 		 tmp[lt0, 2L] <- tmp[lt0, 1L]- 100
+  			 		 x@.Data <- tmp
+  			 		 x},
+  			 log10={lt0 <- which(x@.Data[, 2L] <= 0)
+  			 			 tmp <- log10(pmax(x@.Data, 0))
+  			 			 tmp[lt0, 2L] <- tmp[lt0, 1L]- 100
+  			 			 x@.Data <- tmp
+  			 			 x},
+  			 sqrt={lt0 <- which(x@.Data[, 2L] < 0)
+  			 			tmp <- sqrt(pmax(x@.Data, 0))
+  			 			tmp[lt0, 2L] <- tmp[lt0, 1L]- 100
+  			 			x@.Data <- tmp
+  			 			x},
+  			 exp={x@.Data <- exp(x@.Data)
               x},
          stop(gettextf("'%s' not defined for lcens objects", .Generic),
               domain=NA))
   }
+)
+
+#' @rdname Math-censored
+#' @aliases Math,mcens-method
+setMethod("Math", "mcens", function(x) {
+	if(length(x) == 0L)
+		return(x) # Do nothing
+	x <- switch(.Generic,
+							log={tmp <- log(pmax(x@.Data, 0))
+									 x@.Data <- tmp
+									 x},
+							log10={tmp <- log10(pmax(x@.Data, 0))
+										 x@.Data <- tmp
+										 x},
+							sqrt={tmp <-sqrt(x@.Data)
+										x@.Data <- tmp
+										x},
+							exp={x@.Data <- exp(x@.Data)
+									 x},
+							stop(gettextf("'%s' not defined for mcens objects", .Generic),
+									 domain=NA))
+	natest <- x@.Data[, 1L] == -Inf & x@.Data[, 2L] == -Inf # Both less that 0
+	x@.Data[natest, ] <- c(NA_real_, NA_real_)
+	return(x)
+}
+)
+
+#' @rdname Math-censored
+#' @aliases Math,qw-method
+setMethod("Math", "qw", function(x) {
+	if(length(x) == 0L)
+		return(x) # Do nothing
+	stop(gettextf("'%s' not defined for mcens objects", .Generic),
+									 domain=NA)
+}
 )

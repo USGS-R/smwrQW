@@ -10,7 +10,8 @@
 \arguments{
 \item{x}{an object of class "censReg"---output from \code{censReg}}
 
-\item{which}{either "All" or any of a sequence from 1 to 7 indicating which plot, see \bold{Details}.}
+\item{which}{either "All" or any of a sequence from 1 to 7 indicating which plot,
+see \bold{Details}.}
 
 \item{set.up}{set up the graphics page?}
 
@@ -39,8 +40,14 @@ Numeric values for \code{which}:
 \item Partial residual plots for each explanatory variable
 }
 }
+\note{
+The q-normal plot (number 5) plots the working residuals and portrays fits
+for relatively small percentages of censoring very well. For larger percentages of
+censoring, the q-normal plot in \code{plot.censReg} (number 2) can portray the
+normality of the residuals more accurately.
+}
 \seealso{
-\code{\link{censReg}}
+\code{\link{censReg}}, \code{\link{plot.censReg}}
 }
 \keyword{hplot}
 \keyword{regression}

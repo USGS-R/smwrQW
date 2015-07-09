@@ -42,15 +42,15 @@ plot.ppw <- function(x, which="All", set.up = TRUE, labels, ...) {
   AA.lo <- setLayout(num.cols=2, shared.y=1, yleft=yleft)
   Ord <- order(x$PPWmat[, 3L])
   AA.gr <- setGraph(1, AA.lo)
-  dotPlot(x$PPWmat[Ord, 3L], labels[Ord], xtitle="PPW Scaled Difference",
-          xlabels=5, margin=AA.gr)
+  dotPlot(x$PPWmat[Ord, 3L], labels[Ord], xtitle="Scaled Difference",
+          xlabels=5, margin=AA.gr, jitter.y=FALSE)
   refLine(vertical=0)
   refLine(vertical=mean(x$PPWmat[, 3L]), Plot=list(color="blue"))
   AA.gr <- setGraph(2, AA.lo)
   mind <- x$PPWmat[Ord, 4L]
   maxd <- x$PPWmat[Ord, 5L]
   dotPlot(as.mcens(mind, maxd), labels[Ord], xtitle="Computed Difference",
-          xlabels=5, margin=AA.gr)
+          xlabels=5, margin=AA.gr, jitter.y=FALSE)
   refLine(vertical=0)
   refLine(vertical=median(as.mcens(mind, maxd)), Plot=list(color="blue"))
   invisible(x)

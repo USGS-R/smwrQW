@@ -5,7 +5,7 @@
 \title{Test for Difference in Censored Samples}
 \usage{
 genWilcox.test(x, y, alternative = "two.sided", method = "best", data.names,
-  gehan.seed = 346)
+  gehan.seed = 0)
 }
 \arguments{
 \item{x}{the samples from each group. Forced to the appropriate class.
@@ -23,8 +23,9 @@ to use for the analysis. See \bold{Details}.}
 \item{data.names}{character string to be used to explain
 the data. Default names are derived from the data arguments.}
 
-\item{gehan.seed}{an single integer value to set the seed to
-compute the variance of the Gehan statistic.}
+\item{gehan.seed}{an integer value to set the seed to
+compute the variance of the Gehan statistic. If 0 (the default), then
+use equation 9.5 from Helsel (2012) to compute the variance.}
 }
 \value{
 An object of class "htest" that inherits "genWilcox."
@@ -53,7 +54,7 @@ the left-censored data so that small values become large and left-censored
 values become right-censored values and adapt nonparametric techniques from
 survival analysis. The results from \code{survfit} are printed as the sample
 estimates when printing the output, the important columns are records,
-the numner in each group; events, the number of uncensored values; and
+the number in each group; events, the number of uncensored values; and
 median, the group median.\cr
 A \code{plot} method is supported for the returned object.
 }

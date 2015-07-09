@@ -5,14 +5,16 @@
 #'value.
 #' 
 #' @param \dots either a data frame that contains columns of class "qw" or any combination of
-#'individual vectors of class "numeric," "lcens," or "qw." Missing values are
+#'individual vectors of class "integer," "numeric," "lcens," or "qw." Missing values are
 #'removed before processing.
 #' @param criteria a vector indicating the critical values for each repsective value in
 #'\code{\dots}. May be a named vector containing critical values for the named argument
 #'in \code{\dots} or not supplied. For any argument in \code{\dots} that does not have
 #'a critical value, the critical value is the largest censoring level or if the data have
 #'no censored values, the median. The critical value can never be smaller than
-#'the largest censoring level and will be changed with a warning message.
+#'the largest censoring level and will be changed with a warning message. A special case
+#'is for integer values that have a minimum of 0---for those data the default criterion is to
+#'return 0 if the value is 0 and return 1 for any other value.
 #' @return A data frame containing the binary coded values. Each column has an attribute
 #'called "critical.value" that reports the critical value used to recode the values in 
 #'that column. The column names are taken from \code{\dots}; the rownames are derived 
@@ -39,10 +41,18 @@ code01.default <- function(..., criteria) {
   } else
   	names(dots) <- make.names(names(dots), unique=TRUE)
   # Check that all are numeric, etc
-  keep <- sapply(dots, function(col) class(col)[1L] %in% c("numeric", "qw", "lcens"))
+  keep <- sapply(dots, function(col) class(col)[1L] %in% 
+  							 	c("integer", "numeric", "qw", "lcens"))
   if(any(!keep))
-    stop("not all data are numeric, qw, or lcens")
+    stop("not all data are integer, numeric, qw, or lcens")
+  ## Capture special case
+  special <- sapply(dots, function(col) class(col)[1L] == "integer")
+  if(any(special)) {
+  	# check in min is 0
+  	special[special] <- sapply(dots[special], function(col) min(col) == 0L)
+  }
   dots <- do.call(data.frame, dots)
+  special <- names(dots)[special]
   # OK, start processing, invoke na.omit to remove any rows with missings and trim Data
   ret.rows <- as.character(seq(nrow(dots)))
   dots <- na.omit(dots)
@@ -57,7 +67,7 @@ code01.default <- function(..., criteria) {
   	criteria <- MaxCen
   } else if(is.null(names(criteria))) {
   	if(length(criteria) != length(dots))
-  		stop("length of criteria must match the other arguemnts if not named")
+  		stop("length of criteria must match the other arguments if not named")
   	names(criteria) <- names(MaxCen)
   } else {
   	criteria <- criteria[names(MaxCen)]
@@ -68,8 +78,12 @@ code01.default <- function(..., criteria) {
   for(i in names(criteria)) {
   	## If uncensored
   	if(MaxCen[i] == -Inf) {
-  		if(!is.finite(criteria[i])) # nothing specified, use median
+  		if(!is.finite(criteria[i])) # nothing specified, use median unless special
+  			if(i %in% special) {
+  				criteria[i] <- 0.5
+  			} else {
   			criteria[i] <- median(dots[[i]])
+  			}
   	} else { # censored
   		if(is.na(criteria[i])) { # nothing specified, use max cen
   			criteria[i] <- MaxCen[i]

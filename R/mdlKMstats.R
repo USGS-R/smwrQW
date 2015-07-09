@@ -26,7 +26,7 @@ mdlKMstats <- function(x, probs=c(.25, .5, .75)) {
   ## the minimum 
   pfun <- function(nused, time, surv, n.risk, n.event, probs, type) {
     ## Compute the mean of the curve, with "start.time" as 0
-    ##   start by drawing rectangles under the curve
+    ##   start by drawing rectangles under the curve a reative frequency histogram with unequal bin widths
     start.time <- min(time)
     n <- length(time)
     delta <- diff(c(start.time, time))
@@ -41,10 +41,13 @@ mdlKMstats <- function(x, probs=c(.25, .5, .75)) {
       biasadj <- ifelse(bias == 0, 0, 0 - time[n])
     }
     ## Compute variance
-    surv.T <- surv
-    surv.T[n] <- 0 # force inclusion of last censored data, if necessary
-    Var <- sum((-time - mean)^2*-diff(c(1,surv.T)))
-    Var <- Var*n.risk[1]/(n.risk[1] - 1) # bias correction for sample
+    hh = c(ifelse((n.risk[-n] - n.event[-n]) == 0, 0, 
+    							n.event[-n]/(n.risk[-n] * (n.risk[-n] - n.event[-n]))), 0) * nused
+    dif.time = c(diff(c(start.time, time)), 0)
+    Var = sum(rev(cumsum(rev(dif.time * c(1, surv)))^2)[-1] * hh)
+    events <- sum(n.event)
+    # bias adjustment
+    Var <- Var * (events/(events - 1))
     ## Compute the quantiles 
     minmin <- function(y, xx, prob) {
       prob <- round(prob,8)
@@ -63,8 +66,7 @@ mdlKMstats <- function(x, probs=c(.25, .5, .75)) {
     qtiles <- -sapply(as.list(probs), minmin, y=surv, xx=time)
     names(qtiles) <- paste(100*round(probs,4), "%", sep="")
     names(nused) <- "N"
-    obs <- c(nused,sum(n.event))
-    names(obs) <- c("n", "events")
+    obs <- c(n=nused, events=events)
     mean <- c(mean, bias, biasadj)
     names(mean) <- c("mean", "Max bias", "Bias base")
     n.censored <- n.risk - n.event - c(n.risk[-1], 0)

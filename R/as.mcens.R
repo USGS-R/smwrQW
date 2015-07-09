@@ -121,6 +121,23 @@ setMethod("as.mcens", signature(lower.val="numeric", upper.val="missing",
 
 #' @rdname as.mcens
 setMethod("as.mcens", signature(lower.val="numeric", upper.val="missing",
+																censor.codes="integer"),
+  function(lower.val, upper.val, censor.codes) {
+  	if(length(lower.val) != length(censor.codes))
+  		stop("lengths of lower.val and censor.codes must match")
+  	upper.val <- lower.val
+  	censor.codes <- as.integer(sign(censor.codes))
+  	lower.val[censor.codes == -1L] <- -Inf
+  	upper.val[censor.codes == 1L] <- Inf
+  	mat <- cbind(lower.val=lower.val, upper.val=upper.val)
+  	retval <- new("mcens", mat, censor.codes=censor.codes,
+  								interval=rep(FALSE, length(lower.val)),
+  								names="")
+  	retval@names <- as.character(seq(nrow(mat)))
+  	return(retval) } )
+
+#' @rdname as.mcens
+setMethod("as.mcens", signature(lower.val="numeric", upper.val="missing",
 																censor.codes="character"),
   function(lower.val, upper.val, censor.codes) {
   	if(length(lower.val) != length(censor.codes))

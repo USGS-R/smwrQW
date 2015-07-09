@@ -7,6 +7,7 @@
 \alias{as.mcens,lcens,missing,missing-method}
 \alias{as.mcens,mcens,missing,missing-method}
 \alias{as.mcens,numeric,missing,character-method}
+\alias{as.mcens,numeric,missing,integer-method}
 \alias{as.mcens,numeric,missing,missing-method}
 \alias{as.mcens,numeric,missing,numeric-method}
 \alias{as.mcens,numeric,numeric,missing-method}
@@ -24,6 +25,8 @@ as.mcens(lower.val, upper.val, censor.codes)
 \S4method{as.mcens}{numeric,numeric,missing}(lower.val, upper.val, censor.codes)
 
 \S4method{as.mcens}{numeric,missing,numeric}(lower.val, upper.val, censor.codes)
+
+\S4method{as.mcens}{numeric,missing,integer}(lower.val, upper.val, censor.codes)
 
 \S4method{as.mcens}{numeric,missing,character}(lower.val, upper.val,
   censor.codes)

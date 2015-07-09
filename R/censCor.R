@@ -5,8 +5,8 @@
 #' @details
 #'\code{Full} may be either logical or a numeric vector. If \code{Full} is \code{TRUE},
 #'then estimate the means and standard deviations for \code{x} and \code{y}. 
-#'If \code{Full} is \code{FALSE}, use the intial maximum likelihood estimate for those
-#'statistics. Otehrwise \code{Full} can be a named vector containing \code{mnx}, the mean
+#'If \code{Full} is \code{FALSE}, use the initial maximum likelihood estimate for those
+#'statistics. Otherwise \code{Full} can be a named vector containing \code{mnx}, the mean
 #'for \code{x}; \code{sdx}, the standard deviation for \code{x}; \code{mny}, the mean
 #'for \code{y}; \code{sdy}, the standard deviation for \code{y}. \code{Full} can be set
 #'to \code{FALSE} if the optimization fails at large censoring levels or to improve
@@ -14,8 +14,8 @@
 #'
 #' @importFrom survival survreg Surv
 #' @importFrom mvtnorm dmvnorm pmvnorm
-#' @param x a left-censored data object.
-#' @param y a left-censored data object.
+#' @param x any data that can be converted to a left-censored data object.
+#' @param y any data that can be converted to a left-censored data object.
 #' @param Full how to compute  the mean and standard deviation of \code{x} and \code{y}.
 #'See \bold{Details}.
 #' @param na.rm logical, remove missing values before computing the correlation?
@@ -31,7 +31,8 @@
 #'\item{n}{ the number of observations.}
 #'\item{ll0}{ the log likelihood for cor=0}
 #'\item{llcor}{ the log likelihood for cor=cor}
-#' @references Lyles and others, Biometrics 2001
+#' @references Lyles, R.H., Williams, J.K., and Chuachoowong R., 2001, Correlating two viral 
+#'load assays with known detection limits: Biometrics,  v. 57 no. 4, p. 1238--1244.
 #' @keywords summary censored
 #' @examples
 #'# Simple no censoring
@@ -75,11 +76,17 @@ censCor <- function(x, y, Full=TRUE, na.rm=TRUE) {
     sdy.x <- sdy*sqrt(1 - rho^2) # expected value of sdy given x
     sdx.y <- sdx*sqrt(1 - rho^2)
     xy <- cbind(x,y)
-    ## Type 1 both uncensored, assume that there are always some of these
+    ## Type 1 both uncensored, do not assume that there are always some of these
     sel <- (cx == 0 & cy == 0)
+    if(any(sel)) {
     cov <- rho * sqrt(sdx^2 * sdy^2)
     sigma <- matrix(c(sdx^2, cov, cov, sdy^2), ncol=2)
-    retval <- sum(-log(dmvnorm(xy[sel,], mean=c(mnx, mny), sigma=sigma)))
+    retval <- sum(-log(dmvnorm(xy[sel,,drop=FALSE], mean=c(mnx, mny), sigma=sigma)))
+    } else {
+    	cov <- rho * sqrt(sdx^2 * sdy^2)
+    	sigma <- matrix(c(sdx^2, cov, cov, sdy^2), ncol=2)
+    	retval <- 0
+    }
     ## Type 2 only y censored
     sel <- (cx == 0 & cy == 1)
     if(any(sel))
@@ -93,7 +100,7 @@ censCor <- function(x, y, Full=TRUE, na.rm=TRUE) {
     ## Type 4 both x and y censored
     sel <- (cx == 1 & cy == 1)
     if(any(sel)) {
-      tmp <- apply(xy[sel,], 1, function(x, mn, s) pmvnorm(upper=x, mean=mn, sigma=s),
+      tmp <- apply(xy[sel,, drop=FALSE], 1, function(x, mn, s) pmvnorm(upper=x, mean=mn, sigma=s),
                    mn =  c(mnx, mny), s=sigma)
       retval <- retval + sum(-log(tmp))
     }

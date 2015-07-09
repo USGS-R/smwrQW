@@ -1,0 +1,206 @@
+\documentclass{article}
+\parskip 6pt
+\usepackage[margin=1.25in]{geometry}
+%\VignetteIndexEntry{Regression}
+%\VignetteDepends{smwrQW}
+%\VignetteDepends{psych}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\raggedright
+\title{Regression}
+
+\author{Dave Lorenz}
+
+\maketitle
+
+These examples demonstrate some of the functions and statistical methods for computing the regressions for censored response variables that are available in the \texttt{smwrQW} package. The examples in this vignette use the TCEReg dataset from the \texttt{NADA} package. The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph gets the data and creates a column named ''TCE'' of class ''lcens.'' Only logistic and maximum likelihood estimation methods are described in this vignette because those methods support multiple explanatory variables.
+
+
+<<echo=TRUE>>=
+# Load the smwrQW package
+library(smwrQW)
+# And the data
+data(TCEReg, package="NADA")
+# Convert the data to column TCE
+# For these data, force the reporting limit to be 1 unless the censoring
+# limit is specified.
+TCEReg <- transform(TCEReg, TCE=as.lcens(TCEConc, 1, censor.codes=TCECen))
+@
+
+\eject
+\section{Logistic regression}
+
+Logistic regression models a binary response variable as the probability of observing the larger value. For 0/1 coded data, that is the probability of observing 1, which represents exceeding a specified threshold value of the water-quality data. Helsel (2012) provides a brief introduction to logistic regression, other good references for logistic regression include McCullagh and Nedler (1999) and Harrel (2001).
+
+The example below illustrates the recoding of values to 0/1, building the regression model and the detailed printed output from the \texttt{binaryReg} function that is in the \texttt{smwrStats} package (Lorenz, 2015). The output from the \texttt{binaryReg} function includes the summary information from the regression, two goodness-of-fit tests, four measure of predictive power, and influence diagnostics. Details of the output are presented in the ''Logistic'' vignette in \texttt{smwrStats}.
+
+<<echo=TRUE>>=
+# Append a column of 0/1 values to the data
+# The maximum censored values is 5, which is the default criterion
+TCEReg <- cbind(TCEReg, with(TCEReg, code01(TCE01=TCE)))
+# Build the regression model
+TCE.lr <- glm(TCE01 ~ Depth + PopDensity, data=TCEReg,
+  family=binomial)
+# Detailed output from the logistic regression
+binaryReg(TCE.lr)
+@
+
+The printed output indicates that the significance level of Depth as an explantory variable is much larger then 0.05 and the p-value from the le Cessie-van Houwelingen GOF test is much smaller than 0.05, suggesting a lack of fit. The code following this paragraph redoes the logistic regression, dropping Depth as an explanatory variable. In this case, the p-value from the le Cessie-van Houwelingen GOF test is larger than 0.05, suggesting no lack of fit. The performance of the model is similar to the previous mode and there are fewer observations that exceed at least one of the test criteria. Observation number 70 is printed; the concentration is censored at 1 and the population density (PopDensity) is 19, which is the largest value in the dataset. A graph of the observed data and the fitted line is created in the last part of the code.
+
+<<echo=TRUE>>=
+# Update the regression model
+TCE.lr <- update(TCE.lr, ~ . - Depth)
+# Detailed output from the logistic regression
+binaryReg(TCE.lr)
+# Print the farthest outlier
+TCEReg[70, ]
+# Plot the data and fit
+setSweave("graph01", 6 ,6)
+# Create the graph, 
+# first create a jittered column to see more individual points
+TCEReg <- transform(TCEReg, 
+  TCEjit=TCE01 + runif(nrow(TCEReg), -.1, .1))
+with(TCEReg, xyPlot(PopDensity, TCEjit,
+  ytitle="Probability of exceeding criterion"))
+# Make a prediction data set and fill in the predicted probabilities
+TCEPred <- data.frame(PopDensity=1:19)
+TCEPred$Pred <- predict(TCE.lr, newdata=TCEPred, type="response")
+with(TCEPred, addXY(PopDensity, Pred))
+graphics.off()
+@
+
+\includegraphics{graph01.pdf}
+\paragraph{}
+
+\textbf{Figure 1.} The data and fitted line.
+
+\eject
+\section{Maximum Likelihood Estimation Method} 
+
+An important first step in any parametric statistical analysis is to plot the data. Figure 2 shows the scatter plots between TCE and PopDensity, Depth, and PctIndLU. None show a strong relation to TCE concentration.
+
+<<echo=TRUE>>=
+setSweave("graph02", 6 ,6)
+# Create the graphs
+AA.lo <- setLayout(num.cols=2, num.rows=2)
+setGraph(1, AA.lo)
+with(TCEReg, xyPlot(PopDensity, TCE, yaxis.log=TRUE))
+setGraph(2, AA.lo)
+with(TCEReg, xyPlot(Depth, TCE, yaxis.log=TRUE))
+setGraph(3, AA.lo)
+with(TCEReg, xyPlot(PctIndLU, TCE, yaxis.log=TRUE))
+graphics.off()
+@
+
+\includegraphics{graph02.pdf}
+\paragraph{}
+
+\textbf{Figure 2.} Scatter plots between TCE and PopDensity, Depth, and PctIndLU.
+
+The \texttt{censReg} function is used to build a censored-regresion model. The response variable can be numeric, or any of ''lcens,'' ''mcens,'' or ''qw'' class. The explantory variables must be numeric. The code immediately following this paragraph demonstrates is use for the example data. The arguments to \texttt{censReg} are very similar to \texttt{lm}; they are more limited but include an additional argument \texttt{dist} that allows the user to specify the distribution of the residuals and facilitates prediction.
+
+<<echo=TRUE>>=
+# The censored regression model.
+TCE.cr <- censReg(TCE ~ PopDensity + Depth + PctIndLU, data=TCEReg, dist="lognormal")
+print(TCE.cr)
+@
+
+The printed output is similar to the summary output from a linear regression. The coefficient table list the coefficient, its statndard error, the corresponding z score and the p-value determined from the partial log-likelihood test. Because the response is log-transformed, the residual standard error is expressed as a percentage. The overall significance level is computed from the log-likelihood of the model compared to the log-likelihood of the null model (intercept only). The computation method is "AMLE," which produces first-order unbiased estiamtes of the coefficients and standard error. That method also uses a slight variation on the computation of log-likelihood that results in consistent differences in log-likelihood, but the actual value can differ from other methods. A very quick assessment of the fit can be made by looking at the two diagnostic plots.
+
+<<echo=TRUE>>=
+setSweave("graph03", 6 ,6)
+# Create the graphs
+AA.lo <- setLayout(num.rows=2)
+setGraph(1, AA.lo)
+plot(TCE.cr, which=1, set.up=FALSE)
+setGraph(2, AA.lo)
+plot(TCE.cr, which=2, set.up=FALSE)
+graphics.off()
+@
+
+\includegraphics{graph03.pdf}
+\paragraph{}
+
+\textbf{Figure 3.} The fitted values and response and q-normal diagnostic plots.
+
+The fitted values and response shows the weakness of the fit, but the q-normal plots indicates no major deviation from normality. For both plots, the uncensored data are shown as solid circles and the censored values as open circles.
+
+The \texttt{summary} printout shows more detail about the regression similar to the printed output from the \textttt{multReg} function in the \texttt{smwrStats} package (Lorenz, 2015). Many of the diagnostic plots from \texttt{summary} show working residuals and are designed to portray less heavily censored data than the those in the TCEReg dataset, but the partial residual plots are useful for assessing the linearity of the fit for ech explanatory variable. The code following this paragraph demonstrates the \texttt{summary} funciton and shows the printout and generates the partial residual plots for PopDensity and Depth.  The partial residual plot for PctIndLU is not shown becuase the p-value is much parger than 0.05.
+
+<<echo=TRUE>>=
+# The summary output.
+TCE.crsum <- summary(TCE.cr)
+print(TCE.crsum)
+setSweave("graph04", 6 ,6)
+# Create the graphs
+AA.lo <- setLayout(num.rows=2)
+setGraph(1, AA.lo)
+plot(TCE.crsum, which="PopDensity", set.up=FALSE)
+setGraph(2, AA.lo)
+plot(TCE.crsum, which="Depth", set.up=FALSE)
+graphics.off()
+@
+
+\includegraphics{graph04.pdf}
+\paragraph{}
+
+\textbf{Figure 4.} The partial residual plots for PopDensity and Depth.
+
+The printed output from \texttt{summary} show many observations that exceed at least one of the test criteria, leverage or Cook's D (Helsel and Hirsch, 2002).  For these data, all of the exceedences are for leverage, indicating some values are far from the bulk of the data. The partial residual plot for PoPDensity indicates pretty substantial nonlinearity, but the plot for Depth does not. The code below constructs the revised model, dropping PctIndLU and using a log-transform for PopDensity. The \texttt{summary} report is shown and the diagnostics plots from the model and the partial residual plots are shown from the \texttt{summary} output. The AIC and BIC are both much smaller for the revised model, indicating a much better overall fit. Figures 5 and 6 also indicate a better fit for the revised model than the original model.
+
+<<echo=TRUE>>=
+# The revised censored regression model.
+TCE.cr <- censReg(TCE ~ log(PopDensity) + Depth, data=TCEReg, dist="lognormal")
+# The summary output.
+TCE.crsum <- summary(TCE.cr)
+print(TCE.crsum)
+# Overall and Q-normal plots
+setSweave("graph05", 6 ,6)
+# Create the graphs
+AA.lo <- setLayout(num.rows=2)
+setGraph(1, AA.lo)
+plot(TCE.cr, which=1, set.up=FALSE)
+setGraph(2, AA.lo)
+plot(TCE.cr, which=2, set.up=FALSE)
+graphics.off()
+setSweave("graph06", 6 ,6)
+# Parial residual plots
+AA.lo <- setLayout(num.rows=2)
+setGraph(1, AA.lo)
+plot(TCE.crsum, which="log(PopDensity)", set.up=FALSE)
+setGraph(2, AA.lo)
+plot(TCE.crsum, which="Depth", set.up=FALSE)
+graphics.off()
+@
+
+\includegraphics{graph05.pdf}
+\paragraph{}
+
+\textbf{Figure 5.} The over all fit and q-normal diagnostic plots for the revised model.
+
+\includegraphics{graph06.pdf}
+\paragraph{}
+
+\textbf{Figure 6.} The partial residual plots for PopDensity and Depth for the revised model.
+
+\begin{thebibliography}{9}
+
+\bibentry{FEH}
+Harrel, F.E., 2001, Regression modeling strategies with applications to linear models, logistic regression, and survival analysis: New York, Springer, 568 p.
+
+\bibentry{H12}
+Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab and R: New York, Wiley, 324 p.
+
+\bibentry{HH}
+Helsel, D.R., and Hirsch, R.M., 2002, Statistical methods in water resources: U.S. Geological Survey Techniques of Water-Resources Investigations, book 4, chap. A3, 522 p.
+
+\bibentry{DL}
+Lorenz, D.L., 2015, smwrStats--An R package for the analysis of hydrologic data, Version 0.7.3: U.S. Geological Survey Open File Report, ? p.
+  
+\bibentry{MN}
+McCullagh, P, and Nedler, J.A., 1999, Generalized linear models: Boca Raton, Fla., Chappman and Hall/CRC, 511 p.
+
+\end{thebibliography}
+
+\end{document}

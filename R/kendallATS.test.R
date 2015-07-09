@@ -3,8 +3,8 @@
 #'Compute Kendall's tau for left-censored data and the Akritas-Theil-Sen
 #'slope estimator.
 #'
-#'@param x a left-censored data object
-#'@param y a left-censored data object
+#'@param x any data that can be converted to a left-censored data object.
+#'@param y any data that can be converted to a left-censored data object.
 #'@param na.rm remove missing values before performing the test?
 #'@return an object of class "htest" having these components:
 #'\item{statistic}{ the value of the taub statistic.}

@@ -3,10 +3,16 @@
 \docType{methods}
 \name{Math-censored}
 \alias{Math,lcens-method}
+\alias{Math,mcens-method}
+\alias{Math,qw-method}
 \alias{Math-censored}
 \title{Mathematical Transform Methods for \code{lcens} objects}
 \usage{
 \S4method{Math}{lcens}(x)
+
+\S4method{Math}{mcens}(x)
+
+\S4method{Math}{qw}(x)
 }
 \arguments{
 \item{x}{the object to transform}

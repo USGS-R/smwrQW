@@ -23,12 +23,16 @@ natural log-transformed values computed by regression on order statistics.
 \description{
 Support function for computing statistics for left-censored data using the
 "fill-in" probability plotting procedure method (Helsel and Cohn, 1988),
-now known as regression on order statistics.
+now known as regression on order statistics. This method is also known as the
+"robust" approach (Helsel, 2012).
 }
 \references{
 Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics
 for multiply censored water quality data: Water Resources Research v. 24, n.
-12, pp.1997-2004
+12, pp.1997--2004
+
+Helsel, D.R. 2012, Statistics for censored environmental data
+using Minitab and R: New York, Wiley, 324 p.
 }
 \keyword{misc}
 

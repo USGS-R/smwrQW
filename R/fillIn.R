@@ -50,6 +50,7 @@ fillIn.numeric <- function(x, method, alpha) {
 	## The arguments method and alpha are ignored
 	retval <- sort(x)
 	attr(retval, "censorlevels") <- -Inf
+	return(retval)
 }
 
 #' @rdname fillIn

@@ -125,6 +125,13 @@ censReg_MLE.fit <- function(Y, X, Wt, dist="normal") {
     else if(CENSFLAG[i] < 0) #left censored
       RESID[i] <- -sigma*dnorm(RESID[i], 0, sigma)/pnorm(RESID[i], 0, sigma)
   }
+  ## Compute YPRED, at least as MLE corrected values
+  YPRED <- predict(sr)
+  if(dist == "lognormal") {
+  	YPRED <- YPRED * exp(0.5*sr$scale^2) # MLE adj.
+  } else if(dist == "commonlog") {
+  	YPRED <- 10^YPRED * exp(0.5*(sr$scale*log(10))^2) # MLE adj.
+  }
   ## construct fit for prediction
   fit <- list(NOBSC = NOBSC,
               NPAR = NPAR,
@@ -149,7 +156,7 @@ censReg_MLE.fit <- function(Y, X, Wt, dist="normal") {
               PLEVAML = double(1L),
               DF = integer(1L),
               LogNorm = dist == "lognormal",
-              YPRED = double(NOBSC),
+              YPRED = YPRED,
               AIC = 2 * (NPAR + 1 - ll),
               SPPC = log(NOBSC) * (NPAR + 1 - ll),
               IERR = integer(1L),

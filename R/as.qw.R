@@ -133,6 +133,8 @@ setMethod("as.qw", signature(values="numeric", remark.codes="character",
   								analyte.method=analyte.method, analyte.name=analyte.name,
   								unique.code=unique.code, rounding=c(2L,3L),
   								names=as.character(seq(N)))
+  	# Not sure why necessary
+  	retval@names <- as.character(seq(N))
   	return(retval)
   })
 
@@ -185,5 +187,7 @@ setMethod("as.qw", signature(values="numeric", remark.codes="character",
   								analyte.method=analyte.method, analyte.name=analyte.name,
   								unique.code=unique.code, rounding=c(2L,3L),
   								names=as.character(seq(N)))
+  	# Not sure why necessary
+  	retval@names <- as.character(seq(N))
   	return(retval)
   })

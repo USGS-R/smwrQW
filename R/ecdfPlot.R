@@ -56,9 +56,9 @@ ecdfPlot.lcens <- function(x, group=NULL, # data specification
   ## Set up the axes and transform data
   if(dev.cur() == 1)
     setGD("ECDFPlot")
-  xax <- setAxis(x, xaxis.range, xaxis.log, FALSE, xlabels)
+  xax <- setAxis(xval, xaxis.range, xaxis.log, FALSE, xlabels)
   xax <- xax$dax
-  yax <- linearPretty(c(0,1), labels=ylabels)
+  yax <- linearPretty(c(0,1), hard=TRUE, labels=ylabels, extend.range=FALSE)
   ## Set up the plot
   margin.control <- setMargin(margin, yax)
   margin <- margin.control$margin

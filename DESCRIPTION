@@ -1,6 +1,6 @@
 Package: smwrQW
-Version: 0.7.0
-Date: 2015-05-20
+Version: 0.7.1
+Date: 2015-07-09
 Title: Tools for censored data analysis
 Author: Dave Lorenz <lorenz@usgs.gov>.
 Maintainer: Dave Lorenz <lorenz@usgs.gov>
@@ -17,7 +17,9 @@ Imports:
     lubridate,
     zCompositions
 Suggests:
-    smwrData
+    smwrData,
+    NADA,
+    pshych
 Description: This package provides tools for the analysis and graphing
     of censored data, focussing on water-quality data. It provides
     a uniform user interface to many different methods for the
@@ -91,7 +93,9 @@ Collate:
     'mean.qw.R'
     'meanStats.R'
     'medianStats.R'
+    'multiply.R'
     'nobs.censReg.R'
+    'pairedPratt.test.R'
     'pcodeColNames.R'
     'pcodeNWISqw.R'
     'pctCens.R'
@@ -100,6 +104,7 @@ Collate:
     'plot.htest.R'
     'plot.qw.R'
     'plot.summary.censReg.R'
+    'pow.R'
     'ppw.test.R'
     'predict.censReg.R'
     'print.censMCT.R'
@@ -112,6 +117,7 @@ Collate:
     'qqPlot.R'
     'quantile.R'
     'qw2mcens.R'
+    'qwCoalesce.R'
     'ratio.R'
     'rbindQW.R'
     'readNWQLdl.R'
@@ -129,4 +135,5 @@ Collate:
     'timePlot-censored.R'
     'vcov.censReg.R'
     'vif.censReg.R'
+    'xyPlot-censored.R'
     'z%eq%.R'

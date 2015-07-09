@@ -7,9 +7,9 @@
 censCor(x, y, Full = TRUE, na.rm = TRUE)
 }
 \arguments{
-\item{x}{a left-censored data object.}
+\item{x}{any data that can be converted to a left-censored data object.}
 
-\item{y}{a left-censored data object.}
+\item{y}{any data that can be converted to a left-censored data object.}
 
 \item{Full}{how to compute  the mean and standard deviation of \code{x} and \code{y}.
 See \bold{Details}.}
@@ -36,8 +36,8 @@ Compute the correlation between left-censored data using MLE
 \details{
 \code{Full} may be either logical or a numeric vector. If \code{Full} is \code{TRUE},
 then estimate the means and standard deviations for \code{x} and \code{y}.
-If \code{Full} is \code{FALSE}, use the intial maximum likelihood estimate for those
-statistics. Otehrwise \code{Full} can be a named vector containing \code{mnx}, the mean
+If \code{Full} is \code{FALSE}, use the initial maximum likelihood estimate for those
+statistics. Otherwise \code{Full} can be a named vector containing \code{mnx}, the mean
 for \code{x}; \code{sdx}, the standard deviation for \code{x}; \code{mny}, the mean
 for \code{y}; \code{sdy}, the standard deviation for \code{y}. \code{Full} can be set
 to \code{FALSE} if the optimization fails at large censoring levels or to improve
@@ -54,7 +54,8 @@ censCor(tmp.X, tmp.Y)
 censCor(as.lcens(tmp.X, -1), as.lcens(tmp.Y, -1))
 }
 \references{
-Lyles and others, Biometrics 2001
+Lyles, R.H., Williams, J.K., and Chuachoowong R., 2001, Correlating two viral
+load assays with known detection limits: Biometrics,  v. 57 no. 4, p. 1238--1244.
 }
 \keyword{censored}
 \keyword{summary}

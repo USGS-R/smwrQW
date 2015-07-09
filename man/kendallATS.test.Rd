@@ -7,9 +7,9 @@
 kendallATS.test(x, y, na.rm = TRUE)
 }
 \arguments{
-\item{x}{a left-censored data object}
+\item{x}{any data that can be converted to a left-censored data object.}
 
-\item{y}{a left-censored data object}
+\item{y}{any data that can be converted to a left-censored data object.}
 
 \item{na.rm}{remove missing values before performing the test?}
 }

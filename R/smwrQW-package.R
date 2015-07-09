@@ -4,8 +4,8 @@
 #'that focuses on the analysis of water-quality data.
 #'
 #'\tabular{ll}{ Package: \tab smwrQW\cr Type: \tab Package\cr 
-#'Version: \tab 0.7.0\cr 
-#'Date: \tab 2015-05-20\cr 
+#'Version: \tab 0.7.1\cr 
+#'Date: \tab 2015-07-09\cr 
 #'License: \tab file LICENSE\cr 
 #'Depends: \tab smwrBase smwrGraphs smwrStats methods survival XML mvtnorm\cr }
 #'Modern water-quality information

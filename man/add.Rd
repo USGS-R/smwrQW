@@ -22,7 +22,7 @@ length of the water-quality data. See \bold{Details}.}
 An object of class "qw" that is the result of the requested operations.
 }
 \description{
-The \code{add} function provide a method for adding or subtracting
+The \code{add} function provides a method for adding or subtracting
 water-quality data while trying to maintain the integrity of the data.
 }
 \details{

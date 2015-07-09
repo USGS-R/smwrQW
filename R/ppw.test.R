@@ -85,6 +85,8 @@ ppw.test <- function(x, y, alternative="two.sided", OBrienFleming=TRUE,
   keep <- !(is.na(x) | is.na(y))
   x <- x[keep]
   y <- y[keep]
+  if(any(c(x@.Data[,1L], y@.Data[,1L]) < 0))
+  	stop("Negative values in x or y")
   N <- length(x)
   if(OBrienFleming) {
     xd <- x@.Data[,1L]
@@ -186,8 +188,10 @@ ppw.test <- function(x, y, alternative="two.sided", OBrienFleming=TRUE,
   Scoremat <- cbind(ret1$Scores, ret1$Diffs)
   colnames(Scoremat) <- c("xScore", "yScore", "d")
   ## For diagnostic plot, create min and max differences
-  mind <- x@.Data[, 1L] - ifelse(y@censor.codes, 0, y@.Data[, 1L])
-  maxd <- ifelse(x@censor.codes, 0, x@.Data[, 1L]) - y@.Data[, 1L]
+  d1 <- x@.Data[, 1L] - ifelse(y@censor.codes, 0, y@.Data[, 1L])
+  d2 <- ifelse(x@censor.codes, 0, x@.Data[, 1L]) - y@.Data[, 1L]
+  mind <- pmin(d1, d2)
+  maxd <- pmax(d1, d2)
   Scoremat <- cbind(Scoremat, minDiff=mind, maxDiff=maxd)
   retval <- list(statistic = stat, parameters = param,
                  p.value = pvalue, null.value = mu,

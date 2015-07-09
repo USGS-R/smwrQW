@@ -26,8 +26,9 @@
 #'to use for the analysis. See \bold{Details}.
 #' @param data.names character string to be used to explain 
 #' the data. Default names are derived from the data arguments.
-#' @param gehan.seed an single integer value to set the seed to
-#'compute the variance of the Gehan statistic.
+#' @param gehan.seed an integer value to set the seed to
+#'compute the variance of the Gehan statistic. If 0 (the default), then
+#'use equation 9.5 from Helsel (2012) to compute the variance.
 #' @return An object of class "htest" that inherits "genWilcox."
 #' @note The \code{genWilcox.test} 
 #'function uses the \code{survfit} function. Helsel (2012) describes flipping
@@ -35,7 +36,7 @@
 #'values become right-censored values and adapt nonparametric techniques from
 #'survival analysis. The results from \code{survfit} are printed as the sample
 #'estimates when printing the output, the important columns are records,
-#'the numner in each group; events, the number of uncensored values; and 
+#'the number in each group; events, the number of uncensored values; and 
 #'median, the group median.\cr
 #'A \code{plot} method is supported for the returned object.
 #'
@@ -78,7 +79,7 @@
 #'
 #' @export
 genWilcox.test <- function(x, y, alternative="two.sided", 
-                           method="best", data.names, gehan.seed=346) {
+                           method="best", data.names, gehan.seed=0) {
   ## Coding history:
   ##    2005Mar08 DLLorenz Initial Coding.
   ##    2005Jul14 DLLorenz Fixed date
@@ -170,7 +171,7 @@ genWilcox.test <- function(x, y, alternative="two.sided",
   Gehan.test <- function(values, group) {
     ## Perform the Gehan test as described in Helsel
     levs <- levels(group)
-    ## Compute W, its variance and th number in each group
+    ## Compute W, its variance and the number in each group
     W <- gehanScores(values[group==levs[1L]],
                      values[group==levs[2L]])
     W <- sum(W)
@@ -178,12 +179,17 @@ genWilcox.test <- function(x, y, alternative="two.sided",
     ## Set up the permutation test
     gs <- double(1000)
     N <- length(group)
-    set.seed(gehan.seed)
-    for(i in seq(1000)) {
-      rs <- sample(N, nums[1L], replace=FALSE)
-      gs[i] <- sum(gehanScores(values[rs], values[-rs]))
+    if(gehan.seed) { # true if not 0
+    	set.seed(gehan.seed)
+    	for(i in seq(1000)) {
+    		rs <- sample(N, nums[1L], replace=FALSE)
+    		gs[i] <- sum(gehanScores(values[rs], values[-rs]))
+    	}
+    	VarW <- mean(gs^2) # Assume true mean of 0
+    } else { # 0 use eqn 9.5 from Helsel 2012
+    	H2 <- gehanScores(values)^2
+    	VarW <- nums[1L]*nums[2L]*sum(H2)/(N*(N-1))
     }
-    VarW <- mean(gs^2) # Assume true mean of 0
     return(list(W=W, VarW=VarW, Ngroup=nums))
   }
   if(method == "peto") {

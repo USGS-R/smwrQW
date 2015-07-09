@@ -29,10 +29,10 @@
 }
 \arguments{
 \item{x}{the x-axis data, or data to plot if y is missing. Must be of class
-"lcens" or "qw."}
+"lcens," "mcens," or "qw." Missing values are permitted and removed bedfore plotting.}
 
-\item{y}{the y-axis data. If missing, then produce a quantile-normal
-plot from the data in x.}
+\item{y}{the y-axis data.  Missing values are permitted and removed bedfore plotting.
+If missing, then produce a quantile-normal plot from the data in x.}
 
 \item{alpha}{the alpha value of the function for computing plotting
 positions.}
@@ -67,7 +67,7 @@ details.}
 
 \item{margin}{the parameters of the margin of the plot area.}
 
-\item{Censored}{control parameters of the left-censored data q-normal plot.}
+\item{Censored}{control parameters of the censored values q-normal plot.}
 
 \item{Projected}{control parameters of the projected (filled in)
 left-censored data q-normal plot.}
@@ -78,7 +78,7 @@ left-censored data q-normal plot.}
 Information about the graph.
 }
 \description{
-Produce a quantile-quantile (q-q) or a q-normal plot for left-censored data.
+Produce a quantile-quantile (q-q) or a q-normal plot for censored data.
 }
 \details{
 The argument what for either \code{LineRef} or \code{Line1.1} may be set to

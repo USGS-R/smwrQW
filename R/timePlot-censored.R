@@ -115,7 +115,7 @@ function(x, y, # data
     addXY(xcen, ycen, Plot=Censored, current=list(yaxis.log = yaxis.log, 
        yaxis.rev = yaxis.rev, xaxis.log = FALSE))
     if(Censored$bar)
-      lines(retval$x, retval$y, type="h", col=Censored$color)
+      lines(xcen, ycen, type="h", col=Censored$color)
   }
   box(lwd=frameWt())
   ## label the axes

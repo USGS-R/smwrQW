@@ -17,12 +17,17 @@
 #'}
 #'
 #'@param x an object of class "censReg"---output from \code{censReg}
-#'@param which either "All" or any of a sequence from 1 to 7 indicating which plot, see \bold{Details}.
+#'@param which either "All" or any of a sequence from 1 to 7 indicating which plot, 
+#'see \bold{Details}.
 #'@param set.up set up the graphics page?
 #'@param span the span to use for the loess smooth. Set to 0 to suppress.
 #'@param \dots further arguments passed to or from other methods.
 #'@return The object \code{x} is returned invisibly.
-#'@seealso \code{\link{censReg}}
+#'@note The q-normal plot (number 5) plots the working residuals and portrays fits 
+#'for relatively small percentages of censoring very well. For larger percentages of
+#'censoring, the q-normal plot in \code{plot.censReg} (number 2) can portray the 
+#'normality of the residuals more accurately.
+#'@seealso \code{\link{censReg}}, \code{\link{plot.censReg}}
 #'@keywords regression hplot
 #' @export
 #'@method plot summary.censReg
@@ -57,11 +62,6 @@ plot.summary.censReg <- function(x, which='All', set.up=TRUE, span=1.0, ...) {
     doPlot[1:6] <- FALSE
     xnames <- which
     do7 <- TRUE
-  }
-  ## Fix soon
-  warning("Replace isDateLike with correct reference after converting to smwrQW")
-  isDateLike <- function(x) {
-  	return(class(x)[1L] %in% c("Date", "POSIX", "POSIXct", "POSIXlt"))
   }
   ## Anything else produces all plots
   ## Final plot (7) residuals vs predictors

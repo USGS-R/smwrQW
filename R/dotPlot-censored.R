@@ -7,8 +7,9 @@
 #'
 #' @include mcens-class.R qw-class.R
 #' @name dotPlot-censored
-#' @param x the x-axis data
+#' @param x the x-axis data. Missing values are permitted and not plotted.
 #' @param y the y-axis data, expected to be be either character or factor.
+#'Missing values are permitted and removed before plotting.
 #' @param Plot control parameters for uncensored values of the plot, see 
 #'\code{link{setMultiPlot}} and \bold{Details} for details.
 #' @param yaxis.orient orientation of the y-axis values, must be either "table"
@@ -25,7 +26,9 @@
 #' @param ytitle y-axis title.
 #' @param caption the figure caption.
 #' @param margin the parameters of the margin.
-#' @param jitter.y adjust \code{y} values to reduce overlap for each group?
+#' @param jitter.y logical, if \code{TRUE}, then adjust \code{y} values to reduce
+#'overlap for each group, or adjust randomly if no groups. If \code{FALSE}, then
+#'no adjustment is made.
 #' @param Censored control parameters for censored values of the plot.
 #' @param ... arguments for specific methods.
 #' @return Information about the graph.
@@ -72,6 +75,10 @@ function(x, y, # data
   ## Quick fix for numeric Y
   if(is.numeric(y))
     y <- as.character(y)
+  ## Remove missing ys
+  good <- !is.na(y)
+  x <- x[good]
+  y <- y[good]
   yax <- namePretty(y, orientation=yaxis.orient, order=yaxis.order,
                     label.abbr=ylabels == "abbreviate")
   ylev <- yax$labels
@@ -114,6 +121,8 @@ function(x, y, # data
   ## Need to work this into the explanation
   cens.info <- as.data.frame(cens$current, stringsAsFactors=FALSE)
   Cens <- x@censor.codes | x@interval
+  # Fix for NAs--just skip
+  Cens[is.na(Cens)] <- FALSE
   if(any(Cens)) {
     cens.info$bar <- NULL # Must be removed
     plot.info[Cens, ] <- cens.info[Cens, ]
@@ -122,7 +131,7 @@ function(x, y, # data
   if(jitter.y) {
     Grps <- unique(plot.info$name)
     if(length(Grps) == 1L)
-      jitter.y <- 0
+      jitter.y <- runif(length(y), -.3333, .3333)
     else {
       Rng <- .4 - exp(-length(Grps)) # more-or-less works to expand range
       jitter.y <- seq(-Rng, Rng, length.out=length(Grps))
@@ -179,7 +188,7 @@ function(x, y, # data
   ## Coding History:
   ##    2013Oct22 DLLorenz Original coding
   ##
-  x <- as.mcens(x)
+  x <- qw2mcens(x)
   dotPlot(x=x, y=y, Plot=Plot, yaxis.origin=yaxis.origin,
   yaxis.order=yaxis.order, yaxis.grid=yaxis.grid, xaxis.log=xaxis.log,
   xaxis.range=xaxis.range, ylabels=ylabels, xlabels=xlabels,

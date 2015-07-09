@@ -36,14 +36,29 @@ plot.censReg <- function(x, which='All', set.up=TRUE, ...) {
     else # which not to plot
       doPlot[-which] <- FALSE
   }
-  if(doPlot[2L])
-    probPlot(residuals(x, type="working")/rmse(x),
-             Plot=list(what="points", size=0.05),
-             yaxis.log=FALSE, ylabels=7,
-             ytitle="Standardized Working Residual",
-             margin=c(NA, NA, 2.4, NA), mean=0, sd=1)
+  if(doPlot[2L]) {
+  	Res <- residuals(x, type="response")/rmse(x)
+  	Cen <- x$CENSFLAG
+  	if(is.logical(Cen)) {
+  		Res <- as.lcens(Res, censor.codes=Cen)
+  	} else {
+  		Res <- as.mcens(Res, censor.codes=Cen)
+  	}
+  	qqPlot(Res, Plot=list(what="points", size=0.05),
+  				 ytitle="Standardized Residual",
+  				 LineRef=list( what="lines"), Censored=list(size=0.05),
+  				 Projected=list(what="none"))
+  	refLine(coefficients=c(0,1))
+  }
   if(doPlot[1L]) {
-    xyPlot(fitted(x), x$YLCAL,
+  	Res <- x$YLCAL
+  	Cen <- x$CENSFLAG
+  	if(is.logical(Cen)) {
+  		Res <- as.lcens(Res, censor.codes=Cen)
+  	} else {
+  		Res <- as.mcens(Res, censor.codes=Cen)
+  	}
+    xyPlot(fitted(x), Res,
            Plot=list(what="points", size=0.05),
            xtitle="Fitted Values",
            ytitle="Response")
