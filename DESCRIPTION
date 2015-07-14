@@ -1,6 +1,6 @@
 Package: smwrQW
-Version: 0.7.1
-Date: 2015-07-09
+Version: 0.7.2
+Date: 2015-07-14
 Title: Tools for censored data analysis
 Author: Dave Lorenz <lorenz@usgs.gov>.
 Maintainer: Dave Lorenz <lorenz@usgs.gov>
@@ -10,16 +10,19 @@ Depends:
     smwrGraphs,
     smwrStats
 Imports:
-    survival,
+    boot,
+    coin,
+    lubridate,
     methods,
     mvtnorm,
+    survival,
     XML,
-    lubridate,
     zCompositions
 Suggests:
     smwrData,
+    cluster,
     NADA,
-    pshych
+    psych
 Description: This package provides tools for the analysis and graphing
     of censored data, focussing on water-quality data. It provides
     a uniform user interface to many different methods for the
@@ -46,9 +49,11 @@ Collate:
     'c.R'
     'censCor.R'
     'censKSample.test.R'
+    'censMean.CI.R'
     'censMove.1.R'
     'censMulticomp.test.R'
     'censPPCC.test.R'
+    'censQtiles.CI.R'
     'censQuantile.R'
     'censReg.R'
     'censReg.fit.R'

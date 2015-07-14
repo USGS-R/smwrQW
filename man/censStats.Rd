@@ -60,10 +60,11 @@ censStats(as.lcens(Y, 1), method="log MLE")
 }
 \references{
 Helsel, D.R. 2012, Statistics for censored environmental data
-using Minitab and R: New York, Wiley, 324 p.\cr
+using Minitab and R: New York, Wiley, 324 p.
+
 Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics for
 multiply censored water quality data: Water Resources Research v. 24, n.
-12, pp.1997-2004
+12, pp.1997--2004
 }
 \seealso{
 \code{\link{mdlAMLE}}, \code{\link{mdlKM}}, \code{\link{mdlKMstats}},

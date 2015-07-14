@@ -29,10 +29,11 @@
 #' @seealso \code{\link{mdlAMLE}}, \code{\link{mdlKM}}, \code{\link{mdlKMstats}}, 
 #'\code{\link{mdlMLE}}, \code{\link{mdlROS}}
 #' @references Helsel, D.R. 2012, Statistics for censored environmental data 
-#'using Minitab and R: New York, Wiley, 324 p.\cr
+#'using Minitab and R: New York, Wiley, 324 p.
+#'
 #'Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics for
 #'multiply censored water quality data: Water Resources Research v. 24, n.
-#'12, pp.1997-2004
+#'12, pp.1997--2004
 #' @keywords univariate
 #' @examples
 #'
@@ -99,6 +100,7 @@ censStats.default <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
                    "AMLE"=mdlAMLE(x, method=method, alpha=alpha)[1:2],
                    "flipped K-M"=list(mean=mean(x), sd=sd(x)))
   class(retval) <- "censStats"
+  attr(retval, "method") <- method
   return(retval)
 }
 
@@ -156,6 +158,7 @@ censStats.lcens <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
   								 							 		 sd=as.mcens(step1$stdev, sdmax))}
                    )
   class(retval) <- "censStats"
+  attr(retval, "method") <- method
   return(retval)
 }
 
@@ -200,6 +203,7 @@ censStats.mcens <- function(x, method="MLE", na.rm=FALSE, alpha=0.4) {
                    "ROS"={step1 <- mcenROS(x, method=method, alpha=alpha)
                           list(mean=step1$mean, sd=step1$sd)})
   class(retval) <- "censStats"
+  attr(retval, "method") <- method
   return(retval)
 }
 

@@ -4,10 +4,12 @@
 #'that focuses on the analysis of water-quality data.
 #'
 #'\tabular{ll}{ Package: \tab smwrQW\cr Type: \tab Package\cr 
-#'Version: \tab 0.7.1\cr 
-#'Date: \tab 2015-07-09\cr 
+#'Version: \tab 0.7.2\cr 
+#'Date: \tab 2015-07-14\cr 
 #'License: \tab file LICENSE\cr 
-#'Depends: \tab smwrBase smwrGraphs smwrStats methods survival XML mvtnorm\cr }
+#'Depends: \tab dataRetrieval smwrBase smwrGraphs smwrStats \cr
+#'Imports: \tab boot coin lubridate methods mvtnorm survival XML zCompositions\cr
+#'Suggests: \tab smwrData cluster NADA psych\cr }
 #'Modern water-quality information
 #'requires much more that a value and remark code to characterize the data.
 #'The tools in this library focus on the "qw" class, which store the value and

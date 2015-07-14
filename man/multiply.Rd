@@ -15,7 +15,9 @@ in corresponding missing values in the output.}
 \item{units}{character reporting units of the resulting operation, if not supplied,
 retained from \code{x}.}
 
-\item{analyte.method}{character name of the analytical method for the result,
+\item{analyte}{character the name of the resulting analyte.}
+
+\item{analyte.method}{character the name of the analytical method for the result,
 by default "ALGOR."}
 
 \item{pcode}{the parameter code of the result, if not supplied, retained from \code{x}.}

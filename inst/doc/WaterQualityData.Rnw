@@ -1,0 +1,73 @@
+\documentclass{article}
+\parskip 6pt
+\usepackage[margin=1.25in]{geometry}
+%\VignetteIndexEntry{Working with Water-Quality Data}
+%\VignetteDepends{smwrQW}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\raggedright
+\title{Working with Water-Quality Data}
+
+\author{Dave Lorenz}
+
+\maketitle
+
+These examples demonstrate some of the functions and statistical methods for importing, managing, and manipulating water-quality data that are available in the \texttt{smwrQW} package. 
+
+<<echo=TRUE>>=
+# Load the smwrQW package
+library(smwrQW)
+@
+
+\eject
+\section{Class "qw"}
+
+The class "qw" provides a mechanism for storing water-quality data that facilitates manging and anlyzing those data. 
+
+\eject
+\section{Importing Water-Quality Data} 
+
+Easy from NWISweb.
+
+Data needs from other sources.
+
+\eject
+\section{Artimetic Operations} 
+
+Addition and multiplication methods.
+
+\eject
+\section{Comparison Operations} 
+
+Typical and specialized comparions.
+
+\eject
+\section{Mathematical Transformations} 
+
+A few monotonic math functions are supported.
+
+\eject
+\section{Miscellaneous Manipulations} 
+
+Things like qwCoalesce.
+
+\eject
+\section{Conversions for Analysis} 
+
+Conversion to class "lcens" or "mcens."
+
+\begin{thebibliography}{9}
+
+\bibentry{H12}
+Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab and R: New York, Wiley, 324 p.
+
+\bibentry{HH}
+Helsel, D.R., and Hirsch, R.M., 2002, Statistical methods in water resources: U.S. Geological Survey Techniques of Water-Resources Investigations, book 4, chap. A3, 522 p.
+
+\bibentry{DL}
+Lorenz, D.L., 2016, smwrQW--an R package for managing and analyzing water-quality data, version 1.0.0: U.S. Geological Survey Open File Report 2016-XXXX.
+
+\end{thebibliography}
+
+\end{document}

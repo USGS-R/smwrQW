@@ -13,7 +13,8 @@
 #' @param factor a single numeric value
 #' @param units character reporting units of the resulting operation, if not supplied, 
 #'retained from \code{x}.
-#' @param analyte.method character name of the analytical method for the result,
+#' @param analyte character the name of the resulting analyte.
+#' @param analyte.method character the name of the analytical method for the result,
 #'by default "ALGOR."
 #' @param pcode the parameter code of the result, if not supplied, retained from \code{x}.
 #' @return An object of class "qw" that is the result of the requested operation.

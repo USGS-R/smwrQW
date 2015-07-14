@@ -4,12 +4,14 @@
 \alias{mdlKM}
 \title{Estimate Statistics}
 \usage{
-mdlKM(x, group)
+mdlKM(x, group, conf.int = 0.95)
 }
 \arguments{
-\item{x}{an object of "lcens" to compute}
+\item{x}{an object of "lcens" to compute.}
 
-\item{group}{the group variable}
+\item{group}{the group variable.}
+
+\item{conf.int}{the confidence interval .}
 }
 \value{
 An object of class "survfit."
