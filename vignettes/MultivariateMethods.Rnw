@@ -13,7 +13,7 @@
 
 \maketitle
 
-These examples demonstrate some of the functions that can be used to prepared water-quality data for multivariate analysis that are available in the \texttt{smwrQW} package. The examples in this vignette use the DDT in fish dataset (table 13.1 in Helsel 2012). The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph creates the data and recodes the water-quality data to class ''lcens.'' There are many contributed pacakges that can be used for multivariate anslysis; the examples in this vignette use only packages supplied with base R and are intended only to demonstrate the multivariate functionality of the \ttexttt{smwrQW} pacakge.
+These examples demonstrate some of the functions that can be used to prepared water-quality data for multivariate analysis that are available in the \texttt{smwrQW} package. The examples in this vignette use the DDT in fish dataset (table 13.1 in Helsel 2012). The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph creates the data and recodes the water-quality data to class ''lcens.'' There are many contributed pacakges that can be used for multivariate anslysis; the examples in this vignette use only packages supplied with base R and are intended only to demonstrate the multivariate functionality of the \texttt{smwrQW} pacakge.
 
 
 <<echo=TRUE>>=
@@ -155,7 +155,7 @@ The x-axis (Component 1) represents the total concentration, but primarily the p
 \eject
 \section{Imputation Methods} 
 
-For relatively small percentages of left-censored water-quality data, substitute values can be estimated for left-censored values based on the overall structure of the data and the complete data used in multivariate procedures. The methods for estimating sensible substitution strategies for left-censored values are described by Palarea-Albaladejo (2013). The \textttt{zCompositions} package implements those methods. The functions \texttt{imputeLessThans} and \texttt{mImputeLessThans} in the \texttt{smwrQW} package can be used to estimate values for data of class "qw" or "lcens."
+For relatively small percentages of left-censored water-quality data, substitute values can be estimated for left-censored values based on the overall structure of the data and the complete data used in multivariate procedures. The methods for estimating sensible substitution strategies for left-censored values are described by Palarea-Albaladejo (2013). The \texttt{zCompositions} package implements those methods. The functions \texttt{imputeLessThans} and \texttt{mImputeLessThans} in the \texttt{smwrQW} package can be used to estimate values for data of class "qw" or "lcens."
 
 The example in this section uses an altered version of the DDT dataset. Estimated values for the left-censored were synthesized to approximately maintain the correlations structure of the u-sores and the data were recensored at 2. However, the intent of the altered values was to illustrate the process of estiamting values rather than produce a similar analysis. The R code immediately following this paragraph creates those data.
 
@@ -221,16 +221,16 @@ The x-axis (Component 1) represents the total concentration. Sites on the right-
 
 \begin{thebibliography}{9}
 
-\bibentry{H12}
+\bibitem{H12}
 Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab and R: New York, Wiley, 324 p.
 
-\bibentry{HH}
+\bibitem{HH}
 Helsel, D.R., and Hirsch, R.M., 2002, Statistical methods in water resources: U.S. Geological Survey Techniques of Water-Resources Investigations, book 4, chap. A3, 522 p.
 
-\bibentry{DL}
+\bibitem{DL}
 Lorenz, D.L., 2015, smwrStats--An R package for the analysis of hydrologic data, Version 0.7.3: U.S. Geological Survey Open File Report, ? p.
   
-\bibentry{PA}
+\bibitem{PA}
 Palarea-Albaladejo J. and Martin-Fernandez J.A., 2013, Values below detection limit in compositional chemical data: Analytica Chimica Acta 2013, v. 764, p. 32-43. accessed July 6, 2015 at http://dx.doi.org/10.1016/j.aca.2012.12.029.
 
 \end{thebibliography}

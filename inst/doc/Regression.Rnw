@@ -106,7 +106,7 @@ TCE.cr <- censReg(TCE ~ PopDensity + Depth + PctIndLU, data=TCEReg, dist="lognor
 print(TCE.cr)
 @
 
-The printed output is similar to the summary output from a linear regression. The coefficient table list the coefficient, its statndard error, the corresponding z score and the p-value determined from the partial log-likelihood test. Because the response is log-transformed, the residual standard error is expressed as a percentage. The overall significance level is computed from the log-likelihood of the model compared to the log-likelihood of the null model (intercept only). The computation method is "AMLE," which produces first-order unbiased estiamtes of the coefficients and standard error. That method also uses a slight variation on the computation of log-likelihood that results in consistent differences in log-likelihood, but the actual value can differ from other methods. A very quick assessment of the fit can be made by looking at the two diagnostic plots.
+The printed output is similar to the summary output from a linear regression. The coefficient table list the coefficient, its statndard error, the corresponding z score and the p-value determined from the partial log-likelihood test. Because the response is log-transformed, the residual standard error is expressed as a percentage. The overall significance level is computed from the log-likelihood of the model compared to the log-likelihood of the null model (intercept only). The computation method is ''AMLE,'' which produces first-order unbiased estiamtes of the coefficients and standard error. That method also uses a slight variation on the computation of log-likelihood that results in consistent differences in log-likelihood, but the actual value can differ from other methods. A very quick assessment of the fit can be made by looking at the two diagnostic plots.
 
 <<echo=TRUE>>=
 setSweave("graph03", 6 ,6)
@@ -126,7 +126,7 @@ graphics.off()
 
 The fitted values and response shows the weakness of the fit, but the q-normal plots indicates no major deviation from normality. For both plots, the uncensored data are shown as solid circles and the censored values as open circles.
 
-The \texttt{summary} printout shows more detail about the regression similar to the printed output from the \textttt{multReg} function in the \texttt{smwrStats} package (Lorenz, 2015). Many of the diagnostic plots from \texttt{summary} show working residuals and are designed to portray less heavily censored data than the those in the TCEReg dataset, but the partial residual plots are useful for assessing the linearity of the fit for ech explanatory variable. The code following this paragraph demonstrates the \texttt{summary} funciton and shows the printout and generates the partial residual plots for PopDensity and Depth.  The partial residual plot for PctIndLU is not shown becuase the p-value is much parger than 0.05.
+The \texttt{summary} printout shows more detail about the regression similar to the printed output from the \texttt{multReg} function in the \texttt{smwrStats} package (Lorenz, 2015). Many of the diagnostic plots from \texttt{summary} show working residuals and are designed to portray less heavily censored data than the those in the TCEReg dataset, but the partial residual plots are useful for assessing the linearity of the fit for ech explanatory variable. The code following this paragraph demonstrates the \texttt{summary} funciton and shows the printout and generates the partial residual plots for PopDensity and Depth.  The partial residual plot for PctIndLU is not shown becuase the p-value is much parger than 0.05.
 
 <<echo=TRUE>>=
 # The summary output.
@@ -186,19 +186,19 @@ graphics.off()
 
 \begin{thebibliography}{9}
 
-\bibentry{FEH}
+\bibitem{FEH}
 Harrel, F.E., 2001, Regression modeling strategies with applications to linear models, logistic regression, and survival analysis: New York, Springer, 568 p.
 
-\bibentry{H12}
+\bibitem{H12}
 Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab and R: New York, Wiley, 324 p.
 
-\bibentry{HH}
+\bibitem{HH}
 Helsel, D.R., and Hirsch, R.M., 2002, Statistical methods in water resources: U.S. Geological Survey Techniques of Water-Resources Investigations, book 4, chap. A3, 522 p.
 
-\bibentry{DL}
+\bibitem{DL}
 Lorenz, D.L., 2015, smwrStats--An R package for the analysis of hydrologic data, Version 0.7.3: U.S. Geological Survey Open File Report, ? p.
   
-\bibentry{MN}
+\bibitem{MN}
 McCullagh, P, and Nedler, J.A., 1999, Generalized linear models: Boca Raton, Fla., Chappman and Hall/CRC, 511 p.
 
 \end{thebibliography}

@@ -96,22 +96,22 @@ with(Atra, kendallATS.test(June, Sept))
 
 \begin{thebibliography}{9}
 
-\bibentry{H12}
+\bibitem{H12}
 Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab and R: New York, Wiley, 324 p.
 
-\bibentry{HC}
+\bibitem{HC}
 Helsel, D.R. and Cohn, T.A., 1988, Estimation of descriptive statistics for multiply censored water quality data: Water Resources Research v. 24, n. 12, p.1997--2004
 
-\bibentry{HH}
+\bibitem{HH}
 Helsel, D.R., and Hirsch, R.M., 2002, Statistical methods in water resources: U.S. Geological Survey Techniques of Water-Resources Investigations, book 4, chap. A3, 522 p.
 
-\bibentry{LWC}
+\bibitem{LWC}
 Lyles, R.H., Williams, J.K., and Chuachoowong R., 2001, Correlating two viral load assays with known detection limits: Biometrics,  v. 57 no. 4, p. 1238--1244.
 
-\bibentry{DL}
+\bibitem{DL}
 Lorenz, D.L., 2016, smwrQW--an R package for managing and analyzing water-quality data, version 1.0.0: U.S. Geological Survey Open File Report 2016-XXXX.
 
-\bibentry{S+}
+\bibitem{S+}
 Lorenz, D.L., Ahearn, E.A., Carter, J.M., Cohn, T.A., Danchuk, W.J., Frey, J.W., Helsel, D.R., Lee, K.E., Leeth, D.C., Martin, J.D., McGuire, V.L., Neitzert, K.M., Robertson, D.M., Slack, J.R., Starn, J., Vecchia, A.V.,Wilkison, D.H., and Williamson, J.E., 2011, USGS library for S-PLUS for Windows---Release 4.0: U.S. Geological Survey Open-File Report 2011-1130.
 
 \end{thebibliography}

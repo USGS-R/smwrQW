@@ -28,7 +28,7 @@ AtraAlt <- transform(AtraAlt, June=as.lcens(June, censor.codes=JuneCen),
   Sept=as.lcens(Sept, censor.codes=SeptCen))
 @
 
-The examples in this vignette present few options used in the graphics functions. More complete variations can be seen in the vignettes for the \tetxttt{smwrGraphs} package. \textbf{NOTE:} to use any of the high-level graphics functions, you must first call a function to set up the graphics environment such as \texttt{setPage} or \texttt{setPDF}, but these are not desmonstrated here due to the graphics set up function required for the vignette, \texttt{setSweave}.
+The examples in this vignette present few options used in the graphics functions. More complete variations can be seen in the vignettes for the \texttt{smwrGraphs} package. \textbf{NOTE:} to use any of the high-level graphics functions, you must first call a function to set up the graphics environment such as \texttt{setPage} or \texttt{setPDF}, but these are not desmonstrated here due to the graphics set up function required for the vignette, \texttt{setSweave}.
 
 \eject
 \section{Box Plots}
@@ -184,10 +184,10 @@ graphics.off()
 
 \begin{thebibliography}{9}
 
-\bibentry{H12}
+\bibitem{H12}
 Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab and R: New York, Wiley, 324 p.
 
-\bibentry{HH}
+\bibitem{HH}
 Helsel, D.R., and Hirsch, R.M., 2002, Statistical methods in water resources: U.S. Geological Survey Techniques of Water-Resources Investigations, book 4, chap. A3, 522 p.
 
 \end{thebibliography}

@@ -131,13 +131,13 @@ graphics.off()
 
 \begin{thebibliography}{9}
 
-\bibentry{H12}
+\bibitem{H12}
 Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab and R: New York, Wiley, 324 p.
 
-\bibentry{HH}
+\bibitem{HH}
 Helsel, D.R., and Hirsch, R.M., 2002, Statistical methods in water resources: U.S. Geological Survey Techniques of Water-Resources Investigations, book 4, chap. A3, 522 p.
 
-\bibentry{LR}
+\bibitem{LR}
 Lindsey, B.D., and Rupert, M.G., 2012, Methods for evaluating temporal groundwater quality data and results of decadal-scale changes in chloride, dissolved solids, and nitrate concentrations in groundwater in the United States, 1988--2010: U.S. Geological Survey Scientific Investigations Report 2012--5049, 46 p.
 
 \end{thebibliography}

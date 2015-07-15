@@ -10,8 +10,8 @@ that focuses on the analysis of water-quality data.
 }
 \details{
 \tabular{ll}{ Package: \tab smwrQW\cr Type: \tab Package\cr
-Version: \tab 0.7.2\cr
-Date: \tab 2015-07-14\cr
+Version: \tab 0.7.3\cr
+Date: \tab 2015-07-15\cr
 License: \tab file LICENSE\cr
 Depends: \tab dataRetrieval smwrBase smwrGraphs smwrStats \cr
 Imports: \tab boot coin lubridate methods mvtnorm survival XML zCompositions\cr
