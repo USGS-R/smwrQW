@@ -53,7 +53,7 @@ add <- function(..., analyte, pcode="", gt0=TRUE) {
         retval@.Data[, 1L] <- pmax(retval@.Data[, 1L], 0)
         retval@.Data[, 2L] <- pmax(retval@.Data[, 2L], 0)
       }
-      retval@reporting.level <- retval@reporting.level  + toadd
+      # should not change the RL: retval@reporting.level <- retval@reporting.level  + toadd
     }
     else if(class(toadd)[1L] == "qw") {
       if(dotsigns[i] == "+") {
@@ -72,6 +72,8 @@ add <- function(..., analyte, pcode="", gt0=TRUE) {
         }
         ## Fix censor codes
         retval@remark.codes[toadd@remark.codes == ">"] <- "<"
+        retval@remark.codes[retval@.Data[,1L] == 0] <- "<"
+        retval@remark.codes[retval@.Data[,1L] > 0 & (retval@.Data[,2L] - retval@.Data[,1L] > 1e-9)] <- "I"
       }
     }
     else

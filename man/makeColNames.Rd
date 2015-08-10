@@ -11,7 +11,7 @@ makeColNames(params, name, short)
 
 \item{name}{the long-name of the parameter code.}
 
-\item{short}{the short name of teh parameter code.}
+\item{short}{the short name of the parameter code.}
 }
 \value{
 A data frame containing the columns \code{parm_cd} and
@@ -29,7 +29,7 @@ This function is a support function designed to be called within other
 functions.
 }
 \seealso{
-\code{\link{pcodeNWISqw}}, \code{\link{pcodeColNames}}
+\code{\link{pcodeNWISqw}}, \code{\link{pcodeColData}}
 }
 \keyword{utilities}
 

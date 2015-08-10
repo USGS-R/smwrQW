@@ -24,7 +24,8 @@
 #' confidence limit, and the probability represented by the confidence interval
 #' corresponding to the probs levels in the sorted x data. Missing values denote
 #' values less than the minimum (either censored or uncensored) value. The minimum
-#' value is included as the "minimum" attribute of the matrix.
+#' value is included as the "minimum" attribute of the matrix. The maximum
+#' value is included as the "maximum" attribute of the matrix.
 #' @seealso \code{\link{censQuantile}}
 #' @references Helsel, D.R. 2012, Statistics for censored environmental data 
 #'using Minitab and R: New York, Wiley, 324 p.
@@ -60,7 +61,7 @@ censQtiles.CI <- function(x, probs=0.5, CI=0.90, bound=c("two.sided", "upper", "
 	# The eqn must be tweaked for bound="lower."
 	qtiles <- -step2$quantile
 	if(bound == "upper") {
-		lci <- -Inf
+		lci <- 0
 	} else {
 		lci <- -step2$upper # Note reverses logic
 	}
@@ -70,7 +71,9 @@ censQtiles.CI <- function(x, probs=0.5, CI=0.90, bound=c("two.sided", "upper", "
 		uci <- -step2$lower
 	}
   retval <- cbind(estimate=qtiles, lcl=lci, ucl=uci, ci=CI)
-  rownames(retval) <- paste0(names(qtiles), "%")
+	# Cheat to get the names of the selected quantiles
+  rownames(retval) <- names(quantile(1, probs=probs))
 	attr(retval, "minimum") <- -step1$time[length(step1$time)]
+	attr(retval, "maximum") <- -step1$time[1L]
   return(retval)
 }

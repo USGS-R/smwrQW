@@ -32,15 +32,29 @@ automatically, but can be set by the user,
 see \code{\link{makeColNames}}.
 }
 \description{
-Valid groups are "all," "information," "physical," "cations,"
-"anions," "nutrients," "microbiological," "biological," "metals," "nonmetals,"
-"toxicity," "pesticides," "pcbs," "other organics," "radio chemicals,",
-"stable isotopes," "sediment," and "population/community." Subject to
-availability in the \code{readNWISqw} function in the \code{dataRetrieval}
-package.
+Import discrete sample water-quality data from NWISweb.
 }
 \details{
-Import discrete sample water-quality data from NWISweb.
+Valid parameter code groups are "All," or group codes:
+\tabular{ll}{
+Code \tab Description\cr
+INF \tab Information \cr
+PHY \tab Physical \cr
+INM \tab Inorganics, Major, Metals (major cations) \cr
+INN \tab Inorganics, Major, Non-metals (major anions) \cr
+NUT \tab Nutrient \cr
+MBI \tab Microbiological \cr
+BIO \tab Biological \cr
+IMN \tab Inorganics, Minor, Non-metals \cr
+IMM \tab Inorganics, Minor, Metals \cr
+TOX \tab Toxicity \cr
+OPE \tab Organics, pesticide \cr
+OPC \tab Organics, PCBs \cr
+OOT \tab Organics, other \cr
+RAD \tab Radiochemical \cr
+SED \tab Sediment \cr
+POP \tab Population/community \cr
+}
 }
 \note{
 The sample information columns that are automatically retained are the

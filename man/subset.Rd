@@ -20,7 +20,7 @@
 
 \item{i}{index specifying elements to extract.}
 
-\item{subset}{an logical expression invloving a slot name of the qw object.}
+\item{subset}{an logical expression involving a slot name of the qw object.}
 
 \item{\dots}{not used, required for other methods.}
 }
@@ -28,15 +28,26 @@
 A subset of the object \code{x}.
 }
 \description{
-Extracts or subsets censored or water-quality data objects by
+Extracts or subsets censored or water-quality data objects.
 }
 \details{
 The values for \code{i} can be either numeric indexes or logical.\cr
 Valid slot names are "remark.codes," "reporting.level," "reporting.method,"
 "reporting.units," "analyte.method," "analyte.name," and "unique.code."
 }
+\note{
+In general, assignment of specific values should not be done using the
+"[" extraction operator because it does not modify the meta data assiciated
+with a value. But any value can be set to \code{NA} by treating the value as
+a matrix and setting the equivalent of the row to \code{NA}. See the example below.
+}
 \examples{
-as.lcens(c(1,3, NA), 2)[1:3]
+Xcens <- as.lcens(c(1, 2, 3, 4), 2)
+# Extract the 3rd value
+Xcens[3]
+# Change the 3rd value to NA and print the data
+Xcens[3,] <- NA
+Xcens
 }
 \seealso{
 \code{\link{[.qw}}

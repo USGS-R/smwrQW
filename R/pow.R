@@ -3,7 +3,7 @@
 #' @description The \code{pow} function provides a method for raising censored data to a positive power.
 #'
 #' @include lcens-class.R mcens-class.R qw-class.R
-#' @param x any object than cen be converted to class "mcens." Must be non negative (zero data are
+#' @param x any object that can be converted to class "mcens." Must be non negative (zero data are
 #'permitted). Missing values are permitted and missing vlues in the returnned vector.
 #' @param lambda the power to raise \code{x}. Must be strictly positive.
 #' @return An object of class "mcens" that is the result of the requested operations. Each of the range of the 

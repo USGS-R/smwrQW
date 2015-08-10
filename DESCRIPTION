@@ -1,6 +1,6 @@
 Package: smwrQW
-Version: 0.7.3
-Date: 2015-07-15
+Version: 0.7.5
+Date: 2015-08-10
 Title: Tools for censored data analysis
 Author: Dave Lorenz <lorenz@usgs.gov>.
 Maintainer: Dave Lorenz <lorenz@usgs.gov>
@@ -29,6 +29,7 @@ Description: This package provides tools for the analysis and graphing
     analysis.
 License: CC0
 LazyLoad: yes
+LazyData: yes
 Collate:
     'qw-class.R'
     'mcens-class.R'
@@ -101,7 +102,7 @@ Collate:
     'multiply.R'
     'nobs.censReg.R'
     'pairedPratt.test.R'
-    'pcodeColNames.R'
+    'pcodeColData.R'
     'pcodeNWISqw.R'
     'pctCens.R'
     'percentile.lcens.R'

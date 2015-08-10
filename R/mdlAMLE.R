@@ -67,7 +67,7 @@ mdlAMLE <- function(x, method="AMLE", alpha=0.4) {
     }
     if(uselog)
       retval <- list(mean=step1$zmu[2L], meanlog=step1$zmu[1L],
-                     sd=step1$zsig[2L], sdlog=step1$zsig[1L],
+                     sd=step1$zsig[2L], sdlog=step1$zsig[1L]*sqrt(nobs/(nobs-1)), # Adjust manually
                      fitted=fitted, censorlevels=cmax)
     else
       retval <- list(mean=step1$zmu[1L], sd=step1$zsig[1L]*sqrt(nobs/(nobs-1)), # Correct for bias

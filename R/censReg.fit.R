@@ -8,7 +8,7 @@
 #' @param Y the response data.
 #' @param X a matrix of the explanatory variables, including the intercept term.
 #' @param dist the distribuiton, either "normal" or "lognormal."
-#' @param Wt observations weights.
+#' @param Wt observation weights.
 #' @return a list containing the output from the FORTRAN code,or converted from
 #'survreg.
 #' @seealso \code{\link{censReg}}, \code{\link{survreg}}
@@ -105,11 +105,12 @@ censReg_MLE.fit <- function(Y, X, Wt, dist="normal") {
   if(missing(Wt))
     Wt <- 1.0
   Wt <- rep(Wt, length.out = length(time))
+  # Normalize weights
+  Wt <- Wt/mean(Wt)
   sr <- survreg(Resp ~ X -1, weights=Wt, dist=survdist)
   ## must package into list like AMLE
   NOBSC = length(time)
   NPAR = ncol(X)
-  xtxinv <- solve(crossprod(X*sqrt(Wt)))
   bcor <- NOBSC/(NOBSC - NPAR)
   BIAS <- c(rep(0, NPAR), -NPAR/NOBSC)
   SBIAS <- c(rep(0, NPAR), (-.5*(NPAR - 1) + .25)/NOBSC) # For MLE, only dependent on N and P
@@ -132,6 +133,7 @@ censReg_MLE.fit <- function(Y, X, Wt, dist="normal") {
   } else if(dist == "commonlog") {
   	YPRED <- 10^YPRED * exp(0.5*(sr$scale*log(10))^2) # MLE adj.
   }
+  vcv <- sr$var[-(NPAR+1L), -(NPAR+1L)]
   ## construct fit for prediction
   fit <- list(NOBSC = NOBSC,
               NPAR = NPAR,
@@ -141,17 +143,18 @@ censReg_MLE.fit <- function(Y, X, Wt, dist="normal") {
               CENSFLAG = CENSFLAG,
               PARMLE = as.double(c(sr$coefficients, sr$scale^2)),
               PARAML = as.double(c(sr$coefficients, sigma^2)),
-              BIAS = BIAS,
-              CV = cbind(rbind(xtxinv, 0), -BIAS),
-              SBIAS = SBIAS,
-              SCV = cbind(rbind(xtxinv, 0), c(rep(0, NPAR), sr$var[NPAR+1L, NPAR+1L])),
-              STDDEV = c(sqrt(diag(sr$var)))*sqrt(bcor),
-              PVAL = summary(sr)$table[,"p"],
-              COV = sr$var,
-              RESID = RESID,
-              RSQ = NA_real_,
-              LLR = ll,
-              SCORR = NA_real_,
+  						BIAS = BIAS,
+  						CV = cbind(rbind(vcv/sigma^2*bcor, 0), -BIAS),
+  						SBIAS = SBIAS,
+  						SCV = rbind(cbind(vcv/sigma^2*bcor,0), 
+  												c(rep(0, NPAR), sr$var[NPAR+1L, NPAR+1L])),
+  						STDDEV = c(sqrt(diag(sr$var)))*sqrt(bcor),
+  						PVAL = summary(sr)$table[,"p"],
+  						COV = rbind(cbind(vcv,0), -BIAS*sr$scale^4),
+  						RESID = RESID,
+  						RSQ = NA_real_,
+  						LLR = ll,
+  						SCORR = NA_real_,
               LLRAML = double(1L),
               PLEVAML = double(1L),
               DF = integer(1L),

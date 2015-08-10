@@ -4,7 +4,7 @@
 \alias{censMean.CI}
 \title{Mean with Confidence Limits}
 \usage{
-censMean.CI(x, method = "log MLE", CI = 0.9, bound = c("two.sided",
+censMean.CI(x, method = "log AMLE", CI = 0.9, bound = c("two.sided",
   "upper", "lower"), alpha = 0.4)
 }
 \arguments{

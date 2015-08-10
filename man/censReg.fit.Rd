@@ -16,7 +16,7 @@ censReg_MLE.fit(Y, X, Wt, dist = "normal")
 
 \item{dist}{the distribuiton, either "normal" or "lognormal."}
 
-\item{Wt}{observations weights.}
+\item{Wt}{observation weights.}
 }
 \value{
 a list containing the output from the FORTRAN code,or converted from

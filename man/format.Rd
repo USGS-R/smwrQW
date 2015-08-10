@@ -10,7 +10,7 @@
 
 \method{format}{mcens}(x, digits = NULL, ...)
 
-\method{format}{qw}(x, round = TRUE, units = FALSE, ...)
+\method{format}{qw}(x, round = TRUE, units = FALSE, style = "asis", ...)
 }
 \arguments{
 \item{x}{the censored data object to format.}
@@ -21,7 +21,9 @@
 length 2 containing the maximum number of significant digits and the maximum
 number of decimal digits.}
 
-\item{units}{include the units of the data?}
+\item{units}{logical, if \code{TRUE} then include the units of the data.}
+
+\item{style}{the style for objects of class "qw." See \bold{Details}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -30,6 +32,17 @@ A character representations of the elements of \code{x}.
 }
 \description{
 Format a censored or water-quality data object for pretty printing.
+}
+\details{
+The argument \code{style} must be one of "asis," which tries to format
+the data to best show the values; "simple," which is like "asis" except that interval
+censored data are the midrange values preceded by "I"; or "interpreted," which shows
+the values as they would be used in analysis and \code{round} is ignored.
+Only the first letter is required.
+}
+\note{
+For \code{style} set to "asis," it is often useful to set \code{round} to a
+single value so that the interval data are not rounded to the same value.
 }
 \examples{
 format(as.lcens(1:3, 1))

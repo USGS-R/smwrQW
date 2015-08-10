@@ -1,24 +1,31 @@
 #'Subset an Object
 #'
-#'Extracts or subsets censored or water-quality data objects by 
+#'Extracts or subsets censored or water-quality data objects.
 #'
 #'The values for \code{i} can be either numeric indexes or logical.\cr
 ##'Valid slot names are "remark.codes," "reporting.level," "reporting.method,"
 #'"reporting.units," "analyte.method," "analyte.name," and "unique.code."
 #'
-#'@rdname subset
-#'@aliases [.lcens [.mcens [.qw subset.qw
-#'@param x any R object to subset.
-#'@param i index specifying elements to extract.
-#'@param subset an logical expression invloving a slot name of the qw object.
-#'@param \dots not used, required for other methods.
-#'@return A subset of the object \code{x}.
-#'@seealso \code{\link{[.qw}}
-#'@keywords manip
-#'@examples
-#'
-#'as.lcens(c(1,3, NA), 2)[1:3]
-#'
+#' @rdname subset
+#' @aliases [.lcens [.mcens [.qw subset.qw
+#' @param x any R object to subset.
+#' @param i index specifying elements to extract.
+#' @param subset an logical expression involving a slot name of the qw object.
+#' @param \dots not used, required for other methods.
+#' @return A subset of the object \code{x}.
+#' @note In general, assignment of specific values should not be done using the
+#'"[" extraction operator because it does not modify the meta data assiciated
+#'with a value. But any value can be set to \code{NA} by treating the value as
+#'a matrix and setting the equivalent of the row to \code{NA}. See the example below.
+#' @seealso \code{\link{[.qw}}
+#' @keywords manip
+#' @examples
+#'Xcens <- as.lcens(c(1, 2, 3, 4), 2)
+#'# Extract the 3rd value
+#'Xcens[3]
+#'# Change the 3rd value to NA and print the data
+#'Xcens[3,] <- NA
+#'Xcens
 #' @export
 #'@method [ lcens
 "[.lcens" <- function(x, i, ...) {

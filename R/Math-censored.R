@@ -71,7 +71,14 @@ setMethod("Math", "mcens", function(x) {
 setMethod("Math", "qw", function(x) {
 	if(length(x) == 0L)
 		return(x) # Do nothing
-	stop(gettextf("'%s' not defined for mcens objects", .Generic),
-									 domain=NA)
+	cen <- censoring(x)
+	if(cen == "none") {
+		x=as.numeric(x)
+	} else if(cen == "left") {
+		x=as.lcens(x)
+	} else { # remaining option is mcens
+		x=as.mcens(x)
+	}
+	get(.Generic)(x)
 }
 )

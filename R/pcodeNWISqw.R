@@ -2,11 +2,9 @@
 #'
 #'Support function for \code{importNWISqw}.
 #'
-#'Valid groups for \code{param} are "all," "information," "physical,"
-#'"cations," "anions,"
-#'"nutrients," "microbiological," "biological," "metals," "nonmetals,"
-#'"toxicity," "pesticides," "pcbs," "other organics," "radio chemicals,",
-#'"stable isotopes," "sediment," and "population/community."
+#'Valid groups for \code{param} are "All," "INF," "PHY," "INM," "INN," 
+#'"NUT," "MBI," "BIO," "IMN," "IMM," "TOX," "OPE," "OPC," "OOT," "RAD,"
+#'"SED," or "POP."
 #'
 #' @param params A character string contains the name of a group of parameter
 #'codes, or a vector of pamater codes. See \bold{Details}.
@@ -37,23 +35,22 @@ pcodeNWISqw <- function(params="all", group=TRUE, name=TRUE, CASRN=FALSE, short=
   ##    2015Jan29 DLLorenz Tweaks for smwr series
   ##
   ## The index of short names to NWIS group names
-  grpcd <- c("Information"="information",
-             "Physical"="physical",
-             "Inorganics, Major, Metals"="cations",
-             "Inorganics, Major, Non-metals"="anions",
-             "Nutrient"="nutrients",
-             "Microbiological"="microbiological",
-             "Biological"="biological",
-             "Inorganics, Minor, Metals"="metals",
-             "Inorganics, Minor, Non-metals"="nonmetals",
-             "Toxicity"="toxicity",
-             "Organics, pesticide"="pesticides",
-             "Organics, PCBs"="pcbs",
-             "Organics, other" ="other organics",
-             "Radiochemical"="radio chemicals",
-             "Stable Isotopes"="stable isotopes",
-             "Sediment"="sediment",
-             "Population/Community"="population/community")
+  grpcd <- c("INF"="information",
+             "PHY"="physical",
+             "INM"="cations",
+             "INN"="anions",
+             "NUT"="nutrients",
+             "MBI"="microbiological",
+             "BIO"="biological",
+             "IMM"="metals",
+             "IMN"="nonmetals",
+             "TOX"="toxicity",
+             "OPE"="pesticides",
+             "OPC"="pcbs",
+             "OOT" ="other organics",
+             "RAD"="radio chemicals",
+             "SED"="sediment",
+             "POP"="population/community")
   ## Continue, ckprm = 0 if pcode list
   if(length(params) > 1L) # Must be multiple pcodes, get em all
     ckprm <- -1L

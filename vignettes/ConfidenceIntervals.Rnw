@@ -1,0 +1,79 @@
+\documentclass{article}
+\parskip 6pt
+\usepackage[margin=1.25in]{geometry}
+%\VignetteIndexEntry{Confidence Intervals}
+%\VignetteDepends{smwrQW}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\raggedright
+\title{Confidence Intervals}
+
+\author{Dave Lorenz}
+
+\maketitle
+
+These examples demonstrate some of the functions and statistical methods for computing confidence intervals for the mean and quantiles that are available in the \texttt{smwrQW} package. The examples in this vignette use the Golden dataset from the \texttt{NADA} package. The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated. That conversion is not necessary for data of class ''qw'' or numeric data. Only the liver data in the Golden dataset are used and the data are subsetted to represent samples from a single population---the low dose.
+
+
+<<echo=TRUE>>=
+# Load the smwrQW package
+library(smwrQW)
+# And the data
+data(Golden, package="NADA")
+# Convert and subset the data
+Golden <- with(subset(Golden, DosageGroup ==  "Low"),
+  data.frame(Liver=as.lcens(Liver, censor.codes=LiverCen)))
+@
+
+\eject
+\section{Confidence Intervals for the Mean}
+
+Confidence intervals for the mean of an uncensored, normally distributed sample can easily be calculated using the one-sample \texttt{t.test} function. The confidence interval is set using the \texttt{conf.level} argument and the \texttt{alternative} argument controls whether two-sided, upper- or lower-confidence limits are reported. The \texttt{censMean.CI} function in the \texttt{smwrQW} package can be used to computed confidence intervals for the mean of censored, normally or lognormally distributed sample. Helsel (2012) describes the methods for maximum likelihood and the robust regression on order statistics. The methods for maximum likelihood are extended to adjusted maximum likelihood for the functions in \texttt{smwrQW}.
+
+The example below illustrates each of the three methods for computing the confidence interval for the mean, "log AMLE," "log MLE," and "log ROS." The default method is "log AMLE" because maximum likelihood methods produce estimates of the standard deviation that are biased low, producing confidence interval that are too small. The methods "log ROS" and "ROS" use bootstrapping to compute confidence intervals and setting the seed for the random number generator will produce reproducible results. The results are reported as the estiamte of the mean, the lower and upper confidence limits and the confidence interval. The assumption of lognormality is important because of issues related to the back-transformation and is simply assessed using the \texttt{censPPP.test} on the log-transformed data; the data could also be plotted using the \texttt{qqPlot} function, setting the \texttt{yaxis.log} arguent to \texttt{TRUE}.
+
+<<echo=TRUE>>=
+# first assess the log-normality
+censPPCC.test(log(Golden$Liver))
+# compute the 90 percent (default) two-sided confidence intervals
+# The default log AMLE method
+censMean.CI(Golden$Liver)
+# The log MLE method
+censMean.CI(Golden$Liver, method="log MLE")
+# The log ROS method
+set.seed(123)
+censMean.CI(Golden$Liver, method="log ROS")
+@
+
+
+\eject
+\section{Confidence Intervals for Quantiles} 
+
+Helsel (2012) describes computing confidence intervals of the median and other quantiles for complete data using the properties of the binomial distribution. That method is coded as \texttt{qtiles.CI} in the \texttt{smwrStats} package (Lorenz 2016). He also describes several methods for computing those confidence intervals for left-censored data using nonparametric methods from survival analysis. The B-C method is coded as \texttt{censQtiles.CI} in the \texttt{smwrQW} package.
+
+The example below illustrates computing the 90 percent two-sided and 95 percent upper confidence interval for median and 75th percentile for the Golden data used in the previous example. Those selected confidence interval should produce the same value for the upper confidence limit. For the two-sided or lower confidence level, \texttt{NA} is returned if the computed value is less than the minimum value of the data. In that case, the lower limit should be interpret as interval censored between 0 and the minimum, reported in the "minimum" attribute of the returned matrix. For the two-sided or upper confidence level, the maximum value in the dataset is returned even if the computed upper limit exceeds that value. The user must determine whether to accept the maximum or report the value as right censored, greater than that maximum. An example is shown in the R code below.
+
+<<echo=TRUE>>=
+# The two-sided confidence intervals
+censQtiles.CI(Golden$Liver, probs=c(.25, .5, .75))
+# and the upper confidence interval
+censQtiles.CI(Golden$Liver, probs=c(.25, .5, .75), bound="upper", CI=0.95)
+# Example where the maximum value is reported for the upper limit
+censQtiles.CI(Golden$Liver, probs=c(.9), bound="upper", CI=0.95)
+@
+
+
+\begin{thebibliography}{9}
+
+\bibitem{H12}
+Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab and R: New York, Wiley, 324 p.
+
+
+\bibitem{DL}
+Lorenz, D.L., 2016, smwrStats--An R Package for Analyzing Hydrologic Data, Version 0.7.4: U.S. Geological Survey Open File Report 2016-XXXX.
+
+
+\end{thebibliography}
+
+\end{document}

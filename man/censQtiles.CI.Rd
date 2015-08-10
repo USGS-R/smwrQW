@@ -29,7 +29,8 @@ A matrix of sample quantiles, the lower confidence limit, the upper
 confidence limit, and the probability represented by the confidence interval
 corresponding to the probs levels in the sorted x data. Missing values denote
 values less than the minimum (either censored or uncensored) value. The minimum
-value is included as the "minimum" attribute of the matrix.
+value is included as the "minimum" attribute of the matrix. The maximum
+value is included as the "maximum" attribute of the matrix.
 }
 \description{
 Compute sample quantiles and confidence limits of left-censored data

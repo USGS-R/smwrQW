@@ -1,16 +1,24 @@
-#'Encode in a Common Format
+#' Encode in a Common Format
 #'
-#'Format a censored or water-quality data object for pretty printing.
+#' Format a censored or water-quality data object for pretty printing.
 #'
+#' @details The argument \code{style} must be one of "asis," which tries to format
+#'the data to best show the values; "simple," which is like "asis" except that interval
+#'censored data are the midrange values preceded by "I"; or "interpreted," which shows 
+#'the values as they would be used in analysis and \code{round} is ignored.
+#'Only the first letter is required.
 #'
 #' @aliases format.lcens format.mcens format.qw
 #' @param x the censored data object to format.
 #' @param digits how many significant digits are to be used for numbers?
 #' @param \dots further arguments passed to or from other methods.
-#' @param units include the units of the data?
+#' @param units logical, if \code{TRUE} then include the units of the data.
+#' @param style the style for objects of class "qw." See \bold{Details}.
 #' @param round round the data before formating? Can also be a numeric vector of
 #'length 2 containing the maximum number of significant digits and the maximum
 #'number of decimal digits.
+#' @note For \code{style} set to "asis," it is often useful to set \code{round} to a
+#'single value so that the interval data are not rounded to the same value.
 #' @return A character representations of the elements of \code{x}.
 #' @keywords manip
 #' @examples
@@ -41,35 +49,51 @@ format.mcens <- function(x, digits=NULL, ...) {
 #' @rdname format
 #' @export
 #' @method format qw
-format.qw <- function(x, round=TRUE, units=FALSE, ...) {
+format.qw <- function(x, round=TRUE, units=FALSE, style="asis", ...) {
+	style <- match.arg(style, c("asis", "simple", "interpreted"))
   xval <- x@.Data
+	xmid <- rowMeans(xval)
   xrl <- x@reporting.level
   xrmk <- x@remark.codes
   xrmk[is.na(xrmk)] <- " " # fix NAs in the remark codes
-  ## Force detection limit on left-censored data
-  fdl <- ifelse(is.na(xrl), FALSE,
-                     ifelse(xval[, 2L] >= xrl, FALSE, TRUE))
-  fdl <- na2miss(fdl, FALSE)
-  if(any(fdl)) {
-    xval[fdl, 2L] <- xrl[fdl]
-    xrmk[fdl] <- "<"
-  }
-  if(is.logical(round)) {
-    if(round) {
-      rnd <- x@rounding
-      xval <- round(signif(xval, rnd[1L]), rnd[2L])
-    }
-  }
-  else if(length(round) == 2L) { # Standard qw usage
-    xval <- round(signif(xval, round[1L]), round[2L])
-  }
-  else {
-    xval <- round(xval, round)
-  }
-  xval <- format(xval, ...) # xval is now character
+	# Create I remark codes if necessary
+	Icens <- na2miss(xval[,1L] < xval[,2L] & !(xrmk == "<" | xrmk == ">"), FALSE)
+	xrmk[Icens] <- "I"
+  ## Force detection limit on left-censored data if style is interpreted
+	if(style == "interpreted") {
+		fdl <- ifelse(is.na(xrl), FALSE,
+									ifelse(xval[, 2L] >= xrl, FALSE, TRUE))
+		fdl <- na2miss(fdl, FALSE)
+		if(any(fdl)) {
+			xval[fdl, 2L] <- xrl[fdl]
+			xrmk[fdl] <- "<"
+		}
+	}
+	if(style != "interpreted") {
+		if(is.logical(round)) {
+			if(round) {
+				rnd <- x@rounding
+				xval <- round(signif(xval, rnd[1L]), rnd[2L])
+				xmid <- round(signif(xmid, rnd[1L]), rnd[2L])
+			}
+		}
+		else if(length(round) == 2L) { # Standard qw usage
+			xval <- round(signif(xval, round[1L]), round[2L])
+			xmid <- round(signif(xmid, round[1L]), round[2L])
+		}
+		else {
+			xval <- round(xval, round)
+			xmid <- round(xmid, round)
+		}
+	}
+  xval <- format(xval, ...) # xval is now character matrix
   ## Interval censoring
-  xsho <- ifelse(xrmk == "I", xval[, 2L], xval[, 1L])
-  xrmk <- ifelse(xrmk == "I", paste(xval[, 1L], "-", sep=''), xrmk)
+	if(style != "simple") {
+		xsho <- ifelse(xrmk == "I", xval[, 2L], xval[, 1L])
+		xrmk <- ifelse(xrmk == "I", paste(xval[, 1L], "-", sep=''), xrmk)
+	} else {
+		xsho <- ifelse(xrmk == "I", xmid, xval[, 1L])
+	}
   ## Left censoring
   xsho <- ifelse(xrmk == "<", xval[, 2L], xsho)
   retval <- paste(xrmk, xsho, sep='')

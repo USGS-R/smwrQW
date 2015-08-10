@@ -15,6 +15,7 @@ as.character.lcens <- function(x, ...) {
   vals <- as.character(x@.Data[, 1])
   rmks <- ifelse(x@censor.codes, "<", " ")
   rmks <- ifelse(is.na(rmks), " ", rmks) # Fix NANA in output
+  rmks <- ifelse(is.na(vals), " ", rmks) # Fix <NA in output
   return(paste(rmks, vals, sep=''))
 }
 

@@ -31,11 +31,9 @@ A data frame with the parameter codes and the selected columns.
 Support function for \code{importNWISqw}.
 }
 \details{
-Valid groups for \code{param} are "all," "information," "physical,"
-"cations," "anions,"
-"nutrients," "microbiological," "biological," "metals," "nonmetals,"
-"toxicity," "pesticides," "pcbs," "other organics," "radio chemicals,",
-"stable isotopes," "sediment," and "population/community."
+Valid groups for \code{param} are "All," "INF," "PHY," "INM," "INN,"
+"NUT," "MBI," "BIO," "IMN," "IMM," "TOX," "OPE," "OPC," "OOT," "RAD,"
+"SED," or "POP."
 }
 \examples{
 \dontrun{

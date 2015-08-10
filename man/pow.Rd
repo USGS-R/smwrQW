@@ -7,7 +7,7 @@
 pow(x, lambda)
 }
 \arguments{
-\item{x}{any object than cen be converted to class "mcens." Must be non negative (zero data are
+\item{x}{any object that can be converted to class "mcens." Must be non negative (zero data are
 permitted). Missing values are permitted and missing vlues in the returnned vector.}
 
 \item{lambda}{the power to raise \code{x}. Must be strictly positive.}

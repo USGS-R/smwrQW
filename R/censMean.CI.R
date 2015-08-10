@@ -53,7 +53,7 @@
 #' # check upper bound for AMLE
 #' censMean.CI(XX.rn, method="log AMLE", CI=.90, bound="upper")
 #' @export censMean.CI
-censMean.CI <- function(x, method="log MLE", CI=0.90, bound=c("two.sided", "upper", "lower"),
+censMean.CI <- function(x, method="log AMLE", CI=0.90, bound=c("two.sided", "upper", "lower"),
 											alpha=0.4) {
 	##
 	x <- as.lcens(x)
@@ -90,6 +90,7 @@ censMean.CI <- function(x, method="log MLE", CI=0.90, bound=c("two.sided", "uppe
 	} else if(method %cn% "log") { # use Olsson's modification
 		step1 <- censStats(x, method=method)
 		est <- step1$mean
+		# #adjust the sdlog if AMLE
 		tOlsson <- qt(ci, N-1)*sqrt(step1$sdlog^2/N + step1$sdlog^4/(2*(N-1)))
 		lci <- exp(step1$meanlog + 0.5*step1$sdlog^2 - tOlsson)
 		uci <- exp(step1$meanlog + 0.5*step1$sdlog^2 + tOlsson)

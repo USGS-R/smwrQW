@@ -8,7 +8,7 @@
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 \raggedright
-\title{Correlations}
+\title{Correlation}
 
 \author{Dave Lorenz}
 
@@ -50,7 +50,7 @@ phi(Atra.tbl, digits=4)
 \eject
 \section{Maximum Likelihood Estimation Method} 
 
-Helsel (2012) only decribes the square root of the likelihood r-squared as a measure of the Pearson correlation however, it is only apppropriate for censored y and uncensored x and it only assymptotically approaches Pearson's correlation coefficient as the proportion of censoring decreases. Lyles and others (2001) describe a maximum likelihood estimation method that computes the Pearson correlation coefficient for censored x and y. Their method is coded as \texttt{censCor} in the \texttt{smwrQW} package.
+Helsel (2012) only decribes the square root of the likelihood r-squared as a measure of the Pearson correlation however, it is only apppropriate for censored y and uncensored x and it only assymptotically approaches Pearson's correlation coefficient as the proportion of censoring decreases. Lyles and others (2001) describe a maximum likelihood estimation method that computes the Pearson correlation coefficient for censored x and y. This method is coded as \texttt{censCor} in the \texttt{smwrQW} package.
 
 An important first step in any parametric statistical analysis is to plot the data. Figure 1 show the June and September atrazine concentrations on a log-log axis. In figure 1, uncensored data are shown by solid circles, and censored data are shown by open circles, horizontal lines are drawn between the y-axis and the symbol  if x-axis data values (June) are censored and vertical lines are drawn between the x-axis and the symbol if the y-axis data values (Sept) are censored. Except for a single outlier, the data appear fairly linear.
 
