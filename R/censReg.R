@@ -5,7 +5,7 @@
 #' @details The left-hand side of the formula may be any numeric variable, just as with
 #'\code{lm} or a variable of class "lcens," "mcens," or "qw."\cr
 #'For un- or left-censored data, AMLE is used unless weights are specified in
-#'the model, then MLE is used, through a call to survreg. For any other 
+#'the model, then MLE is used, through a call to \code{survreg}. For any other 
 #'censored data, MLE is used.\cr
 #'If \code{dist} is "normal," then the regression analysis assumes that the
 #'residuals are normally distributed. If \code{dist} is "lognormal," then
@@ -45,15 +45,20 @@
 #'\item{vcov}{extract the variance-covariance matrix from the model}
 #'\item{vif}{compute the variance inflation factors for the explanatory variables in the model}
 #'}
+#'
+#' The AMLE method has arbitrary limitations on the size of the data: 24 explanatory variables
+#'and 5000 observations. Exceeding these will generate a warning message with the error code in
+#'the output object.
+#'
 #' @seealso \code{\link{lm}}, \code{\link{survreg}}
 #' @references Lorenz, 2015, smwrQW.\cr
 #'Breen, R., 1996, Regression models: censored, sample selected, or truncated data:
-#'Sage University Paper series on Qunatitative Applications in the Social Sciences, 
-#'07-111, Thousand Oaks, CA, 
+#'Sage University Paper series on Quantitative Applications in the Social Sciences, 
+#'07-111, Thousand Oaks, CA, \cr
 #'Cohn, T.A., 1988, Adjusted maximum likelihood estimation of moments
 #'of lognormal populations from type I censored samples: 
 #'U.S. Geological Survey Open-File Report 88-350, 34 p.\cr
-#'#' @keywords regression censored
+#' @keywords regression censored
 #' @examples
 #'
 #'set.seed(345)
@@ -129,5 +134,10 @@ censReg <- function(formula, data, subset, weights, na.action, dist="normal") {
   fit$na.message <- na.message
   fit$xlevels <- xlevels
   class(fit) <- "censReg"
+  if(fit$IERR > 0) {
+  	warning("Fatal error code: ", fit$IERR)
+  } else if(fit$IERR < 0) {
+  	warning("Nonfatal error code: ", fit$IERR)
+  }
   return(fit)
 }

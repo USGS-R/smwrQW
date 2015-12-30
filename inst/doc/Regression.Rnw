@@ -1,6 +1,8 @@
 \documentclass{article}
 \parskip 6pt
 \usepackage[margin=1.25in]{geometry}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
 %\VignetteIndexEntry{Regression}
 %\VignetteDepends{smwrQW}
 %\VignetteDepends{psych}
@@ -14,7 +16,16 @@
 
 \maketitle
 
-These examples demonstrate some of the functions and statistical methods for computing the regressions for censored response variables that are available in the \texttt{smwrQW} package. The examples in this vignette use the TCEReg dataset from the \texttt{NADA} package. The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph gets the data and creates a column named ''TCE'' of class ''lcens.'' Only logistic and maximum likelihood estimation methods are described in this vignette because those methods support multiple explanatory variables.
+\begin{abstract}
+These examples demonstrate some of the functions and statistical methods for computing the regressions for censored response variables that are available in the \texttt{smwrQW} package. 
+\end{abstract}
+
+\tableofcontents
+
+\eject
+\section{Introduction}
+
+The examples in this vignette use the TCEReg dataset from the \texttt{NADA} package. The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph gets the data and creates a column named ''TCE'' of class ''lcens.'' Only logistic and maximum likelihood estimation methods are described in this vignette because those methods support multiple explanatory variables.
 
 
 <<echo=TRUE>>=

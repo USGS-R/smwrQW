@@ -1,7 +1,7 @@
 citHeader("Suggested citation for smwrQW:")
 
 citEntry(entry = "TechReport",
-  title        = "smwrQW--An R Package for Managing and Analyzing Water-Quality Data, Version 0.7.5",
+  title        = "smwrQW--An R Package for Managing and Analyzing Water-Quality Data, Version 0.7.7",
   author       = personList(as.person("Dave Lorenz")),
   institution  = "U.S. Geological Survey",
   series       = "Open File report",
@@ -9,5 +9,5 @@ citEntry(entry = "TechReport",
 
   textVersion  =
   paste("Lorenz, D.L., in preparation",
-        "smwrQW--An R Package for Managing and Analyzing Water-Quality Data, Version 0.7.5:")
+        "smwrQW--An R Package for Managing and Analyzing Water-Quality Data, Version 0.7.7:")
 )

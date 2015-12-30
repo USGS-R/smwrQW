@@ -106,7 +106,8 @@ importNWISqw <- function(sites, params="all", begin.date="", end.date="",
 	for(i in grep(".Seq", names(retval), value=TRUE, fixed=TRUE)) {
 		val <-ByResult$qw[retval[[i]]]
 		## Work around some issues, need more robust criteria etc.
-		if((val@unique.code[1L] %in% NPCd) && censoring(val) == "none") {
+		uniq.val <- val@unique.code[!is.na(val@unique.code)][1L]
+		if((uniq.val %in% NPCd) && censoring(val) == "none") {
 			retval[[i]] <- as.numeric(val)
 		} else
 			retval[[i]] <- val

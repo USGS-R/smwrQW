@@ -56,47 +56,47 @@ convert2qw <- function(data, scheme="booker") {
     retval <- data[, Keep, drop=FALSE]
     ## Now convert each name and add the column
     for(i in Cnames) {
-      Pname <- grep(paste("^P", i, sep=""), dnames, ignore.case=TRUE, value=TRUE)
-      Rname <- grep(paste("^R", i, sep=""), dnames, ignore.case=TRUE, value=TRUE)
-      qw <- as.qw(data[[Pname]], data[[Rname]], value.codes="", reporting.level=NA_real_,
-      reporting.method="", reporting.units="", analyte.method="", analyte.name="",
-      unique.code=i)
-      retval[[Pname]] <- qw
+    	Pname <- grep(paste("^P", i, sep=""), dnames, ignore.case=TRUE, value=TRUE)
+    	Rname <- grep(paste("^R", i, sep=""), dnames, ignore.case=TRUE, value=TRUE)
+    	qw <- as.qw(as.numeric(data[[Pname]]), as.character(data[[Rname]]), value.codes="", reporting.level=NA_real_,
+    							reporting.method="", reporting.units="", analyte.method="", analyte.name="",
+    							unique.code=i)
+    	retval[[Pname]] <- qw
     }
     return(retval)
   } # End of booker
   if(scheme == "qw") {
-    Vnames <- grep("\\.va1$", dnames, value=TRUE)
-    Vnames <- substring(Vnames, 1L, nchar(Vnames) - 4L)
-    ## Extract the non qw data
-    Keep <- dnames
-    for(i in Vnames)
+  	Vnames <- grep("\\.va1$", dnames, value=TRUE)
+  	Vnames <- substring(Vnames, 1L, nchar(Vnames) - 4L)
+  	## Extract the non qw data
+  	Keep <- dnames
+  	for(i in Vnames)
       Keep <- grep(paste("^", i, sep=""), Keep, value=TRUE, invert=TRUE)
     retval <- data[, Keep, drop=FALSE]
     ## Now convert each name and add the column
     for(i in Vnames) {
-      mat <- cbind(values=data[[paste(i, "va1", sep=".")]], 
-        value2=data[[paste(i, "va2", sep=".")]])
-      ## as.characer protects against factors
-      qw <- new("qw", mat, 
-        remark.codes=as.character(data[[paste(i, "rmk", sep=".")]]),
-        value.codes=as.character(data[[paste(i, "vqc", sep=".")]]),
-        reporting.level=data[[paste(i, "rlv", sep=".")]],
-        reporting.method=as.character(data[[paste(i, "rmt", sep=".")]]),
-        reporting.units=as.character(data[[paste(i, "unt", sep=".")]]),
-        analyte.method=as.character(data[[paste(i, "mth", sep=".")]]), 
-        analyte.name=as.character(data[[paste(i, "nam", sep=".")]]),
-        unique.code=as.character(data[[paste(i, "pcd", sep=".")]]), 
-        rounding=c(2L,3L),
-        names=as.character(seq(ncol(mat))))
-      retval[[i]] <- qw
+    	mat <- cbind(values=as.numeric(data[[paste(i, "va1", sep=".")]]), 
+    							 value2=as.numeric(data[[paste(i, "va2", sep=".")]]))
+    	## as.characer protects against factors
+    	qw <- new("qw", mat, 
+    						remark.codes=as.character(data[[paste(i, "rmk", sep=".")]]),
+    						value.codes=as.character(data[[paste(i, "vqc", sep=".")]]),
+    						reporting.level=as.numeric(data[[paste(i, "rlv", sep=".")]]),
+    						reporting.method=as.character(data[[paste(i, "rmt", sep=".")]]),
+    						reporting.units=as.character(data[[paste(i, "unt", sep=".")]]),
+    						analyte.method=as.character(data[[paste(i, "mth", sep=".")]]), 
+    						analyte.name=as.character(data[[paste(i, "nam", sep=".")]]),
+    						unique.code=as.character(data[[paste(i, "pcd", sep=".")]]), 
+    						rounding=c(2L,3L),
+    						names=as.character(seq(ncol(mat))))
+    	retval[[i]] <- qw
     }
     return(retval)
   } # End of qw
   ## Only way to get here is for scheme = "partial"
   Vnames <- grep("\\.(rmk|rlv|dl)$", dnames, value=TRUE)
   if(length(Vnames) == 0)
-    stop("No valid \"partial\" scheme column names (ending in .rmk, .rlv, or .dl)")
+  	stop("No valid \"partial\" scheme column names (ending in .rmk, .rlv, or .dl)")
   ## strip off suffixes and keep other columns
   Vnames <- unique(sub("\\.(rmk|rlv|dl)$", "", Vnames))
   Keep <- dnames
@@ -105,15 +105,15 @@ convert2qw <- function(data, scheme="booker") {
   retval <- data[, Keep, drop=FALSE]
   ## Now convert each name and add the column
   for(i in Vnames) {
-    Val <- data[[i]]
+    Val <- as.numeric(data[[i]])
     ## Detection or reporting limit (and set up method code)
     RMT <- ""
     if(!is.null(data[[paste(i, "dl", sep=".")]])) {
-      RL <- data[[paste(i, "dl", sep=".")]]
+      RL <- as.numeric(data[[paste(i, "dl", sep=".")]])
       RMT <- "MDL"
     }
     else if(!is.null(data[[paste(i, "rlv", sep=".")]]))
-      RL <- data[[paste(i, "rlv", sep=".")]]
+      RL <- as.numeric(data[[paste(i, "rlv", sep=".")]])
     else
       RL <- NA_real_
     ## Remark codes

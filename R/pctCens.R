@@ -9,7 +9,7 @@
 #'right-censored data is computed. For "multiple," the percentage of left-, right-,
 #'and interval-censored data is returned.
 #' @return The percentage of the kind of censoring specified by \code{type} is
-#'returned. 
+#'returned. Zero is returned if all data are missing!
 #' @note This function will work for any type of data that has a method for 
 #'\code{censoring} and \code{as.mcens}.
 #' @seealso \code{\link{censoring}}
@@ -28,6 +28,9 @@ pctCens <- function(x, type="multiple") {
   type <- match.arg(type, c("left", "right", "multiple"))
   x <- x[!is.na(x)]
   N <- length(x)
+  if(N == 0L) {
+    return(0)
+  }
   xcl <- class(x)[1L]
   if(xtype == "left" && existsMethod("as.lcens", c(xcl, "missing", "missing"))) {
     x <- as.lcens(x)

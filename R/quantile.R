@@ -74,7 +74,7 @@ quantile.lcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE, names=TRUE,
                      "ROS"=mdlROS(x, method=method, alpha=alpha),
                      "log MLE"=mdlMLE(x, method=method, alpha=alpha),
                      "MLE"=mdlMLE(x, method=method, alpha=alpha)), silent=TRUE)
-    if(class(retval)[1L] == "try-error") {
+    if(class(retval)[1L] == "try-error" || any(is.na(retval$fitted))) { # protect against convergence failure
       retval <- quantile(NA_real_, probs=probs, na.rm=TRUE, names=names)
     } else
       retval <- quantile(retval$fitted, probs=probs, type=type, names=names)
@@ -120,7 +120,7 @@ quantile.mcens <- function(x, probs=seq(0, 1, 0.25), na.rm=FALSE, names=TRUE,
                      "ROS"=mcenROS(x, method=method, alpha=alpha),
                      "log MLE"=mcenMLE(x, method=method, alpha=alpha),
                      "MLE"=mcenMLE(x, method=method, alpha=alpha)), silent=TRUE)
-    if(class(retval)[1L] == "try-error") {
+    if(class(retval)[1L] == "try-error" || any(is.na(retval$fitted))) {
       retval <- quantile(NA_real_, probs=probs, na.rm=TRUE, names=names)
     } else
       retval <- quantile(retval$fitted, probs=probs, type=type, names=names)

@@ -1,7 +1,7 @@
 ### R code from vignette source 'ComparingPairedData.Rnw'
 
 ###################################################
-### code chunk number 1: ComparingPairedData.Rnw:19-25
+### code chunk number 1: ComparingPairedData.Rnw:30-36
 ###################################################
 # Load the smwrQW package
 library(smwrQW)
@@ -12,7 +12,7 @@ print(head(Atra, 2), digits=11)
 
 
 ###################################################
-### code chunk number 2: ComparingPairedData.Rnw:37-50
+### code chunk number 2: ComparingPairedData.Rnw:48-61
 ###################################################
 # First compute the interval-censored values for June and September
 # Set the minimum value to 0 for censored values
@@ -30,7 +30,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 3: ComparingPairedData.Rnw:60-69
+### code chunk number 3: ComparingPairedData.Rnw:71-80
 ###################################################
 # The revised parametric paired-data test, save for plot and print it
 Atra.pt <- censReg(pow(Sept, .04) - pow(June, .04) ~ 1)
@@ -44,7 +44,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 4: ComparingPairedData.Rnw:85-98
+### code chunk number 4: ComparingPairedData.Rnw:96-109
 ###################################################
 # First compute the left-censored values for June and September
 # Set the minimum value to 0 for censored values
@@ -62,7 +62,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 5: ComparingPairedData.Rnw:114-124
+### code chunk number 5: ComparingPairedData.Rnw:125-135
 ###################################################
 # The left-censored values for June and September are from the previous example
 # The Pratt test, save for plot and print it

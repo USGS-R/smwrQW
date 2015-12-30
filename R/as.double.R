@@ -9,17 +9,14 @@
 #' @note The process of simple substitution proceeds in 4 steps for each kind of
 #'censoring: none, interval, left and right.  First uncensored data are
 #'retained as is. Interval-censored data are converted by computing the mid
-#'value. Left-censored data are converted sequentially from the lowest
+#'rnge. Left-censored data are converted sequentially from the lowest
 #'censoring level, which is set to 1/2 the reporting level, any subsequent
 #'levels are replaced by the mean of all values less than the current reporting
-#'level. Right-censored data are converted sequentially from the largest
-#'censoring level. Each level is replaced by the mean of all values greater
-#'than the current level, beginning with a value 10 percent larger than the
-#'largest censoring level if there are no larger uncensored values.\cr
+#'level. Conversion of right-censored data are not implemented in the current version
+#'and result in an error.\cr
 #'
 #'The function \code{as.double} is executed for \code{as.numeric}.
 #' @seealso \code{\link{fillIn}}
-#' @references Is one needed? Is there one that really describes the process?
 #' @keywords manip
 #' @examples
 #'
@@ -34,8 +31,18 @@
 #' @method as.double qw
 as.double.qw <- function(x, ...) {
   Cen <- censoring(x)
-  if(Cen == "none") # Just return the raw data
+  if(Cen == "none") { # Just return the raw data
     return(x@.Data[,1L])
+  }
+  # First process interval censored data to set values to midrange
+  picks <- which(!(x@remark.codes == "<") & !(x@remark.codes == ">"))
+  x@.Data[picks, ] <- rowMeans(x@.Data[picks, ])
+  x@remark.codes[picks] <- ""
+  Cen <- censoring(x)
+  # check if all done!
+  if(Cen == "none") { # Just return the raw data
+    return(x@.Data[,1L])
+  }
   if(Cen == "left") {
     ## Convert to lcens and process those data
     x <- as.lcens(x)
@@ -55,5 +62,5 @@ as.double.qw <- function(x, ...) {
     return(retval)
   }
   ## Cen must be "multiple"
-  stop("multiply censored not yet implemented")
+  stop("right-censored conversion not yet implemented")
 }

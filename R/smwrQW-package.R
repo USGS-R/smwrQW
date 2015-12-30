@@ -4,9 +4,9 @@
 #'that focuses on the analysis of water-quality data.
 #'
 #'\tabular{ll}{ Package: \tab smwrQW\cr Type: \tab Package\cr 
-#'Version: \tab 0.7.5\cr 
-#'Date: \tab 2015-08-10\cr 
-#'License: \tab file LICENSE\cr 
+#'Version: \tab 0.7.7\cr 
+#'Date: \tab 2015-12-30\cr 
+#'License: \tab CC0\cr 
 #'Depends: \tab dataRetrieval smwrBase smwrGraphs smwrStats \cr
 #'Imports: \tab boot coin lubridate methods mvtnorm survival XML zCompositions\cr
 #'Suggests: \tab smwrData cluster NADA psych\cr }

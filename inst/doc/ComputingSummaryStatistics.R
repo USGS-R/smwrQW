@@ -1,7 +1,7 @@
 ### R code from vignette source 'ComputingSummaryStatistics.Rnw'
 
 ###################################################
-### code chunk number 1: ComputingSummaryStatistics.Rnw:21-27
+### code chunk number 1: ComputingSummaryStatistics.Rnw:32-38
 ###################################################
 # Load the smwrQW package
 library(smwrQW)
@@ -12,7 +12,7 @@ Oahu <- transform(Oahu, As=as.lcens(As, censor.codes=AsCen))
 
 
 ###################################################
-### code chunk number 2: ComputingSummaryStatistics.Rnw:37-41
+### code chunk number 2: ComputingSummaryStatistics.Rnw:48-52
 ###################################################
 # The mean and standard deviation.
 with(Oahu, censStats(As, method="log MLE"))
@@ -21,14 +21,14 @@ with(Oahu, quantile(As, method="log MLE"))
 
 
 ###################################################
-### code chunk number 3: ComputingSummaryStatistics.Rnw:46-48
+### code chunk number 3: ComputingSummaryStatistics.Rnw:57-59
 ###################################################
 # The mean and standard deviation.
 with(Oahu, censStats(As, method="log AMLE"))
 
 
 ###################################################
-### code chunk number 4: ComputingSummaryStatistics.Rnw:56-60
+### code chunk number 4: ComputingSummaryStatistics.Rnw:67-71
 ###################################################
 # The mean and standard deviation.
 with(Oahu, censStats(As, method="flipped K-M"))
@@ -37,7 +37,7 @@ with(Oahu, quantile(As, method="flipped K-M"))
 
 
 ###################################################
-### code chunk number 5: ComputingSummaryStatistics.Rnw:65-73
+### code chunk number 5: ComputingSummaryStatistics.Rnw:76-84
 ###################################################
 # Modify the Oahu dataset, censoring the first 0.5 value
 OahuX <- Oahu
@@ -50,7 +50,7 @@ with(OahuX, censQuantile(As, method="flipped K-M"))
 
 
 ###################################################
-### code chunk number 6: ComputingSummaryStatistics.Rnw:81-85
+### code chunk number 6: ComputingSummaryStatistics.Rnw:92-96
 ###################################################
 # The mean and standard deviation.
 with(Oahu, censStats(As, method="log ROS"))

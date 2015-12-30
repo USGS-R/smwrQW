@@ -137,8 +137,13 @@ boxPlotCensStats <- function(x, Box, yaxis.log) {
                                      type=2)
       else
         target$estimated <- cval
-      if(yaxis.log)
+      if(yaxis.log && target$estimated >= 0) { # protect against already negative values
         target$estimated <- log10(target$estimated)
+      }
+      # capture error for no censored values
+      if(is.na(target$estimated)) {
+      	target$estimated <- -Inf
+      }
       ## Verify that estimated values less than the RL are not > RL
       if(clevs[1L] > -Inf)
         target$critical <- max(target$data[seq(along=clevs)])

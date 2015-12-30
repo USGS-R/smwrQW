@@ -1,6 +1,8 @@
 \documentclass{article}
 \parskip 6pt
 \usepackage[margin=1.25in]{geometry}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
 %\VignetteIndexEntry{Plotting Censored Data}
 %\VignetteDepends{smwrQW}
 
@@ -13,7 +15,16 @@
 
 \maketitle
 
-These examples demonstrate some of the plotting capabilities in the \texttt{smwrQW} package. The examples in this vignette use data from the \texttt{NADA} package, so that similarities and differences between the assumptions made in Helsel (2012) and the assumptions made in \texttt{smwrQW} can be highlighted---as Helsel (2012) states in section 5.5.1 ''Know the procedures used by your software.'' The examples use the \texttt{as.lcens} function to convert data to a valid format for \texttt{smwrQW} functions; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph gets the data and converts the columns named ''June'' and ''Sept'' to class ''lcens.''
+\begin{abstract}
+These examples demonstrate some of the plotting capabilities in the \texttt{smwrQW} package. 
+\end{abstract}
+
+\tableofcontents
+
+\eject
+\section{Introduction}
+
+The examples in this vignette use data from the \texttt{NADA} package, so that similarities and differences between the assumptions made in Helsel (2012) and the assumptions made in \texttt{smwrQW} can be highlighted---as Helsel (2012) states in section 5.5.1 ''Know the procedures used by your software.'' The examples use the \texttt{as.lcens} function to convert data to a valid format for \texttt{smwrQW} functions; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph gets the data and converts the columns named ''June'' and ''Sept'' to class ''lcens.''
 
 <<echo=TRUE>>=
 # Load the smwrQW package
@@ -28,7 +39,7 @@ AtraAlt <- transform(AtraAlt, June=as.lcens(June, censor.codes=JuneCen),
   Sept=as.lcens(Sept, censor.codes=SeptCen))
 @
 
-The examples in this vignette present few options used in the graphics functions. More complete variations can be seen in the vignettes for the \texttt{smwrGraphs} package. \textbf{NOTE:} to use any of the high-level graphics functions, you must first call a function to set up the graphics environment such as \texttt{setPage} or \texttt{setPDF}, but these are not desmonstrated here due to the graphics set up function required for the vignette, \texttt{setSweave}.
+The examples in this vignette present few options used in the graphics functions. More complete variations can be seen in the vignettes for the \texttt{smwrGraphs} package. \textbf{NOTE:} to use any of the high-level graphics functions, you must first call a function to set up the graphics environment such as \texttt{setPage} or \texttt{setPDF}, but these are not demonstrated here due to the graphics set up function required for the vignette, \texttt{setSweave}.
 
 \eject
 \section{Box Plots}

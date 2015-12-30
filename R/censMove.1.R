@@ -5,14 +5,16 @@
 #'left-censored data.
 #'
 #' The left- or right-hand side of the formula may be any numeric variable, just as with
-#'\code{move.1} or a variable of class "lcens"\cr
+#'\code{move.1} or a variable of class "lcens." The response variable must be the name of
+#'a column and not converted using \code{as.lcens} in the call.
+#'
 #' If distribution is "normal," then the data in x and y are assumed to have a 
 #'bivariate normal distribution. Otherwise, they are assumed to have a bivariate 
 #'log-normal distribution and a logarithmic transform is applied to both x and y 
 #'before analysis. The natural logarithm is used if distribution is "lognormal" and 
 #'the commmon logarithm is used if distribution is "commonlog."
 #'
-#' @param formula a formula with a single response variable on the left and asingle
+#' @param formula a formula with a single response variable on the left and a single
 #'explanatory variable on the right. See \bold{Details}.
 #' @param data the data to search for the variables in \code{formula}.
 #' @param subset an expression to select a subset of the data.
@@ -23,7 +25,13 @@
 #'Except, there are no \code{fitted.values} or \code{residuals} components, the values of
 #'\code{x} and \code{y} include estimated values (See \bold{Note}), and components \code{cx}
 #'and \code{cy}, which indicate left-censoring are included.
-#' @note The components \code{x} and \code{y} are the actual values if the data are 
+#' @note Because predictions are made using the \code{predict} method for class "move.1,"
+#'and do not expect censored values, the explanatory variable in \code{formula} must
+#'refer to a column in \code{data} and not converted using the \code{as.lcens} function;
+#'the user must convert the explanatory variable column to class "lcens" before using 
+#'\code{censMove.1}.
+#' 
+#' The components \code{x} and \code{y} are the actual values if the data are 
 #'uncensored. If \code{y} is censored and \code{x} is not censored, then \code{y} is the
 #'expected value of \code{y}, given its censored value and the value of \code{x} and likewise
 #'for \code{x} censored and \code{y} not censored. If both are cesnored, then the values 
@@ -37,10 +45,12 @@
 #'library(smwrData)
 #'data(IonBalance)
 #'# Build model for non missing Alkalinity
-#'IB.move <- move.1(Anion_sum ~ Cation_sum, data=IonBalance, 
+#'move.1(Anion_sum ~ Cation_sum, data=IonBalance, 
 #'  subset=abs(Pct_Diff) < 10) 
-#'print(IB.move)
-#'# Compare to censored at
+#'# Compare to censored
+#'censMove.1(Anion_sum ~ Cation_sum, data=IonBalance, 
+#'  subset=abs(Pct_Diff) < 10) 
+#'# The difference in standard deviations is due to using sd/MLE 
 #'}
 #'
 #'@export
@@ -85,7 +95,7 @@ censMove.1 <- function(formula, data, subset, na.action, distribution="normal") 
   xbar <- retcor[2L]
   xvar <- retcor[4L]^2
   fit$R <- retcor[1L]
-  fit$p.value <- 1. - pchisq(2*(retcor[10L] - retcor[11L]), 1)
+  fit$p.value <- 1. - pchisq(-2*(retcor[10L] - retcor[11L]), 1)
   fit$coefficients[2L] <- sqrt(yvar/xvar)
   if(fit$R < 0)
   	fit$coefficients[2L] <-  - fit$coefficients[2L]

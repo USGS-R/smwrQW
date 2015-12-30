@@ -1,7 +1,7 @@
 ### R code from vignette source 'Correlation.Rnw'
 
 ###################################################
-### code chunk number 1: Correlation.Rnw:20-29
+### code chunk number 1: Correlation.Rnw:31-40
 ###################################################
 # Load the smwrQW package
 library(smwrQW)
@@ -15,7 +15,7 @@ Atra <- with(Atra, data.frame(June=as.lcens(June, censor.codes=JuneCen),
 
 
 ###################################################
-### code chunk number 2: Correlation.Rnw:39-46
+### code chunk number 2: Correlation.Rnw:50-57
 ###################################################
 # Create data frame of 0/1 data for June and September
 Atra.01 <- with(Atra, code01(June, Sept))
@@ -27,7 +27,7 @@ phi(Atra.tbl, digits=4)
 
 
 ###################################################
-### code chunk number 3: Correlation.Rnw:57-61
+### code chunk number 3: Correlation.Rnw:68-72
 ###################################################
 setSweave("graph01", 6 ,6)
 # Create the graph
@@ -36,14 +36,14 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 4: Correlation.Rnw:71-73
+### code chunk number 4: Correlation.Rnw:82-84
 ###################################################
 # The Pearson correlation:
 with(Atra, censCor(log(June), log(Sept)))
 
 
 ###################################################
-### code chunk number 5: Correlation.Rnw:81-87
+### code chunk number 5: Correlation.Rnw:92-98
 ###################################################
 # The Spearman correlation:
 # Step 1: U code the data, and print part
@@ -54,7 +54,7 @@ with(AtraU, cor.test(June, Sept, method='spearman'))
 
 
 ###################################################
-### code chunk number 6: Correlation.Rnw:92-94
+### code chunk number 6: Correlation.Rnw:103-105
 ###################################################
 # Compute tau and the test
 with(Atra, kendallATS.test(June, Sept))

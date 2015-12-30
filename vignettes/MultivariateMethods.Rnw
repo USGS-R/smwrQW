@@ -1,6 +1,8 @@
 \documentclass{article}
 \parskip 6pt
 \usepackage[margin=1.25in]{geometry}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
 %\VignetteIndexEntry{Multivariate Methods}
 %\VignetteDepends{smwrQW}
 
@@ -13,7 +15,16 @@
 
 \maketitle
 
-These examples demonstrate some of the functions that can be used to prepared water-quality data for multivariate analysis that are available in the \texttt{smwrQW} package. The examples in this vignette use the DDT in fish dataset (table 13.1 in Helsel 2012). The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph creates the data and recodes the water-quality data to class ''lcens.'' There are many contributed pacakges that can be used for multivariate anslysis; the examples in this vignette use only packages supplied with base R and are intended only to demonstrate the multivariate functionality of the \texttt{smwrQW} pacakge.
+\begin{abstract}
+These examples demonstrate some of the functions that can be used to prepared water-quality data for multivariate analysis that are available in the \texttt{smwrQW} package.
+\end{abstract}
+
+\tableofcontents
+
+\eject
+\section{Introduction}
+
+The examples in this vignette use the DDT in fish dataset (table 13.1 in Helsel 2012). The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph creates the data and recodes the water-quality data to class ''lcens.'' There are many contributed packages that can be used for multivariate analysis; the examples in this vignette use only packages supplied with base R and are intended only to demonstrate the multivariate functionality of the \texttt{smwrQW} package.
 
 
 <<echo=TRUE>>=
@@ -59,7 +70,7 @@ library(cluster)
 
 The most conceptually simple method to prepare censored data for multivariate analysis recodes values as presence/absence or as the numerical values 1 and 0, respectively. The values are typically recoded based on the largest reporting limit, which works well for moderately and highly censored data. The recoding criterion can be set to any value greater than the largest reporting level, which can be useful for un- or lightly censored data.
 
-The recoded presence/absence, often referred to as 0/1 (reversing the sense of presence/absence), data usually converted into similarity or dissimilarity meterics. Helsel (2012) points out that many of the techniques for computing the similarity or dissimilarity meterics were developed for the biological sciences and are not appropriate for water-quality data because they downweight absence/absence pairs. The simple matching coefficient for computing dissimilarities described by Helsel (2012) can be computed using the \texttt{daisy} function in the \texttt{cluster} package and is illustrated in the R code following this paragraph. The distances between the first 10 sites are shown in the last line of R code, for illustration only. For example the 0.5 dissimilarity between site 1 and 2 indicates that one-half the values are the same (opDDD, ppDDE, and opDDT) and the other one-half are different.
+The recoded presence/absence, often referred to as 0/1 (reversing the sense of presence/absence), data usually converted into similarity or dissimilarity metrics. Helsel (2012) points out that many of the techniques for computing the similarity or dissimilarity metrics were developed for the biological sciences and are not appropriate for water-quality data because they downweight absence/absence pairs. The simple matching coefficient for computing dissimilarities described by Helsel (2012) can be computed using the \texttt{daisy} function in the \texttt{cluster} package and is illustrated in the R code following this paragraph. The distances between the first 10 sites are shown in the last line of R code, for illustration only. For example the 0.5 dissimilarity between site 1 and 2 indicates that one-half the values are the same (opDDD, ppDDE, and opDDT) and the other one-half are different.
 
 <<echo=TRUE>>=
 # Compute the 0/1 values
@@ -71,7 +82,7 @@ head(DDT01, 10)
 print(as.dist(as.matrix(DDT.diss)[1:10,1:10]), digits=4)
 @
 
-The distance matrix can be used to construct a hieracical cluster analysis. The \texttt{stats} package in base R has the \texttt{hclust} function and the \texttt{cluster} pacakge, supplied with base R has the \texttt{agnes} function that has more options than \texttt{hclust}. The example following this paragrah uses the \texttt{hclust} function. The details of the cluster merging sequence are printed to help understand the dendrogram. The cluster merging sequence has three columns, the first column is the left cluster number, the second column is the right cluster number and the third column is the height or distance between those cluster. For the left and right columns, negative values refer to the object number and positive values refer to the row number in the matrix. In this example the first cluster is formed from the merger of object 1 and 5 and the second cluster is formed from the merger of object 24 and the fist cluster. In both cases, the distances are 0 (no difference between the values). That pattern can be seen in the dendrogram.
+The distance matrix can be used to construct a hierarchical cluster analysis. The \texttt{stats} package in base R has the \texttt{hclust} function and the \texttt{cluster} package, supplied with base R has the \texttt{agnes} function that has more options than \texttt{hclust}. The example following this paragraph uses the \texttt{hclust} function. The details of the cluster merging sequence are printed to help understand the dendrogram. The cluster merging sequence has three columns, the first column is the left cluster number, the second column is the right cluster number and the third column is the height or distance between those cluster. For the left and right columns, negative values refer to the object number and positive values refer to the row number in the matrix. In this example the first cluster is formed from the merger of object 1 and 5 and the second cluster is formed from the merger of object 24 and the fist cluster. In both cases, the distances are 0 (no difference between the values). That pattern can be seen in the dendrogram.
 
 <<echo=TRUE>>=
 # The cluster analysis
@@ -93,7 +104,7 @@ graphics.off()
 \eject
 \section{Ordinal Methods} 
 
-Gehan's u-score, described in Helsel (2012) is an affine transform of the rank for uncensored and single-reporting level censored values. The equation is u = (r-(n+1)/2)*2  or r = u/2 + (n+1)/2, where u is the u-score, r is the rank, and n is the number of observations. The advantage for the u-score is that is computable for multiple reporting levels and multiply censored data. The exampes in this section use the u-score computed by the \texttt{codeU} function.
+Gehan's u-score, described in Helsel (2012) is an affine transform of the rank for uncensored and single-reporting level censored values. The equation is u = (r-(n+1)/2)*2  or r = u/2 + (n+1)/2, where u is the u-score, r is the rank, and n is the number of observations. The advantage for the u-score is that is computable for multiple reporting levels and multiply censored data. The examples in this section use the u-score computed by the \texttt{codeU} function.
 
 The u-scores can be used directly in a principal component analysis or used to compute distances for a cluster analysis. The code following this paragraph computes the u-scores and the computes the Euclidean distance between sites.
 
@@ -107,7 +118,7 @@ head(DDTU, 8)
 print(as.dist(as.matrix(DDTU.dist)[1:8,1:8]), digits=4)
 @
 
-Hierarchical cluster analysis can be computed using either the \texttt{hclust} or \texttt{agnes} function. The R code following this paragraph uses the \texttt{hclust} function to compute the cluster analysis and uses the "average" method for merging clusters. For this example, the cluster merging sequence is not shown as there are no multiple obervations separated by a distance of 0. But sites 5 and 26 have identical u-scores.
+Hierarchical cluster analysis can be computed using either the \texttt{hclust} or \texttt{agnes} function. The R code following this paragraph uses the \texttt{hclust} function to compute the cluster analysis and uses the "average" method for merging clusters. For this example, the cluster merging sequence is not shown as there are no multiple observations separated by a distance of 0. But sites 5 and 26 have identical u-scores.
 
 <<echo=TRUE>>=
 # The cluster analysis
@@ -150,14 +161,14 @@ graphics.off()
 
 \textbf{Figure 3.} The biplot of the principal component analyses of the u-sores of the DDT data.
 
-The x-axis (Component 1) represents the total concentration, but primarily the pp-type compunds. Sites on the left-hand side have larger concentrations than those on the right-hand side. The y-axis (Component 2) represents whether opDDE or opDDT has the larger concentration.
+The x-axis (Component 1) represents the total concentration, but primarily the pp-type compounds. Sites on the left-hand side have larger concentrations than those on the right-hand side. The y-axis (Component 2) represents whether opDDE or opDDT has the larger concentration.
 
 \eject
 \section{Imputation Methods} 
 
 For relatively small percentages of left-censored water-quality data, substitute values can be estimated for left-censored values based on the overall structure of the data and the complete data used in multivariate procedures. The methods for estimating sensible substitution strategies for left-censored values are described by Palarea-Albaladejo (2013). The \texttt{zCompositions} package implements those methods. The functions \texttt{imputeLessThans} and \texttt{mImputeLessThans} in the \texttt{smwrQW} package can be used to estimate values for data of class "qw" or "lcens."
 
-The example in this section uses an altered version of the DDT dataset. Estimated values for the left-censored were synthesized to approximately maintain the correlations structure of the u-sores and the data were recensored at 2. However, the intent of the altered values was to illustrate the process of estiamting values rather than produce a similar analysis. The R code immediately following this paragraph creates those data.
+The example in this section uses an altered version of the DDT dataset. Estimated values for the left-censored were synthesized to approximately maintain the correlations structure of the u-sores and the data were recensored at 2. However, the intent of the altered values was to illustrate the process of estimating values rather than produce a similar analysis. The R code immediately following this paragraph creates those data.
 
 <<echo=TRUE>>=
 # Create the altered dataset, code as character
@@ -193,7 +204,7 @@ DDTalt <- transform(DDTalt, opDDD=as.lcens(opDDD), ppDDD=as.lcens(ppDDD),
   opDDT=as.lcens(opDDT), ppDDT=as.lcens(ppDDT))
 @
 
-The \texttt{imputeLessThans} function can estimate sensible substitution values for left-censored values. The Rcode immediately following this paragraph uses that function to estiamte complete data for the DDTal dataset. Those data are used in a principal component analysis, \texttt{prcomp} and the biplot is created.
+The \texttt{imputeLessThans} function can estimate sensible substitution values for left-censored values. The R code immediately following this paragraph uses that function to estimate complete data for the DDTal dataset. Those data are used in a principal component analysis, \texttt{prcomp} and the biplot is created.
 
 <<echo=TRUE>>=
 # Impute the less-than values, multRepl required because opDDE is heavily censored
@@ -217,7 +228,7 @@ graphics.off()
 
 \textbf{Figure 4.} The biplot of the principal component analyses of the of the DDTalt data.
 
-The x-axis (Component 1) represents the total concentration. Sites on the right-hand side have larger concentrations than those on the left-hand side. The y-axis (Component 2) represents the cponcetration of opDDE. Sites with negative scores have larger concentrations than those with positive scores.
+The x-axis (Component 1) represents the total concentration. Sites on the right-hand side have larger concentrations than those on the left-hand side. The y-axis (Component 2) represents the concentration of opDDE. Sites with negative scores have larger concentrations than those with positive scores.
 
 \begin{thebibliography}{9}
 

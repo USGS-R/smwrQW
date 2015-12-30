@@ -1,6 +1,8 @@
 \documentclass{article}
 \parskip 6pt
 \usepackage[margin=1.25in]{geometry}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
 %\VignetteIndexEntry{Comparing Paired Data}
 %\VignetteDepends{smwrQW}
 
@@ -13,7 +15,16 @@
 
 \maketitle
 
-These examples demonstrate some of the functions and statistical methods for comparing paired observations that are available in the \texttt{smwrQW} package. The examples in this vignette use the Atra dataset from the \texttt{NADA} package. The examples in this vignette use the functions \texttt{as.lcens} and \texttt{as.mcens} to convert those data to a form used by the functions demonstrated. The functions demonstrated in these examples will also accept data of class ''qw'' without conversion.
+\begin{abstract}
+These examples demonstrate some of the functions and statistical methods for comparing paired observations that are available in the \texttt{smwrQW} package. 
+\end{abstract}
+
+\tableofcontents
+
+\eject
+\section{Introduction}
+
+The examples in this vignette use the Atra dataset from the \texttt{NADA} package. The examples in this vignette use the functions \texttt{as.lcens} and \texttt{as.mcens} to convert those data to a form used by the functions demonstrated. The functions demonstrated in these examples will also accept data of class ''qw'' without conversion.
 
 
 <<echo=TRUE>>=

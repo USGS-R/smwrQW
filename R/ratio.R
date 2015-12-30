@@ -4,7 +4,7 @@
 #'or other data and maintain the integrity of the data, as opposed to methods that use
 #'simple substitution
 #'
-#' Objects of class "qw" are converted to class "mcens" using the \code{wq2mcens} 
+#' Objects of class "qw" are converted to class "mcens" using the \code{qw2mcens} 
 #'function, which preserves the minimum value of 0 for "less than" data rather 
 #'than \code{as.mcens}, which converts the to left-censored values.
 #'

@@ -189,7 +189,7 @@ function(x, y, # data
   ##    2013Oct22 DLLorenz Original coding
   ##
   x <- qw2mcens(x)
-  dotPlot(x=x, y=y, Plot=Plot, yaxis.origin=yaxis.origin,
+  dotPlot(x=x, y=y, Plot=Plot, yaxis.orient=yaxis.orient,
   yaxis.order=yaxis.order, yaxis.grid=yaxis.grid, xaxis.log=xaxis.log,
   xaxis.range=xaxis.range, ylabels=ylabels, xlabels=xlabels,
   xtitle=xtitle, ytitle=ytitle, caption=caption, margin=margin,

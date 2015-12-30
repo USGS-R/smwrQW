@@ -1,6 +1,8 @@
 \documentclass{article}
 \parskip 6pt
 \usepackage[margin=1.25in]{geometry}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
 %\VignetteIndexEntry{Correlation}
 %\VignetteDepends{smwrQW}
 %\VignetteDepends{psych}
@@ -8,13 +10,22 @@
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 \raggedright
-\title{Correlations}
+\title{Correlation}
 
 \author{Dave Lorenz}
 
 \maketitle
 
-These examples demonstrate some of the functions and statistical methods for computing the correlation between two variables that are available in the \texttt{smwrQW} package. The examples in this vignette use the Atra dataset from the \texttt{NADA} package. The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated. That conversion is not necessary for data of class ''qw'' or numeric data. With the exception of the binary and Spearman methods, only censored data techniques are included in this vignette. Techniques that apply to single reporting limits and can require recensoring and simple substitution are not included, as the censored techniques can be used directly by the functions in \texttt{smwrQW}.
+\begin{abstract}
+These examples demonstrate some of the functions and statistical methods for computing the correlation between two variables that are available in the \texttt{smwrQW} package. 
+\end{abstract}
+
+\tableofcontents
+
+\eject
+\section{Introduction}
+
+The examples in this vignette use the Atra dataset from the \texttt{NADA} package. The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated. That conversion is not necessary for data of class ''qw'' or numeric data. With the exception of the binary and Spearman methods, only censored data techniques are included in this vignette. Techniques that apply to single reporting limits and can require recensoring and simple substitution are not included, as the censored techniques can be used directly by the functions in \texttt{smwrQW}.
 
 
 <<echo=TRUE>>=
@@ -50,7 +61,7 @@ phi(Atra.tbl, digits=4)
 \eject
 \section{Maximum Likelihood Estimation Method} 
 
-Helsel (2012) only decribes the square root of the likelihood r-squared as a measure of the Pearson correlation however, it is only apppropriate for censored y and uncensored x and it only assymptotically approaches Pearson's correlation coefficient as the proportion of censoring decreases. Lyles and others (2001) describe a maximum likelihood estimation method that computes the Pearson correlation coefficient for censored x and y. Their method is coded as \texttt{censCor} in the \texttt{smwrQW} package.
+Helsel (2012) only describes the square root of the likelihood r-squared as a measure of the Pearson correlation however, it is only appropriate for censored y and uncensored x and it only asymptotically approaches Pearson's correlation coefficient as the proportion of censoring decreases. Lyles and others (2001) describe a maximum likelihood estimation method that computes the Pearson correlation coefficient for censored x and y. This method is coded as \texttt{censCor} in the \texttt{smwrQW} package.
 
 An important first step in any parametric statistical analysis is to plot the data. Figure 1 show the June and September atrazine concentrations on a log-log axis. In figure 1, uncensored data are shown by solid circles, and censored data are shown by open circles, horizontal lines are drawn between the y-axis and the symbol  if x-axis data values (June) are censored and vertical lines are drawn between the x-axis and the symbol if the y-axis data values (Sept) are censored. Except for a single outlier, the data appear fairly linear.
 
@@ -76,7 +87,7 @@ with(Atra, censCor(log(June), log(Sept)))
 \eject
 \section{Nonparametric Methods} 
 
-Helsel (2012) only discusses the computation of Spearman's rho for single detection limit using simple substitution for the censored values. However later in his book, he discuses U coding that computes the equivalent of the rank for multiple detection limit data. Those U-coded values can be used to compute Spearman's rho. The R code folowing this paragraph illustrates its use on the Atra dataset. The U coded values the equivalent of the rank times 2 minus the number of observations plus 1 and thus are interchangeble with rnak and can be either used directly or converted to ranks.
+Helsel (2012) only discusses the computation of Spearman's rho for single detection limit using simple substitution for the censored values. However later in his book, he discuses U coding that computes the equivalent of the rank for multiple detection limit data. Those U-coded values can be used to compute Spearman's rho. The R code following this paragraph illustrates its use on the Atra dataset. The U coded values the equivalent of the rank times 2 minus the number of observations plus 1 and thus are interchangeable with rank and can be either used directly or converted to ranks.
 
 <<echo=TRUE>>=
 # The Spearman correlation:
@@ -87,7 +98,7 @@ head(AtraU)
 with(AtraU, cor.test(June, Sept, method='spearman'))
 @
 
-Helsel (2012) does discuss the computation of Kendall's tau for multiple detection limits. The function \texttt{kendallATS.test} computes Kendall's tau and also computes a slope estimate for y as a function of x. Its use is illutrated in the R code following this paragraph. Note that taub is the value of tau corrected for ties.
+Helsel (2012) does discuss the computation of Kendall's tau for multiple detection limits. The function \texttt{kendallATS.test} computes Kendall's tau and also computes a slope estimate for y as a function of x. Its use is illustrated in the R code following this paragraph. Note that taub is the value of tau corrected for ties.
 
 <<echo=TRUE>>=
 # Compute tau and the test

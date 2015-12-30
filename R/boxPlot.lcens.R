@@ -97,6 +97,9 @@ boxPlot.lcens <- function(..., group=NULL, # data
     xrange <- c(0, length(dots) + 1)
     xtoplot <- seq(length(dots))
   }
+  # Open device if necessary
+  if(dev.cur() == 1L)
+  	setGD("BoxPlot")
   if(is.null(names(dots))) { # try to get names
     call <- as.list(match.call())[-1] # drop boxPlot
     call <- as.character(call)
@@ -115,8 +118,6 @@ boxPlot.lcens <- function(..., group=NULL, # data
     Box$censorstyle <- "estimated"
   }
   ## Compute the stats and produce the boxplot
-      if(dev.cur() == 1L)
-        setGD("BoxPlot")
   statsret <- boxPlotCensStats(dots, Box, yaxis.log)
   ##
   retval <- renderBoxPlot(xtoplot, statsret$boxes, Box, statsret$explan, statsret$z,
@@ -170,6 +171,9 @@ boxPlot.qw <- function(..., group=NULL, # data
     xrange <- c(0, length(dots) + 1)
     xtoplot <- seq(length(dots))
   }
+  # Open device if necessary
+  if(dev.cur() == 1L)
+  	setGD("BoxPlot")
   if(is.null(names(dots))) { # try to get names
     call <- as.list(match.call())[-1] # drop boxPlot
     call <- as.character(call)
@@ -206,9 +210,6 @@ boxPlot.qw <- function(..., group=NULL, # data
   	statsret <- boxPlotStats(dots, Box, yaxis.log)
   }
   ## Produce the boxplot
-  if(dev.cur() == 1L)
-  	setGD("BoxPlot")
-  ##
   retval <- renderBoxPlot(xtoplot, statsret$boxes, Box, statsret$explan, statsret$z,
                           yaxis.log, yaxis.range, xrange, ylabels, xlabels, xlabels.rotate,
                           xtitle, ytitle, caption, margin)

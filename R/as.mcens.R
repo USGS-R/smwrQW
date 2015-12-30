@@ -171,8 +171,9 @@ setMethod("as.mcens", signature(lower.val="qw", upper.val="missing",
   	Dl <- temp@reporting.level
   	## Fix less-thans
   	Pick <- na2miss(Dl > upper.val, FALSE)
+  	Cc[Pick] <- "<"
   	upper.val[Pick] <- Dl[Pick]
-  	lower.val[Pick | Cc == "<"] <- -Inf
+  	lower.val[Cc == "<"] <- -Inf
   	## Fix greater-thans
   	upper.val[Cc == ">"] <- Inf
   	## Compute the censor.codes and interval

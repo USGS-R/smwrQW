@@ -62,5 +62,9 @@ as.character.qw <- function(x, ...) {
   xstr <- ifelse(is.na(x@reporting.level), "*", xstr)
   xstr <- na2miss(xstr, " ")
   xvc <- x@value.codes
+  # strip additional info if xsho is NA
+  xrmk[is.na(xsho)] <- " "
+  xstr[is.na(xsho)] <- ""
+  xvc[is.na(xsho)] <- ""
   return(paste(xrmk, xsho, xstr, xvc, sep=' '))
 }

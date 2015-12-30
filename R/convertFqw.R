@@ -36,11 +36,13 @@ convertFqw <- function(data, columns="") {
 	tmp <- list()
 	for(i in names(data)) {
 		tmp[[i]] <- if(i %in% columns) {
-			as.data.frame(data[[i]], nm=i, expand=TRUE)
+			as.data.frame(data[[i]], nm="J_U_N_K", expand=TRUE) # Need to remove later
 		} else
 			data[, i, drop=FALSE]
 	}
 	# now pack together is a dataset
 	retval <- do.call(cbind, tmp)
+	# Remove the junk in the name
+	names(retval) <- sub(".J_U_N_K.", ".", names(retval), fixed=TRUE)
   return(retval)
 }

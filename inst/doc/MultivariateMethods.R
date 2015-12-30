@@ -1,7 +1,7 @@
 ### R code from vignette source 'MultivariateMethods.Rnw'
 
 ###################################################
-### code chunk number 1: MultivariateMethods.Rnw:19-54
+### code chunk number 1: MultivariateMethods.Rnw:30-65
 ###################################################
 # Load the smwrQW package
 library(smwrQW)
@@ -41,7 +41,7 @@ library(cluster)
 
 
 ###################################################
-### code chunk number 2: MultivariateMethods.Rnw:64-71
+### code chunk number 2: MultivariateMethods.Rnw:75-82
 ###################################################
 # Compute the 0/1 values
 DDT01 <- with(DDT, code01(opDDD, ppDDD, opDDE, ppDDE, opDDT, ppDDT))
@@ -53,7 +53,7 @@ print(as.dist(as.matrix(DDT.diss)[1:10,1:10]), digits=4)
 
 
 ###################################################
-### code chunk number 3: MultivariateMethods.Rnw:76-85
+### code chunk number 3: MultivariateMethods.Rnw:87-96
 ###################################################
 # The cluster analysis
 DDT.hclust <- hclust(DDT.diss, method="average") 
@@ -67,7 +67,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 4: MultivariateMethods.Rnw:100-107
+### code chunk number 4: MultivariateMethods.Rnw:111-118
 ###################################################
 # Compute the u scores
 DDTU <- with(DDT, codeU(opDDD, ppDDD, opDDE, ppDDE, opDDT, ppDDT))
@@ -79,7 +79,7 @@ print(as.dist(as.matrix(DDTU.dist)[1:8,1:8]), digits=4)
 
 
 ###################################################
-### code chunk number 5: MultivariateMethods.Rnw:112-120
+### code chunk number 5: MultivariateMethods.Rnw:123-131
 ###################################################
 # The cluster analysis
 DDTU.hclust <- hclust(DDTU.dist, method="average") 
@@ -92,7 +92,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 6: MultivariateMethods.Rnw:131-145
+### code chunk number 6: MultivariateMethods.Rnw:142-156
 ###################################################
 # The PCA.
 DDTU.pca <- princomp(DDTU, cor=TRUE)
@@ -111,7 +111,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 7: MultivariateMethods.Rnw:162-193
+### code chunk number 7: MultivariateMethods.Rnw:173-204
 ###################################################
 # Create the altered dataset, code as character
 DDTalt <- data.frame(Site=1:32,
@@ -147,7 +147,7 @@ DDTalt <- transform(DDTalt, opDDD=as.lcens(opDDD), ppDDD=as.lcens(ppDDD),
 
 
 ###################################################
-### code chunk number 8: MultivariateMethods.Rnw:198-212
+### code chunk number 8: MultivariateMethods.Rnw:209-223
 ###################################################
 # Impute the less-than values, multRepl required because opDDE is heavily censored
 DDTaltImp <- with(DDTalt, imputeLessThans(opDDD, ppDDD, opDDE, ppDDE, opDDT, ppDDT,

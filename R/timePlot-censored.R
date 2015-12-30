@@ -60,6 +60,10 @@ function(x, y, # data
   ## set up the axes
   xtitle <- xtitle
   ytitle <- ytitle
+  if(yaxis.rev) {
+  	warning("y-axis cannot be reversed for left-censored data")
+  	yaxis.rev <- FALSE
+  }
   if(dev.cur() == 1)
     setGD("DateTimePlot")
   ## Buffer by .95, 1.05 to avoid ending at exactly rounded values
@@ -112,7 +116,7 @@ function(x, y, # data
   if(any(Cen)) {
     Censored <- setDefaults(Censored, name="Left censored", what='points', symbol='circle',
                             filled=FALSE, size=0.09, color='black', bar=FALSE)
-    addXY(xcen, ycen, Plot=Censored, current=list(yaxis.log = yaxis.log, 
+    addXY(xcen, ycen, Plot=Censored, current=list(yaxis.log = FALSE, # already converted!
        yaxis.rev = yaxis.rev, xaxis.log = FALSE))
     if(Censored$bar)
       lines(xcen, ycen, type="h", col=Censored$color)

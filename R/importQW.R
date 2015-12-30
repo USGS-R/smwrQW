@@ -82,37 +82,37 @@ importQW <- function(data, keep=c("STAID", "DATES", "TIMES", "MEDIM"),
                        short=FALSE, units=FALSE, col.name=TRUE)
     data <- merge(data, Extra, by.x=unique.code, by.y="parameter_cd")
     ColNames <-  "col_name"
-  }
-  else if(is.null(data[[ColNames]])) { # must be a single column of data
+  } else if(is.null(data[[ColNames]])) { # must be a single column of data
     data <- cbind(data, .col_name=make.names(ColNames))
     ColNames <- ".col_name"
-  }
-  else # Force valid names
+  } else { # Force valid names
     data[[ColNames]] <- make.names(data[[ColNames]])
+  }
   if(value.codes == "NWIS") {
     ## paste the 3 columns of values codes
     data$NWIS <- paste(data$QUAL1, data$QUAL2, data$QUAL3, sep='')
   }
   ## Get all of the data needed for class "qw"
   ## The columns values and remark codes are required
-  values <- data[[values]]
-  remark.codes <- data[[remark.codes]]
+  values <- as.numeric(data[[values]])
+  remark.codes <- as.character(data[[remark.codes]])
   if(!is.null(data[[value.codes]]))
-     value.codes <- data[[value.codes]]
+     value.codes <- as.character(data[[value.codes]])
   if(is.character(reporting.level) && !is.null(data[[reporting.level]])) {
     reporting.level <- as.numeric(data[[reporting.level]]) # force numeric
-  } else
+  } else {
   	reporting.level <- as.numeric(reporting.level) # for NA to numeric if necessary
+  }
   if(!is.null(data[[reporting.method]]))
-    reporting.method <- data[[reporting.method]]
+    reporting.method <- as.character(data[[reporting.method]])
   if(!is.null(data[[reporting.units]]))
-    reporting.units <- data[[reporting.units]]
+    reporting.units <- as.character(data[[reporting.units]])
   if(!is.null(data[[analyte.method]]))
-    analyte.method <- data[[analyte.method]]
+    analyte.method <- as.character(data[[analyte.method]])
   if(!is.null(data[[analyte.name]]))
-    analyte.name <- data[[analyte.name]]
+    analyte.name <- as.character(data[[analyte.name]])
   if(!is.null(data[[unique.code]]))
-    unique.code <- data[[unique.code]]
+    unique.code <- as.character(data[[unique.code]])
   ## If qw not part of data, then error generated  by later subset
   ##  becuase the names attribute lengths do not match!
   data$qw <- as.qw(values, remark.codes, value.codes, reporting.level, 
@@ -124,14 +124,14 @@ importQW <- function(data, keep=c("STAID", "DATES", "TIMES", "MEDIM"),
   data$Seq <- seq(nrow(data))
   ## Create the data
   retval <- group2row(data, keep, ColNames, "Seq")
-  for(i in grep(".Seq", names(retval), value=TRUE, fixed=TRUE))
-    retval[[i]] <- data$qw[retval[[i]]]
-  names(retval) <- gsub(".Seq", "", names(retval), fixed=TRUE)
   ## Sort by date if possible
   Dt <- which(sapply(retval, isDateLike))
   if(length(Dt) == 1L) { # Found one
-    Seq <- order(retval[[Dt]], na.last=TRUE)
-    retval <- retval[Seq,]
+  	Seq <- order(retval[[Dt]], na.last=TRUE)
+  	retval <- retval[Seq,]
   }
+  for(i in grep(".Seq", names(retval), value=TRUE, fixed=TRUE))
+    retval[[i]] <- data$qw[retval[[i]]]
+  names(retval) <- gsub(".Seq", "", names(retval), fixed=TRUE)
   return(retval)
 }

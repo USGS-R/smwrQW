@@ -1,7 +1,7 @@
 ### R code from vignette source 'ComparingMoreGroups.Rnw'
 
 ###################################################
-### code chunk number 1: ComparingMoreGroups.Rnw:19-25
+### code chunk number 1: ComparingMoreGroups.Rnw:30-36
 ###################################################
 # Load the smwrQW package
 library(smwrQW)
@@ -12,7 +12,7 @@ TCE <- transform(TCE, TCE=as.lcens(TCEConc, censor.codes=TCECen))
 
 
 ###################################################
-### code chunk number 2: ComparingMoreGroups.Rnw:35-44
+### code chunk number 2: ComparingMoreGroups.Rnw:46-55
 ###################################################
 # Create Density as a factor ordered Low-Medium-High
 TCE <- transform(TCE, Density=factor(Density, levels=c("Low", "Medium", "High")))
@@ -26,7 +26,7 @@ prop.test(TCETbl)
 
 
 ###################################################
-### code chunk number 3: ComparingMoreGroups.Rnw:55-66
+### code chunk number 3: ComparingMoreGroups.Rnw:66-77
 ###################################################
 setSweave("graph01", 3 ,6)
 # Set layout for 2 graphs
@@ -42,14 +42,14 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 4: ComparingMoreGroups.Rnw:76-78
+### code chunk number 4: ComparingMoreGroups.Rnw:87-89
 ###################################################
 # The ANOVA analogue test:
 censReg(TCE ~ Density, data=TCE, dist="lognormal")
 
 
 ###################################################
-### code chunk number 5: ComparingMoreGroups.Rnw:88-92
+### code chunk number 5: ComparingMoreGroups.Rnw:99-103
 ###################################################
 # The Peto type two-sample test
 with(TCE, censKSample.test(TCE, Density, type="Peto"))
@@ -58,7 +58,7 @@ with(TCE, censKSample.test(TCE, Density, type="log-rank"))
 
 
 ###################################################
-### code chunk number 6: ComparingMoreGroups.Rnw:102-104
+### code chunk number 6: ComparingMoreGroups.Rnw:113-115
 ###################################################
 # The Peto type two-sample test
 with(TCE, censMulticomp.test(TCE, Density))

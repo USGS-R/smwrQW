@@ -1,7 +1,7 @@
 ### R code from vignette source 'PlottingCensoredData.Rnw'
 
 ###################################################
-### code chunk number 1: PlottingCensoredData.Rnw:18-28
+### code chunk number 1: PlottingCensoredData.Rnw:29-39
 ###################################################
 # Load the smwrQW package
 library(smwrQW)
@@ -16,7 +16,7 @@ AtraAlt <- transform(AtraAlt, June=as.lcens(June, censor.codes=JuneCen),
 
 
 ###################################################
-### code chunk number 2: PlottingCensoredData.Rnw:42-65
+### code chunk number 2: PlottingCensoredData.Rnw:53-76
 ###################################################
 # setSweave is a specialized function that sets up the graphics page for
 # Sweave scripts. It should be replaced by a call to setPage or setPDF 
@@ -44,7 +44,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 3: PlottingCensoredData.Rnw:80-89
+### code chunk number 3: PlottingCensoredData.Rnw:91-100
 ###################################################
 setSweave("graph02", 6 ,6)
 # Set layout for 2 graphs
@@ -58,7 +58,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 4: PlottingCensoredData.Rnw:104-123
+### code chunk number 4: PlottingCensoredData.Rnw:115-134
 ###################################################
 setSweave("graph03", 6 ,6)
 # Set layout for 2 graphs
@@ -82,7 +82,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 5: PlottingCensoredData.Rnw:138-144
+### code chunk number 5: PlottingCensoredData.Rnw:149-155
 ###################################################
 setSweave("graph04", 6 ,6)
 # The Q-Q plot
@@ -93,7 +93,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 6: PlottingCensoredData.Rnw:154-158
+### code chunk number 6: PlottingCensoredData.Rnw:165-169
 ###################################################
 setSweave("graph05", 6 ,6)
 # The Q-normal plot
@@ -102,7 +102,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 7: PlottingCensoredData.Rnw:171-177
+### code chunk number 7: PlottingCensoredData.Rnw:182-188
 ###################################################
 setSweave("graph06", 6 ,6)
 # The x-axis data must be numeric, and add droplines (bar)

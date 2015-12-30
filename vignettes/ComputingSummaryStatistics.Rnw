@@ -1,6 +1,8 @@
 \documentclass{article}
 \parskip 6pt
 \usepackage[margin=1.25in]{geometry}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
 %\VignetteIndexEntry{Computing Summary Statistics}
 %\VignetteDepends{smwrQW}
 
@@ -13,9 +15,18 @@
 
 \maketitle
 
-These examples demonstrate some of the functions and statistical methods for computing summary statistics that are available in the \texttt{smwrQW} pacakge. The examples in this vignette use data from the \texttt{NADA} package. The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph gets the data and converts the column named ''As'' to class ''lcens.''
+\begin{abstract}
+These examples demonstrate some of the functions and statistical methods for computing summary statistics that are available in the \texttt{smwrQW} package.
+\end{abstract}
 
-Helsel (2012) reviews methods and makes some recommendations regarding the chioce of methods. Lorenz (2016) discusses the performance of the methods specific to the functions in the \texttt{smwrQW} package. Details of the computation of the methods are in Helsel (2012). Details pertaining to how censored data are handled in these functions are in Lorenz (2016).
+\tableofcontents
+
+\eject
+\section{Introduction}
+
+The examples in this vignette use data from the \texttt{NADA} package. The examples in this vignette use the function \texttt{as.lcens} to convert those data to a form used by the functions demonstrated; the class ''lcens'' is most appropriate for these data as they are only left-censored and have only the value and an indicator of censoring. The functions demonstrated in these examples will also accept data of class ''qw.'' The R code following this paragraph gets the data and converts the column named ''As'' to class ''lcens.''
+
+Helsel (2012) reviews methods and makes some recommendations regarding the choice of methods. Lorenz (2016) discusses the performance of the methods specific to the functions in the \texttt{smwrQW} package. Details of the computation of the methods are in Helsel (2012). Details pertaining to how censored data are handled in these functions are in Lorenz (2016).
 
 
 <<echo=TRUE>>=
@@ -32,7 +43,7 @@ Oahu <- transform(Oahu, As=as.lcens(As, censor.codes=AsCen))
 
 Maximum likelihood estimation will estimate the most likely parameters of an assumed distribution, like the mean and standard deviation of a normal distribution, to observed data.
 
-The example below illustates the computation of the mean and standard deviation using the ''log MLE'' method for arsenic data in the Oahu dataset. The example uses the \texttt{censStats} function to perform the computation, which prints the output in a fairly readable form. The quantiles are also computed and printed. The \texttt{quantile} function for censored data and the \texttt{censQuantile} function (not shown in the example), impute values for the censored data, much like regression on order statistics to compute quantiles that are more representative of the sample data than simply computing the quantiles of the computed distribution. That behavior replicates other U.S. Geological Survey software based on Helsel and Cohn (1988).
+The example below illustrates the computation of the mean and standard deviation using the ''log MLE'' method for arsenic data in the Oahu dataset. The example uses the \texttt{censStats} function to perform the computation, which prints the output in a fairly readable form. The quantiles are also computed and printed. The \texttt{quantile} function for censored data and the \texttt{censQuantile} function (not shown in the example), impute values for the censored data, much like regression on order statistics to compute quantiles that are more representative of the sample data than simply computing the quantiles of the computed distribution. That behavior replicates other U.S. Geological Survey software based on Helsel and Cohn (1988).
 
 <<echo=TRUE>>=
 # The mean and standard deviation.
@@ -100,7 +111,7 @@ Helsel, D.R., and Hirsch, R.M., 2002, Statistical methods in water resources: U.
 Lorenz, D.L., 2016, smwrQW--an R package for managing and analyzing water-quality data, version 1.0.0: U.S. Geological Survey Open File Report 2016-XXXX.
 
 \bibitem{S+}
-Lorenz, D.L., Ahearn, E.A., Carter, J.M., Cohn, T.A., Danchuk, W.J., Frey, J.W., Helsel, D.R., Lee, K.E., Leeth, D.C., Martin, J.D., McGuire, V.L., Neitzert, K.M., Robertson, D.M., Slack, J.R., Starn, J., Vecchia, A.V.,Wilkison, D.H., and Williamson, J.E., 2011, USGS library for S-PLUS for Windows---Release 4.0: U.S. Geological Survey Open-File Report 2011-1130.
+Lorenz, D.L., Ahearn, E.A., Carter, J.M., Cohn, T.A., Danchuk, W.J., Frey, J.W., Helsel, D.R., Lee, K.E., Leeth, D.C., Martin, J.D., McGuire, V.L., Neitzert, K.M., Robertson, D.M., Slack, J.R., Starn, J., Vecchia, A.V., Wilkison, D.H., and Williamson, J.E., 2011, USGS library for S-PLUS for Windows---Release 4.0: U.S. Geological Survey Open-File Report 2011-1130.
 
 \end{thebibliography}
 

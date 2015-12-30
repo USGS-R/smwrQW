@@ -1,7 +1,7 @@
 ### R code from vignette source 'Regression.Rnw'
 
 ###################################################
-### code chunk number 1: Regression.Rnw:20-28
+### code chunk number 1: Regression.Rnw:31-39
 ###################################################
 # Load the smwrQW package
 library(smwrQW)
@@ -14,7 +14,7 @@ TCEReg <- transform(TCEReg, TCE=as.lcens(TCEConc, 1, censor.codes=TCECen))
 
 
 ###################################################
-### code chunk number 2: Regression.Rnw:38-46
+### code chunk number 2: Regression.Rnw:49-57
 ###################################################
 # Append a column of 0/1 values to the data
 # The maximum censored values is 5, which is the default criterion
@@ -27,7 +27,7 @@ binaryReg(TCE.lr)
 
 
 ###################################################
-### code chunk number 3: Regression.Rnw:51-70
+### code chunk number 3: Regression.Rnw:62-81
 ###################################################
 # Update the regression model
 TCE.lr <- update(TCE.lr, ~ . - Depth)
@@ -51,7 +51,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 4: Regression.Rnw:83-93
+### code chunk number 4: Regression.Rnw:94-104
 ###################################################
 setSweave("graph02", 6 ,6)
 # Create the graphs
@@ -66,7 +66,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 5: Regression.Rnw:103-106
+### code chunk number 5: Regression.Rnw:114-117
 ###################################################
 # The censored regression model.
 TCE.cr <- censReg(TCE ~ PopDensity + Depth + PctIndLU, data=TCEReg, dist="lognormal")
@@ -74,7 +74,7 @@ print(TCE.cr)
 
 
 ###################################################
-### code chunk number 6: Regression.Rnw:111-119
+### code chunk number 6: Regression.Rnw:122-130
 ###################################################
 setSweave("graph03", 6 ,6)
 # Create the graphs
@@ -87,7 +87,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 7: Regression.Rnw:131-142
+### code chunk number 7: Regression.Rnw:142-153
 ###################################################
 # The summary output.
 TCE.crsum <- summary(TCE.cr)
@@ -103,7 +103,7 @@ graphics.off()
 
 
 ###################################################
-### code chunk number 8: Regression.Rnw:152-174
+### code chunk number 8: Regression.Rnw:163-185
 ###################################################
 # The revised censored regression model.
 TCE.cr <- censReg(TCE ~ log(PopDensity) + Depth, data=TCEReg, dist="lognormal")

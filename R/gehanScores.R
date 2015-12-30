@@ -4,8 +4,8 @@
 #'group to the values in another group.
 #'
 #' @details If \code{y} is missing, then \code{x} is compared to itself 
-#'(with \code{NA}s removed) and the output is a linear transform of the
-#'rank of \code{x}. 
+#'(with \code{NA}s removed) and the output is the u-score described in Helsel
+#'(2012).
 #' 
 #' @param x any object that can be converted to class "mcens."
 #'Missing values are permitted and result in corresponding 
@@ -21,6 +21,9 @@
 #'equivalent of the "h" score in described by Helsel, but the 
 #'signs are reversed so that larger values in \code{x} have
 #'larger values in the output.
+#' @note If the output is the u-score, \code{y} is missing, then the
+#'values can be converted to ranks by dividing by 2 and adding the mean
+#'rank, (length(\code{x}) + 1)/2.
 #' @seealso \code{\link{survdiff}}, \code{\link{survfit}},
 #'\code{\link{lcens-class}}
 #' @references Gehan, E.A., 1965, A generalized Wilcoxon test for comparing

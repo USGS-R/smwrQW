@@ -1,72 +1,316 @@
 \documentclass{article}
 \parskip 6pt
 \usepackage[margin=1.25in]{geometry}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
 %\VignetteIndexEntry{Working with Water-Quality Data}
 %\VignetteDepends{smwrQW}
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 \raggedright
+
 \title{Working with Water-Quality Data}
 
 \author{Dave Lorenz}
 
 \maketitle
 
-These examples demonstrate some of the functions and statistical methods for importing, managing, and manipulating water-quality data that are available in the \texttt{smwrQW} package. 
+\begin{abstract}
+These examples demonstrate some of the functions and methods for importing, managing, and manipulating water-quality data that are available in the \textbf{smwrQW} package. 
+\end{abstract}
+
+\tableofcontents
+
+\eject
+\section{Introduction}
+
+The class ''qw'' provides a mechanism for storing water-quality data that facilitates managing and analyzing those data. The information stored in class ''qw'' includes quantitative and qualitative data. The quantitative data pertain to assigning values to the data and is used to convert the data to either class ''lcens,'' for un- or left-censored values, or ''mcens,'' for any other or mixture of censoring, that are required for the analytic functions in \textbf{smwrQW}. The quantitative data are in slots named ''.Data'' that is a numeric matrix of two columns, required to store data that are potentially interval censored; ''remark.codes'' that provide additional information about the type of censoring; and ''reporting.level'' that records the censoring level that will be used for each value when converted to either class ''lcens'' or ''mcens.'' The qualitative data are provided for the user to better interpret the data. The qualitative data are in slots named ''value.codes'' that contains additional information about each value, possibly supplied by the analyzing lab; "reporting.method" that 
+contains any information about the method for computing the 'reporting.level''; '''reporting.units'' that contains the concentration units and can be used by some analytic routines if necessary; ''analyte.method'' that contains the method code for the analytic method; ''analyte.name'' that contains the name of the constituent; ''rounding'' is a two element vector that rounds the data for printing; ''unique.code'' that provide a mechanism for distinguishing between various types of data, equivalent to the parameter code; and ''names'' that is used only internally. The qualitative data are hereinafter referred to as meta data.
+
+The two column matrix in the slot named ''.Data'' provides a mechanism for storing censored water-quality data when combined with the censoring information in the slot named ''remark.codes.'' Quantified values are stored with the same value in the two columns and a remark code set to '''' (the empty character string) or '' '' (a single blank character). So called less-than values are stored with 0 in the first column and the reported upper limit of concentration in the second column and the remark code must be ''<.'' Right-censored values are stored as the minimum value in the first column, positive infinity in the second column, and the remark code must be ''>.'' Interval-censored values are stored with the minimum value of in the first column and the maximum value in the second column; the remark code can be set to ''I,'' but either of the valid strings for quantified values are permitted. Invalid remark codes are permitted, but can generate warnings under certain circumstances. This approach for storing data facilitates easy mathematical manipulation and conversion to forms that can easily be analyzed.
 
 <<echo=TRUE>>=
 # Load the smwrQW package
 library(smwrQW)
+# print the slot names of the class "qw"
+slotNames("qw")
 @
-
-\eject
-\section{Class "qw"}
-
-The class "qw" provides a mechanism for storing water-quality data that facilitates manging and anlyzing those data. 
 
 \eject
 \section{Importing Water-Quality Data} 
 
-Easy from NWISweb.
+Data from the U.S. Geological Survey (USGS) NWISWeb can easily be imported into data frames using the \texttt{importNWISqw} function. The \texttt{importNWISqw} function requires at least one USGS station identifier at a minimum and optional parameter codes or a parameter group code, and starting and ending dates for the retrieval. See the documentation for \texttt{importNWISqw} for more information. The code following this paragraph retrieves a small data set of ammonia, parameter code ''00608'' for a single USGS station identifier 0531656290, West Fork Beaver Creek at 320 St. near Bechyn, Minn. and more complete nutrient data for USGS station identifier 05320270, Little Cobb River near Beauford, Minn.
 
-Data needs from other sources.
+<<echo=TRUE>>=
+# get the data
+WFBC.NH3 <- importNWISqw("0531656290", "00608", end.date="2006-09-30")
+# print the structure
+str(WFBC.NH3)
+# Now get the nutrient data for Little Cobb
+LCobb.nuts <- importNWISqw("05320270", "NUT")
+@
+
+Data from other sources can come in a wide variety of formats. One source is the Water Quality Portal (WQP), a cooperative service sponsored by the USGS, the Environmental Protection Agency, and the National Water Quality Monitoring Council. It serves data collected by over 400 state, federal, tribal, and local agencies. Data stored in the WQP can be retrieved using the \texttt{readWQPqw} function in the \textbf{dataRetrieval} package, as shown in the code following this paragraph.
+
+<<echo=TRUE>>=
+# get the data
+WFBC.wqp <- readWQPqw("USGS-0531656290", "00608", endDate="2006-09-30")
+# print the structure, note that the output is captured and modified to fit 
+# in a narrow output; the additional attribute data frames are also stripped
+Tmp <- capture.output(str(data.frame(WFBC.wqp), vec.len=1))
+Tmp <- sapply(Tmp, sub, pattern=":", replacement="\n   ", fixed=TRUE)
+cat(Tmp, sep="\n")
+@
+
+The \texttt{importQW} function can be used to process the data in a dataset such as \texttt{WFBC.wqp} and create a dataset with the concentration data as class ''qw.'' Except for \texttt{values} and \texttt{ColNames}, the argument names in \texttt{importQW} correspond to the slot names in the object of class ''qw.'' The argument \texttt{values} processes the data in a single column and with \texttt{remark.codes} construct the data stored in the slot named ''.Data.'' The argument \texttt{ColNames} can be used to set the slot named ''names'' but that is typically not used. Note that \texttt{importQW} cannot be used to import interval-censored data, those data must be constructed using the \texttt{as.qw} function.
+
+The user must verify that the data are in the correct format for the conversion. Two critical variables are the numeric values and the remark codes. The column containing the numeric values must contain the values for all data, censored and uncensored. The remark codes must be the valid codes for ''qw'' data objects described in the Introduction. The data retrieved from the WQP must be modified to meet these standards. Censored values are not stored in the numeric result column and must be merged with the reporting level and the remark codes must be generated from the column named ''ResultDetectionConditionText.'' Those modifications and the data conversion are performed in the code following this paragraph.
+
+<<echo=TRUE>>=
+# Combine the numeric data and convert the remark codes
+WFBC.wqp <- transform(WFBC.wqp, 
+  values=ifelse(ResultDetectionConditionText == "Not Detected",
+    DetectionQuantitationLimitMeasure.MeasureValue, ResultMeasureValue),
+  remark.codes = ifelse(ResultDetectionConditionText == "Not Detected",
+    "<", "")) # Everything else is passed through as uncensored
+# Convert the data
+WFBC.nh3 <- importQW(WFBC.wqp, keep=c("MonitoringLocationIdentifier",
+    "ActivityStartDate", "ActivityStartTime.Time", "ActivityEndDate",
+    "ActivityEndTime.Time", "ActivityStartTime.TimeZoneCode", "ActivityMediaName"),
+  values="values",
+  remark.codes="remark.codes",
+  value.codes="ResultCommentText",
+  reporting.level="DetectionQuantitationLimitMeasure.MeasureValue",
+  reporting.method="DetectionQuantitationLimitTypeName",
+  reporting.units="DetectionQuantitationLimitMeasure.MeasureUnitCode",
+  analyte.method="ResultAnalyticalMethod.MethodIdentifier",
+  analyte.name="CharacteristicName",
+  unique.code="USGSPCode")
+# And show what we've got
+# print the structure, note that the output is captured and modified to fit 
+# in a narrow output
+Tmp <- capture.output(str(WFBC.nh3, vec.len=2))
+Tmp <- sapply(Tmp, sub, pattern=":", replacement="\n   ", fixed=TRUE)
+cat(Tmp, sep="\n")
+@
 
 \eject
-\section{Artimetic Operations} 
+\section{Arithmetic Operations} 
 
-Addition and multiplication methods.
+Addition and multiplication are accomplished by using the \texttt{add} and \texttt{multiply} functions rather than the arithmetic operators, ''+'' and ''*'' in order to preserve or update the meta data. The \texttt{add} function can add or subtract water-quality data of class ''qw'' or add or subtract numeric values to water-quality data. It is typically used to compute or recompute constituents that are not measured directly. The \texttt{multiply} function provides a method for multiplying water-quality data of class ''qw'' by a numeric value. It is typically used to change the units of the data. Use of the \texttt{multiply} function is not demonstrated in this section.
+
+The code following this paragraph recomputes the values for dissolved organic nitrogen (NitrogenOrg), which is computed as dissolved Kjeldahl nitrogen (Kjeldahl.N.00623) minus dissolved ammonia (Ammonia.N). When Kjeldahl.N.00623 is uncensored and Ammonia.N is censored, then the result for NitrogenOrg is censored, see the results for the first line of executable code below. The value that is reported in the data retrieved from NWISweb (<0.7) is correct for descriptive purposes, but for statistical analysis, a more precise value is needed, one the puts the value within a range defined by the value for Kjeldahl.N.00623 (0.7) and the range of possible values for Ammonia.N (from 0 to 0.02). The value for analysis should be interval censored in the range from 0.68 to 0.70. That computation is on the second and following lines of executable code and the results shown below. Those data can now be used to produce statistical results that are unbiased, at least from the context of censoring.
+
+<<echo=TRUE>>=
+# Print an example of censored dissolved organic nitrogen
+LCobb.nuts[10, c("NitrogenOrg", "Ammonia.N", "Kjeldahl.N.00623")]
+# Recompute censored dissolved organic nitrogen
+LCobb.nuts$NitrogenOrg <- with(LCobb.nuts, add(Kjeldahl.N.00623, -Ammonia.N, 
+  analyte="Organic nitrogen", pcode="00607"))
+LCobb.nuts[10, c("NitrogenOrg", "Ammonia.N", "Kjeldahl.N.00623")]
+@
+
+The ratio of water-quality values can be computed using the \texttt{ratio} function, this is equivalent to division, which would normally be performed using the ''/'' operator. The \texttt{ratio} function is different from the other functions discussed in this section because the output is of class ''mcens'' rather than maintaining class ''qw.'' The code following this paragraph demonstrates how to use the \texttt{ratio} function by computing the ratio of dissolved to whole-water phosphorus.
+
+<<echo=TRUE>>=
+# Subset the data to create ademonstration data set.
+LCobb.sub <- LCobb.nuts[1:20, c("Phosphorus.P", "Phosphorus_WW.P")]
+# Compute the ratio
+LCobb.sub$Ratio <- with(LCobb.sub, ratio(Phosphorus.P, Phosphorus_WW.P))
+# Print the results
+LCobb.sub
+@
+
 
 \eject
 \section{Comparison Operations} 
 
-Typical and specialized comparions.
+Comparisons between uncensored values is very straightforward and all of the comparison operators in R ''<,'' ''<=,'' ''==,'' ''!=,'' ''>,'' and ''>='' give consistent results. Comparisons between censored values and between censored and uncensored values is not always straightforward. For example, it is clear the expression \texttt{4 > <2} results in \texttt{TRUE}. But what about \texttt{2 > <4}? In that latter case, the correct result would be \texttt{NA} because it is not known whether 2 is greater than the actual value of <4. All of the comparison operators in R work on data of class ''qw'' and the analysis classes ''lcens'' and ''mcens.'' Furthermore, an additional comparison operator ''\%~=\%'' that could be defined as ''is in the range of'' is defined for comparing censored values. The code following this paragraph demonstrates the results of the comparison operators.
 
-\eject
-\section{Mathematical Transformations} 
-
-A few monotonic math functions are supported.
+<<echo=TRUE>>=
+# Use the Ammonia data from 0531656290
+NH3 <- WFBC.NH3$Ammonia.N
+# Print the values, specifically calling print makes it more readable
+# The "n" following E 0.005 is a non-blank value qualifying code, verifying 
+# that the E means the the value is greater than the detection limit, but 
+# less than the reporting level
+print(NH3)
+# Equality and inequality:
+NH3 == 0.026
+NH3 != 0.026
+# Greater than and greater than or equal to
+NH3 > .1
+NH3 >= .1
+# Less than and less that or equal to
+NH3 < 0.04
+NH3 <= 0.04
+# And the range checker
+NH3 %~=% 0.02
+@
 
 \eject
 \section{Miscellaneous Manipulations} 
 
-Things like qwCoalesce.
+Occasionally, the same constituent will be represented by more than one column in a data set.  This is common when multiple analytic methods are used to quantify a constituent. Often the user will want a single column representing the data for some particular analysis. The example following this paragraph demonstrates the use of the \texttt{qwCoalesce} function to create a single column of data from diverse sources. The \texttt{qwCoalesce} function acts like the \texttt{coalesce} function in the \texttt{smwrBase} package by selecting the first non-missing value in each row in the order specified in the arguments. All of the arguments to \texttt{qwCoalesce} must be of class ''qw.''
+
+<<echo=TRUE>>=
+# Retrieve alkalinity data for a couple of sites.
+sites <- c("01493112", "01632900")
+# The parameter codes representthe preferred order for computing alkalinity
+# according to NWIS
+PC <- c("39086", "29802", "39036", "00418", "39087", "29803", "29801", "00421")
+# Get the data
+Alk <- importNWISqw(sites, PC, begin.date="2011-01-01", end.date="2013-12-31", 
+    use.pnames=TRUE)
+# Note only parameter codes 29801 and 39806 were retrieved for these sites
+# Compute alkalinity
+Alk <- transform(Alk, Alk=as.numeric(qwCoalesce(P39086, P29801)))
+# Print the first 10 rows of the data
+head(Alk, 10)
+@
+
+The \texttt{summary} function has a method for class ''qw'' that conforms to the expected output for the \texttt{summary} function method for class ''data.frame''---a vector of length 6 that provides a very simply summary of the data. The example immediately following this paragraph demonstrates the output in the context of the data frame. Also shown is the output from \texttt{str}. The \texttt{summary} function has a method for class ''qw'' has an additional argument, \texttt{details}, that returns a list with more detailed information. The example also demonstrates this output.
+
+<<echo=TRUE>>=
+# Print the summary information for WFBC.NH3.
+# Nobs is the number of non-missing values
+summary(WFBC.NH3)
+# Compare to str
+str(WFBC.NH3)
+# More details can be extracted from the summary of the qw data
+summary(NH3, details=TRUE)
+# In this output, the units, and all of the analytical methods and reporting 
+# methods are returned, rather than "many" in the previous call to summary.
+@
+
+Data of class ''qw'' can be subsetted, much like any other vector. The example code following this paragraph demonstrates a few simple cases. In addition to subsetting using [], the \texttt{subset} function can be used to extract data based on the meta data. The example code also demonstrates that capability. Because of the meta data, individual values cannot be updated using [], except being set to \texttt{NA}. The example code demonstrates setting a single value to \texttt{NA}, note the additional requirement to treat the value as a matrix rather than as a vector as the extraction does.
+
+<<echo=TRUE>>=
+# Print NH3.
+print(NH3)
+# select the first 3 values
+print(NH3[1:3])
+# skip the first value
+print(NH3[-1])
+# extract using a logical vector
+print(NH3[WFBC.NH3$sample_dt < "2006-01-01"])
+# Use subset to extract the data associated with an analytical method
+print(subset(NH3, analyte.method == "CL037"))
+# Make a temporary copy of NH3 to demonstrate assignment
+Tmp <- NH3
+# Must treat as a matrix to set the necessary meta data to NA
+Tmp[2,] <- NA
+print(Tmp)
+rm(Tmp)
+@
 
 \eject
 \section{Conversions for Analysis} 
 
-Conversion to class "lcens" or "mcens."
+The ''qw'' class is useful for storing water-quality data because it retains meta information that help to understand the data. But the data must be converted to another type for analysis. All of the analytic functions in \textbf{smwrQW} convert data of class ''qw'' to class ''lcens'' or class ''mcens'' depending on the censoring. If the data are uncensored or strictly left-censored, then the data are converted to class ''lcens'' for analysis. Any other censoring requires conversion to class ''mcens.'' The process of conversion uses the numeric data, the remark code information and the reporting level information. A thorough discussion of the conversion is in Lorenz (2016).
+
+Plotting the data can help understand the data and how it will be interpreted for analysis. The example code immediately following this paragraph creates a plot of the ammonia data that has been used in previous examples. An additional argument that can very useful is \texttt{yaxis.log} that can be set to \texttt{TRUE} to draw the data on a logarithmic scale. The graph shows uncensored data as solid filled circles and censored data as open circles. The reporting level is shown by the colored horizontal lines---the color of those lines changes with the analytic method, but no key is available for those colors. The y-axis caption is derived from the characteristic name and the units. Te x-axis is simply the index number, sequential from 1 to the number of observations.
+
+<<echo=TRUE>>=
+# Set up the graphics environment, the equivalent call for an on screen
+#  device would be setPage("square")
+setSweave("graph01", 6 ,6)
+# Plot the data
+plot(NH3, set.up=FALSE)
+# Required call to close PDF output graphics
+graphics.off()
+@
+\includegraphics{graph01.pdf}
+\paragraph{}
+
+\textbf{Figure 1.} The default graph of water-quality data.
+
+Figure 1 can be used to describe the how left-censored data are created (for either class ''lcens'' or ''mcens''). Bonn (2008) provides an excellent description of the issues related to reporting censored data at the quantitation limit but reporting uncensored data using a detection limit and describes two methods for recensoring the data--censor everything at the quantitation limit or change the quantitation limit to the detection limit. The term reporting limit used in \textbf{smwrQW} refers to either the detection limit or the quantitation limit.  
+
+The seventh and ninth values in \texttt{NH3} are examples of reporting uncensored data at the detection limit and censored data at the quantitation limit, respectively. To provide unbiased statistical analysis, the conversion of the data to either ''lcens'' or ''mcens'' censors everything at the reporting level recorded with the data. The code immediately following this paragraph illustrates the manual conversion of the \texttt{NH3} data.
+
+
+<<echo=TRUE>>=
+# The raw data--the n following the E 0.005 value is a qualification code
+# indicating that the reported value is less than the reporting level
+print(NH3)
+# And converted to lcens
+print(as.lcens(NH3))
+# And converted to mcens
+print(as.mcens(NH3))
+@
+
+If the user wants to use the detection limit rather than the quantitation limit, then the user must look up the detection limit for each analytic method, which may vary over time. For the \texttt{NH3} data, The detection limit for method 00048 for the period of time covered by the last four values in \texttt{NH3} was 0.005. The code following this paragraph demonstrates how to recode those data. The code uses the \texttt{as.data.frame} to convert the data in \texttt{NH3}; the function \texttt{convertFqw} can be used to expand any or all columns of class ''qw'' in a dataset.
+
+<<echo=TRUE>>=
+# Create a dataset that can be easily manipulated
+NH3.df <- as.data.frame(NH3, expand=TRUE)
+print(NH3.df)
+# reset the reporting level, column suffix .rlv
+NH3.df$NH3.rlv[NH3.df$NH3.mth == "00048"] <- 0.005
+# and recensor the data in columnm suffix .va2
+# Must be careful not to recensor elevated censored values
+NH3.df$NH3.va2[NH3.df$NH3.mth == "00048" & NH3.df$NH3.rmk == "<" &
+    NH3.df$NH3.va2 == 0.01] <- 0.005
+# Print to verify
+print(NH3.df)
+# And convert back to water-quality data (as a data.frame)
+NH3.df <- convert2qw(NH3.df, "qw")
+print(NH3.df)
+# verify the conversion
+print(as.lcens(NH3.df$NH3))
+@
+
+Censored methods for some kinds of analyses do not exist. For those cases, any but right-censored data of class ''qw'' can be converted to numeric values using the \texttt{as.numeric} function. That function uses an approach based on simple substitution to estimate values for left- and interval-censored data. The mid range is used for interval censored values. Left-censored values are converted sequentially from the smallest value up to the largest censored value---one half the reporting level is used for the smallest left-censored value, then the mean of all values less that the reporting level is used to substitute for each larger reporting level until the largest value is computed. The code following this paragraph illustrates the use of \texttt{as.numeric}. In the conversion to numeric, the data are first processed as for any other analysis described previously in this section. For the \texttt{NH3} data, the seventh and ninth values are first censored at 0.01 and converted to numeric values at one-half the reporting level or 0.005. The first, second, fourth and fifth values are censored at 0.04, so their numeric value is the mean of 0.005, 0.026, and 0.005 or 0.012. The output from the last line of code shows that conversion.
+
+<<echo=TRUE>>=
+# Print the data
+print(NH3)
+# And convert to numeric values
+print(as.numeric(NH3))
+@
+
+There is one final conversion function for data of class ''qw'' called \texttt{qw2mcens}. That function converts the data to class ''mcens'' but treats the less-than values as interval-censored values between 0 and the reporting level. It does not convert quantified data less than the reporting level. It is illustrated in the example code following this paragraph. Interval data are printed as a hyphenated range.
+
+<<echo=TRUE>>=
+# Print the data
+print(NH3)
+# And convert to numeric values
+print(qw2mcens(NH3))
+@
+
+\eject 
+\section{Mathematical Transformations} 
+
+A few math functions are supported for transforming water-quality data. Most commonly these will be the power transforms \texttt{log}, \texttt{log10}, \texttt{exp}, and \texttt{sqrt}. For the conversion, if the water-quality data are uncensored, then the data are converted to numeric data and the function applied to those values. If the data are left-censored, then the data are converted to class ''lcens'' and the function applied. For any other censoring, the data are converted to class ''mcens'' and the function applied. The \textbf{smwrQW} package also has a function called \texttt{pow} the does a power transform for any arbitrary exponent greater than 0. By default, data of class ''qw'' are converted using the \texttt{qw2mcens} function, but the output type can be controlled by the \texttt{out} argument. The data computed by \texttt{pow} are scaled by dividing by the exponent. The code following this paragraph provides some examples.
+
+<<echo=TRUE>>=
+# Print the data
+print(NH3)
+# Compute the natural log, data converted to lcens
+print(log(NH3))
+# Compute the square root, data converted to lcens
+print(sqrt(NH3))
+# The default output from pow, using an exponent to mimic the square root
+print(pow(NH3, .5))
+# And forced to lcens
+print(pow(NH3, .5, out="lcens"))
+# Note that the last 2 are simply twice the result using sqrt
+@
+
+\eject 
+\section{Other Applications} 
+
+This vignette summaries working with water-quality data of class ''qw.'' It concentrates only on manipulating the data. Other vignettes illustrate the analysis or graphing data. Those vignettes typically use the data classes designed for analysis, ''lcens'' and ''mcens'' but the methods can be used directly with data of class ''qw.'' The vignette ''Quality Control Data Analysis'' also uses data of class ''qw'' in its presentation of some tools for processing QA/QC data.
 
 \begin{thebibliography}{9}
 
-\bibitem{H12}
-Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab and R: New York, Wiley, 324 p.
-
-\bibitem{HH}
-Helsel, D.R., and Hirsch, R.M., 2002, Statistical methods in water resources: U.S. Geological Survey Techniques of Water-Resources Investigations, book 4, chap. A3, 522 p.
+\bibitem{BB}
+Bonn, B.A., 2008, Using the U.S. Geological Survey National Water Quality Laboratory LT-MDL to evaluate and analyze data: U.S. Geological Survey Open-File Report 2008-1227, 73p.
 
 \bibitem{DL}
-Lorenz, D.L., 2016, smwrQW--an R package for managing and analyzing water-quality data, version 1.0.0: U.S. Geological Survey Open File Report 2016-XXXX.
+Lorenz, D.L., 2016, smwrQW---an R package for managing and analyzing water-quality data, version 1.0.0: U.S. Geological Survey Open File Report 2016-XXXX, XX p.
 
 \end{thebibliography}
 

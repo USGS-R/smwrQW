@@ -10,8 +10,9 @@
 #'\code{x} is negative, then a warning is generated and the returned value
 #'contains missing values.
 #'
-#' @param x any R object than can be converted to class "lcens" to compute the mean. 
-#'Missung values are permitted and are removed before computing the mean.
+#' @param x any R object than can be converted to class "lcens," or "mcens"
+#'for multiply censored data, to compute the mean. 
+#'Missing values are permitted and are removed before computing the mean.
 #' @param method the method to use for computing the statistics. See
 #'\bold{Details}.
 #' @param CI the minimum desired confidence interval for each level specifed in
@@ -56,12 +57,21 @@
 censMean.CI <- function(x, method="log AMLE", CI=0.90, bound=c("two.sided", "upper", "lower"),
 											alpha=0.4) {
 	##
-	x <- as.lcens(x)
+	method <- match.arg(method, c("log MLE", "MLE", "log ROS", "ROS",
+																"log AMLE", "AMLE"))
+	if(censoring(x) == "multiple") {
+		x <- as.mcens(x)
+		if(method %cn% "AMLE") {
+			stop("AMLE/log AMLE only valid for uncensored and left-censored data")
+		}
+		ckpos <- !all(x > 0, na.rm=TRUE) # left-censored NA unless < (less than 0)
+	} else {
+		x <- as.lcens(x)
+		ckpos <- any(x@.Data[, 1L] <= 0)
+	}
 	x <- x[!is.na(x)] # keep the good ones
 	N <- length(x)
   bound <- match.arg(bound)
-	method <- match.arg(method, c("log MLE", "MLE", "log ROS", "ROS",
-																"log AMLE", "AMLE"))
   if(bound == "two.sided") {
   	ci <- 1 - (1 - CI)/2
   } else {
@@ -69,7 +79,7 @@ censMean.CI <- function(x, method="log AMLE", CI=0.90, bound=c("two.sided", "upp
   }
 	# Figure out which to do
 	cknot0 <- TRUE
-	if(method %cn% "log" && any(x@.Data[, 1L] <= 0)) {
+	if(method %cn% "log" && ckpos) {
 		est <- lci <- uci <- NA_real_
 		cknot0 <- FALSE
 		warning("Not all values are strictly positive")

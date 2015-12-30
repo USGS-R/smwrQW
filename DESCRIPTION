@@ -1,6 +1,6 @@
 Package: smwrQW
-Version: 0.7.5
-Date: 2015-08-10
+Version: 0.7.7
+Date: 2015-12-30
 Title: Tools for censored data analysis
 Author: Dave Lorenz <lorenz@usgs.gov>.
 Maintainer: Dave Lorenz <lorenz@usgs.gov>
