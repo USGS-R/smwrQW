@@ -1,6 +1,6 @@
 #' Conversion to class "mcens"
 #'
-#' Convert objects of class "qw" to "mcens" retaining interval censoring
+#' Converts objects of class "qw" to "mcens" retaining interval censoring
 #'for "less-than" data.
 #'
 #' @param x an object of class "qw" to convert.

@@ -1,8 +1,9 @@
 #'Sorting Vectors
 #'
-#'Sort a censored-data object. This function sorts left-censored values
-#'immediately below the equivalent uncensored values and rigth-censored
-#'values immediately above the euvualent uncensored values. 
+#'Sorts a vector into ascending or descending order: methods for "lcens" and "mcens"
+#'data. This function sorts left-censored values immediately below the equivalent 
+#'uncensored values and right-censored values immediately above the equivalent 
+#'uncensored values. 
 #'
 #'@aliases sort.lcens sort.mcens
 #'@param x the data to be sorted.

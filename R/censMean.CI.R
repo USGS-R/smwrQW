@@ -1,6 +1,6 @@
 #' Mean with Confidence Limits
 #' 
-#' Compute the mean and confidence limits of left-censored data.
+#' Computes the mean and confidence limits of left-censored data.
 #' 
 #' @details The methods available in the current version are "log MLE," "MLE," "log ROS,"
 #'"ROS," "log AMLE," and "AMLE." The methods "log ROS," "log MLE," and "log AMLE" are

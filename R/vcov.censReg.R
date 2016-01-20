@@ -1,7 +1,7 @@
-#'Variance-Covariance Matrix 
+#' Variance-Covariance Matrix 
 #'
-#'Computes the variance-covariance matrix of the main parameters of a 
-#'fitted censored-regression model object.
+#' Extracts the variance-covariance matrix of the main parameters from a 
+#'censored regression object: method for "censReg" object.
 #'
 #' @param object an object of class "censReg"---output from \code{censReg}.
 #' @param \dots not used, further arguments passed to or from other methods.

@@ -1,6 +1,6 @@
-#'Subset an Object
+#' Subset an Object
 #'
-#'Extracts or subsets censored or water-quality data objects.
+#' Extracts or subsets a vector: methods for "lcens," "mcens," and "qw" data.
 #'
 #'The values for \code{i} can be either numeric indexes or logical.\cr
 ##'Valid slot names are "remark.codes," "reporting.level," "reporting.method,"

@@ -1,6 +1,6 @@
-#'Predict Values
+#' Predict Values
 #'
-#'Predict values from a censored regression object.
+#' Predicts values from a censored regression object: method for "censReg" object.
 #'
 #'Some combinations of \code{type} and \code{se.fit} and \code{interval}
 #'are not possible, depending on the distribution of the model. If \code{type}

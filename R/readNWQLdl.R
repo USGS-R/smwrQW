@@ -1,6 +1,7 @@
 #' @title Historical Reporting Limits
 #'
-#' @description Import the historical reporting limits for all methods for a parameter code.
+#' @description Imports the historical reporting limits for all methods for a 
+#'parameter code.
 #'
 #' @importFrom XML readHTMLTable
 #' @importFrom lubridate today

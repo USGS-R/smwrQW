@@ -1,6 +1,6 @@
 #'Water-Quality Data
 #'
-#'Import discrete sample water-quality data from NWISweb.
+#'Imports discrete water-quality sample data from NWISweb.
 #'
 #' @details Valid parameter code groups are "All," or group codes:
 #'\tabular{ll}{
@@ -65,7 +65,7 @@
 #'}
 #' @import dataRetrieval
 #' @export
-importNWISqw <- function(sites, params="all", begin.date="", end.date="",
+importNWISqw <- function(sites, params="All", begin.date="", end.date="",
                          keep=NULL, use.pnames=FALSE) {
   ## Coding history:
   ##    2012Sep17 DLLorenz original Coding
@@ -90,7 +90,7 @@ importNWISqw <- function(sites, params="all", begin.date="", end.date="",
   ## Create the qw column and the by sample dataset
   ByResult$qw <- as.qw(ByResult$result_va, ByResult$remark_cd,
                        ByResult$val_qual_tx,
-                       ByResult$rpt_lev_va, ByResult$rpt_lev_cd,
+                       as.numeric(ByResult$rpt_lev_va), ByResult$rpt_lev_cd,
                        ByResult$parameter_units, ByResult$meth_cd,
                        ByResult$srsname, ByResult$parm_cd)
   ## The function group2row cannot handle complicated data structures like qw

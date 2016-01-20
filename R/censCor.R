@@ -1,6 +1,8 @@
 #' @title Correlation
 #'
-#' @description Compute the correlation between left-censored data using MLE
+#' @description Computes the maximum likelihood estimate of the correlation between 
+#'two possibly left-censored vectors. It is equivalent the the Pearson 
+#'product-moment correlation for uncensored data.
 #'
 #' @details
 #'\code{Full} may be either logical or a numeric vector. If \code{Full} is \code{TRUE},

@@ -1,6 +1,6 @@
 #' Compute Ratios
 #'
-#' The \code{ratio} function provide a method for computing ratios from water-quality 
+#' Computes ratios from water-quality 
 #'or other data and maintain the integrity of the data, as opposed to methods that use
 #'simple substitution
 #'

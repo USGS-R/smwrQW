@@ -1,6 +1,6 @@
 #' @title Estimate Censored Values
 #'
-#' @description Estimates values of censored data.
+#' @description Estimates values for censored data.
 #'
 #' @details The methods of Regression on Order Statistics (ROS) and MLE is
 #'explained in Helsel (2012). The "log ROS" first log-transforms the data and
@@ -9,14 +9,16 @@
 #'detection limit. Quinn and Keogh (2003) describe alternatives to simple 
 #'substituion of a single value that sample from an alternate distribution.
 #'The triangular distribution is a reasonable distribution when the percentage
-#'of censored data is relatively small, say less than 30 percent.
+#'of censored data is relatively small, say less than 30 percent. The "fill" and
+#'"log fill" methods implement the method described by Gleit (1985).
 #'
 #' @param x an object of class "lcens." Missing values are ignored.
 #' @param method the method to use for estimating censored values:
 #'"ROS," "log ROS," "MLE," or "log MLE" are valid for any left-
-#'or multiply-censored data ; "triangular" is valid for left-censored data 
-#'with a single detection limit; \code{method} is ignored for uncensored data.
-#' @param alpha the offset fraction to be used; typically in [0,0.5].
+#'or multiply-censored data ; "triangular," "fill" and "log fill" are valid for 
+#'left-censored data  with a single detection limit; \code{method} is ignored for 
+#'uncensored data.
+#' @param alpha the offset fraction to be used for plotting position; typically in [0,0.5].
 #' @return A vector of sorted estimates and actual values with an attribute of the 
 #'censoring levels.
 #' @seealso \code{\link{as.double.qw}}
@@ -79,6 +81,12 @@ fillIn.lcens <- function(x, method="ROS", alpha=.4) {
 								 								xc <- sqrt(ppoints(sum(x@censor.codes), alpha)) * CL
 								 								list(fitted=c(xc, xu),
 								 										 censorlevels=rep(CL, length(xc)))
+								 },
+								 "fill" = {ret <- sdlFill(x, method, alpha)
+								           list(fitted=ret$fitted, censorlevels=ret$censorlevels)
+								 },
+								 "log fill" = {ret <- sdlFill(x, method, alpha)
+								 list(fitted=ret$fitted, censorlevels=ret$censorlevels)
 								 })
 	retval <- temp$fitted
 	attr(retval, "censorlevels") <- temp$censorlevels

@@ -1,6 +1,6 @@
 #' @title Summary Statistics
 #'
-#' @description Compute selected summary statistics for censored data.
+#' @description Computes selected summary statistics for censored data.
 #'
 #' @param \dots any number of vectors or a data frame of the data to
 #'be summarized. If \code{\dots} is a data frame, then only numeric data,

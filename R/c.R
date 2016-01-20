@@ -1,6 +1,7 @@
 #' Combine Values into a Vector
 #'
-#' These method combine arguments to form a vector. All arguments are coerced to
+#' Combines arguments to form a vector for censored or water-quality data: 
+#'methods for "cens," "mcens," and "qw" data. All arguments are coerced to
 #'a common type which is the type of the first argument, except for the qw method,
 # which requires all arguments to be of class "qw."
 #'

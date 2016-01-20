@@ -1,7 +1,7 @@
 #' @title Multiply-censored Data Conversion
 #'
-#' @description Convert from various formats to a multiply-censored data (\code{mcens})
-#'object.
+#' @description Converts data to a multiply-censored data (\code{mcens})
+#'object: various methods.
 #'
 #' @details In keeping with the logic of \code{Surv}, \code{NA} is permitted to indicate
 #'left- or right-censored data. If both are \code{NA}, then the observation is

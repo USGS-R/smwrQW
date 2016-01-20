@@ -1,6 +1,6 @@
 #'Numeric Representations
 #'
-#'Converts an object of class "qw" to a numeric values.
+#'Converts data to numeric values: method for "qw" data.
 #'
 #' @param x the object to be converted.
 #' @param \dots further arguments passed to or from other methods.

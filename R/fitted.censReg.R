@@ -1,6 +1,7 @@
 #'Extract Model Fitted Values
 #'
-#'Extract the fitted values of an AMLE/MLE regression.
+#' Extracts the fitted values from a censored regression object: method 
+#'for "censReg" object.
 #'
 #' @param object an object of class "censReg"---output from \code{censReg}
 #' @param suppress.na.action logical, suppress the effects of the

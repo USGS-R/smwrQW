@@ -1,6 +1,6 @@
 #' @title Censored Data Regression
 #'
-#' @description Build a regression model for censored response data.
+#' @description Builds a linear regression model for censored response data.
 #'
 #' @details The left-hand side of the formula may be any numeric variable, just as with
 #'\code{lm} or a variable of class "lcens," "mcens," or "qw."\cr

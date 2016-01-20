@@ -1,6 +1,6 @@
 #' Missing Values
 #'
-#' Indicate which elements of censored or water-quality data are missing.
+#' Indicates which elements are missing: methods for "lcens," "mcens," and "qw" data.
 #'
 #'
 #' @aliases is.na.lcens is.na.mcens is.na.qw

@@ -1,6 +1,6 @@
 #' @title Censored Data Methods for Function \code{dotPlot}
 #'
-#' @description Produce a dot plot of censored data.
+#' @description Produces a dot plot: methods for "mcens" and "qw" data.
 #'
 #' @details The \code{what} component of the \code{Plot} argument must be either
 #'"points" or "none."

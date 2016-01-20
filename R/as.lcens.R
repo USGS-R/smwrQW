@@ -1,6 +1,6 @@
 #' @title Left-censored Data Conversion
 #'
-#' @description Convert from various formats to a left-censored data (\code{lcens}) object.
+#' @description Converts data to a left-censored data (\code{lcens}) object: various methods.
 #'
 #' @name as.lcens
 #' @rdname as.lcens

@@ -1,6 +1,6 @@
 #' Describe Censoring
 #'
-#' Gets the type of censoring ("none," "left," "multiple") for an object.
+#' Returns the type of censoring ("none," "left," "multiple") for an object.
 #'
 #'
 #' @aliases censoring censoring.default censoring.lcens censoring.mcens

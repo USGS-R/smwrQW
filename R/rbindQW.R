@@ -1,7 +1,8 @@
 #' Combine Data by Rows
 #'
-#' Take a sequence of data frame arguments and compine by rows. This is a specilized
-#'version of \code{rbind} that works for data frames that contain columns of class "qw."
+#' Combines a sequence of data frame arguments and combine by rows. This is a 
+#'specialized version of rbind that works for data frames that contain columns 
+#'of class "qw."
 #'
 #' @param \dots any number of data frames with identical columns. The missing value \code{NA}
 #'is permitted as a special case to allow the addition of missing values.

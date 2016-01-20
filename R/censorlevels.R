@@ -1,6 +1,6 @@
 #'Describe Censoring
 #'
-#'Gets all censoring levels for an object.
+#'Returns all censoring levels for an object.
 #'
 #'
 #' @aliases censorLevels censorLevels.default censorLevels.lcens

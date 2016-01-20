@@ -1,6 +1,6 @@
-#'Not exported
+#' Not exported
 #'
-#'Compute the stats for a censored boxplot
+#' Computes the statistics for a left-censored data boxplot.
 #'
 #'@param x list of the lcens data
 #'@param Box the Box parameters

@@ -1,6 +1,7 @@
 #' @title Water-quality Data Conversion
 #'
-#' @description Convert the data and meta data to a water-quality data (\code{qw}) object.
+#' @description Converts data and meta data to a water-quality data (\code{qw}) object:
+#'various methods.
 #'
 #' @details Two methods for constructing water-quality data are defined in the current
 #'version. The first method works well for un-, left-, and right-censored data where the 

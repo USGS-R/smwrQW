@@ -1,6 +1,6 @@
 #' @title Code Censored Values
 #' 
-#' @description Recode censored data to a binary coding system with 0 indicating
+#' @description Recodes censored data to a binary coding system with 0 indicating
 #'less than some critical value and 1 indicating greater than or equal to that critical 
 #'value.
 #' 

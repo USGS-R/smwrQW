@@ -1,7 +1,7 @@
 #'Kendall' tau
 #'
-#'Compute Kendall's tau for left-censored data and the Akritas-Theil-Sen
-#'slope estimator.
+#'Computes Kendall's tau for left-censored data and the Akritas and others (1995)
+#'Theil-Sen slope estimator.
 #'
 #'@param x any data that can be converted to a left-censored data object.
 #'@param y any data that can be converted to a left-censored data object.

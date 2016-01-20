@@ -1,7 +1,7 @@
 #' @title Add Water-Quality Data
 #'
-#' @description The \code{add} function provides a method for adding or subtracting 
-#'water-quality data while trying to maintain the integrity of the data.
+#' @description Adds or subtracts water-quality data while trying to maintain the 
+#'integrity of the data.
 #'
 #' @details The \dots arguments must not be named in the call. Only objects of class 
 #'"qw" or "numeric" are allowed. To perform a subtraction, simply preceed the argument

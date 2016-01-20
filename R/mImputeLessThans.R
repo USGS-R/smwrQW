@@ -1,6 +1,7 @@
 #' @title Impute Censored Values
 #' 
-#' @description Impute left-censored values multiple times using the data augmentation method.
+#' @description Imputes substitute values left-censored values multiple times using 
+#'the data augmentation method.
 #' 
 #' @details Imputation of left-censored data requires the assumption of multivariate 
 #'log-normality for a single population. If the data represent samples from multiple

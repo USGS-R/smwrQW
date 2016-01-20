@@ -1,8 +1,8 @@
 #' Box Plot
 #'
-#' Produces an estimated or censored style box plot for truncated, simple,
-#'or extended type box plot. The Tukey type box plot requires an
-#'estimated style box plot.
+#' Produces an estimated or censored style box plot for truncated, Tukey, simple, or 
+#'extended type box plot: methods for "lcens" and "qw" data. The Tukey type box 
+#'plot requires an estimated style box plot.
 #'
 #' If group is numeric, then the boxes will be plotted along a continuous
 #'numeric axis. Otherwise the x-axis will be discrete groups.

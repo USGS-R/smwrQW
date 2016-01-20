@@ -1,6 +1,7 @@
-#'Extract AIC from a Fitted Model
+#' Extract AIC from a Fitted Model
 #'
-#'Computes the Akaike An Information Criterion for an AMLE/MLE regression.
+#' Computes the Akaike (1974) An Information Criterion for a censored regression 
+#'object: method for "censReg" object.
 #'
 #' @param fit an object of class "censReg"---output from \code{censReg}.
 #' @param scale set scale, ignored in current version.
@@ -9,9 +10,11 @@
 #'corrected AIC, if \code{FALSE} or \code{k} is not set to 2,then return the 
 #'uncorrected value, either AIC or BIC.
 #' @param \dots further arguments passed to or from other methods.
-#' @return A vector of length 2, giving the equivalent degreees of freedom and
+#' @return A vector of length 2, giving the equivalent degrees of freedom and
 #'the AIC for \code{fit}.
 #' @seealso \code{\link{censReg}}, \code{\link{extractAIC}}
+#' @references Akaike, H., 1974, A new look at the statistical model identification:
+#'IEE transactions on Automatic Control, v. 19, no. 6, p. 716--723.
 #' @keywords regression
 #' @export
 #' @method extractAIC censReg

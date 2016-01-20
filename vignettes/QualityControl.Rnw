@@ -19,7 +19,7 @@
 \raggedright
 \title{Quality Control Data Analysis}
 
-\author{Dave Lorenz, Jeffrey Martin, and Laura Medalie}
+\author{Dave Lorenz, Laura Medalie, and Jeffrey Martin}
 
 \maketitle
 
@@ -32,7 +32,7 @@ These examples demonstrate some of the functions and statistical methods for the
 \eject
 \section{Introduction}
 
-Most of the examples will use datasets supplied in the \textbf{smwrQW} package, but the Statistical Concepts section will use small, artificial datasets, with known properties to illustrate the use of the functions. The artificial data are class ''lcens'' rather than class ''qw,'' but the statistical methods apply to both classes.  The user should read the Working with Water-Quality Data vignette to become familiar with the management of water-quality data in the \texttt{smwrQW} package before attempting the examples in this vignette.
+Most of the examples will use datasets supplied in the \textbf{smwrQW} package, but the Statistical Concepts section will use small, artificial datasets, with known properties to illustrate the use of the functions. The artificial data are class ''lcens'' rather than class ''qw,'' but the statistical methods apply to both classes.  The user should read the Working with Water-Quality Data vignette to become familiar with the management of water-quality data in the \textbf{smwrQW} package before attempting the examples in this vignette.
 
 <<echo=TRUE>>=
 # Load the smwrQW package
@@ -124,12 +124,183 @@ binom.test(sum(Xlc >= Xlc.max),
 	length(Xlc), percentile(Xlc, 1.2, percent=FALSE))
 @
 
+\subsection{Relative Percent Difference}
+
+The relative percent difference (RPD) between uncensored replicate-pair results is calculated using the following equation:
+\[RPD = 100*\frac{larger\ value - smaller\ value}{(larger\ value + smaller\ value)/2}\]
+The values for RPD range from 0 if the smaller value is equal to the larger value to 200 if the smaller value is 0.
+
+For censored water-quality data, the results can be ambiguous---''less than'' values represent an unquantified value between 0, the minimum possible contentration, and the reporting level. Thus the equation for RPD can give any value between 0 and 200, depending on what value is used for the ''less than'' value. The \texttt{qwRPD} function has three options for dealing with those censored values: return \texttt{NA}, the minimum possible difference, or the range of possble RPDs for any computation involving censored values. The first two are simple preview options and suitable for very small sample-replicate sizes. The last option returns the values as class ''mcens'' so that the mean and confidence interval for the RPD can be computed and is suitable for larger sample-replicate sizes. The documentation for \texttt{qwRPD} describes the details and gives an example.
+
+\eject
+\section{Initial Data Processing}
+
+Jeff and Laura, I think some details on the preprocessing of the sample data. Thanks.
+
+Bonn (2008) describes the fundamentals of of the various reporting limits used the the U.S. Geological Survey National Water Quality Laboratory (NWQL). She describes the process of recensoring data at the long-term method detection limit (LT-MDL) for the purposes of analyzing low-level concentrations, which is important for quality control. This section describes that procedure for selected atrazine samples colleced by the U.S. Geological Survey National Stream Water-Quality Assessment (NAWQA) program from October 1, 2001 through September 30, 2012. The procedure described would be applicable to any data retrieved from analysis by the NWQL and broadly applicable to data from other laboratories. Ryberg and others (2010) describe a procedure for lowering the effective detection limit for information-rich analyses where values less that the detection limit for the math can be quantified. That proceedure could be extended to blanks or other cases of distinct patterns of those quantified values less than the detection level.
+
+The first step in processing these data for the quality-control analysis is to recode the reporting level of the data to the detection limit. This is only necessary if the laboratory uses the quantitation level rather than the detection limit for censored values as described in Bonn (2008). The R code immediately following this paragraph illustrates how to extract the information and update both the reporting levels and the values in the dataset. The initial part of the R code recodes some data in each dataset so that the codes used in the different datasets agree. The user must be careful to review the processing carefully to verify that the detection levels are correct. 
+
+<<echo=TRUE>>=
+# Get the sample and the reporting level data (supplied with smwrQW)
+data(atrazine.df)
+data(atrazine.dl)
+# Change the schedule code (sched) in the sample data to match the 
+# LabCode in the reporting level data (easy for these data, others 
+# could be more complicated).
+atrazine.df$LabCode <- sub("NWQL", "1", atrazine.df$sched)
+# The reportling level data do not report values for LabCode 12033 prior
+# to 2005-03-04, but that LabCode is recorded in the sample data. 
+# LabCode 12033 is equivalent to 12003, so recode 
+atrazine.df$LabCode[atrazine.df$LabCode == "12033" & 
+    atrazine.df$Date < "2005-03-04"] <- "12003"
+# Extract the method code from the TestID in the reporting level data
+atrazine.dl$QW_METHOD_CD <- substring(atrazine.dl$TestID, 6)
+# For these data the reporting level codes agree, but in some case, the
+# reporting level data uses lower case.
+# The data are now ready for processing. They cannot be merged because
+# there is no exact match for dates. This requires a relatively slow 
+# loop to get the 1 to 1 match.
+# First set up vector of detection limits
+DL <- numeric(nrow(atrazine.df))
+# Then loop through each row
+for(i in seq(DL)) {
+	# match method code
+	tmp.mc <- atrazine.df$QW_METHOD_CD[i] == atrazine.dl$QW_METHOD_CD 
+	# match reporting level codes
+	tmp.rlc <- atrazine.df$RPT_LEV_CD[i] == atrazine.dl$ReportLevelCode
+	# and finally the dates
+	tmp.dt <- atrazine.df$Date[i] >= atrazine.dl$StartDate & 
+		atrazine.df$Date[i] <= atrazine.dl$EndDate
+	# match lab code only if necessary--more than one detection limit
+	# This works when the LabCode is not recorded in the sample data or 
+	# for different DLs among the LabCodes
+	tmp.sel <- tmp.mc & tmp.rlc & tmp.dt
+	if(sum(tmp.sel) > 1) {
+		# extract the value(s)
+		tmp.val <- unique(atrazine.dl[tmp.sel, "DetectionLevel"])
+		if(length(tmp.val) > 1L) {
+			tmp.sel <- tmp.sel & atrazine.df$LabCode[i] == atrazine.dl$LabCode
+			tmp.val <- atrazine.dl[tmp.sel, "DetectionLevel"]
+		}
+	} else { # found a single or none
+		tmp.val <- atrazine.dl[tmp.sel, "DetectionLevel"]
+	}
+	if(length(tmp.val)) {
+		DL[i] <- tmp.val
+	} else {
+		DL[i] <- NA
+	}
+}
+# clean up
+rm(tmp.dt, tmp.mc, tmp.rlc, tmp.sel, tmp.val, i)
+# Do the missing values make sense?
+Miss <- which(is.na(DL))
+atrazine.df[Miss, c("Date", "sched", "RPT_LEV_VA", "RPT_LEV_CD", "QW_METHOD_CD")]
+#  The values have no code for the reporting level code and the reporting
+# levels are different from those in the reporting level data--OK.
+#
+# Update the reporting level value and code where DL is not missing.
+atrazine.df$DL <- ifelse(is.na(DL), atrazine.df$RPT_LEV_VA, DL)
+atrazine.df$DL_CD <- ifelse(is.na(DL), atrazine.df$RPT_LEV_CD, "DL")
+# Update the censored values in RESULT_VA--this works only for left-censored
+atrazine.df$RESULT_VA <- ifelse(atrazine.df$REMARK_CD == "<", 
+    atrazine.df$DL, atrazine.df$RESULT_VA)
+@
+
+The last step in processing these data for the quality-control analysis is to split the sample data into three seaparate datasets, one for each type of data and convert the atrazine data to class "qw" to facilitate processing. The R code following this paragraph splits the data, retaining only the necessary information and uses the function \texttt{convert2qw} to construct the dataset containing the atrazine data. The dataset are ready for quality-control analysis of blanks, and replicates
+
+<<echo=TRUE>>=
+# Subset the atrazine sample data and rename the columns
+# Blank data
+atrazine.oaq <- subset(atrazine.df, MEDIUM_CD == "OAQ", 
+  select = c("staid", "Date", "MEDIUM_CD", "SAMP_TYPE_CD", 
+    "RESULT_VA", "REMARK_CD", "DL", "DL_CD", "QW_METHOD_CD",
+    "Units", "PARAMETER_CD"))
+names(atrazine.oaq)[5:11] <- paste0("atrazine", c("", ".rmk",
+  ".rlv", ".rmt", ".mth", ".unt", ".pcd"))
+# Check if practcal to reset the DL for the blank data by method
+with(subset(atrazine.oaq, atrazine < atrazine.rlv), 
+     table(atrazine, atrazine.mth))
+# there is only 1 value less than the detection limit, so the payback for 
+# resetting the detection limits is small.
+# Convert the atrazine to "qw"
+atrazine.oaq <- convert2qw(atrazine.oaq, scheme="partial")
+#
+# Replicate data
+atrazine.wsq <- subset(atrazine.df, MEDIUM_CD == "WSQ", 
+  select = c("staid", "Date", "MEDIUM_CD", "SAMP_TYPE_CD", 
+    "RESULT_VA", "REMARK_CD", "DL", "DL_CD", "QW_METHOD_CD",
+    "Units", "PARAMETER_CD"))
+names(atrazine.wsq)[5:11] <- paste0("atrazine", c("", ".rmk",
+  ".rlv", ".rmt", ".mth", ".unt", ".pcd"))
+# Convert the atrazine to "qw"
+atrazine.wsq <- convert2qw(atrazine.wsq, scheme="partial")
+#
+# Envirionmental sample data
+atrazine.ws <- subset(atrazine.df, MEDIUM_CD == "WS", 
+  select = c("staid", "Date", "MEDIUM_CD", "SAMP_TYPE_CD", 
+    "RESULT_VA", "REMARK_CD", "DL", "DL_CD", "QW_METHOD_CD",
+    "Units", "PARAMETER_CD"))
+names(atrazine.ws)[5:11] <- paste0("atrazine", c("", ".rmk",
+  ".rlv", ".rmt", ".mth", ".unt", ".pcd"))
+# Convert the atrazine to "qw"
+atrazine.ws <- convert2qw(atrazine.ws, scheme="partial")
+@
+
 \eject
 \section{Analysis of Blanks} 
 
 Blanks are used to estimate the positive bias that can be caused by extraneous contamination introduced into environmental samples during collection, processing, shipment, and laboratory analysis. Evaluation of data from field blanks depends on the inference space represented by the blanks. In general, there are two possibilities: (1) a single blank is prepared to represent potential sources of contamination that affect a specific, small set of environmental samples, or (2) multiple blanks are prepared periodically over time and space to represent potential sources of contamination that might affect a much larger set of environmental samples.
 
-This example presents a technique for evaluating potential contamination by comparing the distribution of atrazine in environmental samples to the distribution of the 90-percent upper confidence limit for percentiles of concentration in associated field blanks (Mueller and others (2015). Out of a total of 637 data points for atrazine concentrations in field blanks associated with surface-water sampling across the United States, 630 are censored at a consistent DL of 0.004 $\mu$g/L. The lowest concentration of the 7 quantified values is 0.0035 $\mu$g/L, which is less than the DL (atrazine is an information-rich analyte for samples analyzed at the NWQL). The last 10 rows of the example dataset of atrazine field blank results are shown below.  The dataset is ordered numerically by RESULT with censored results ahead of uncensored results.
+Out of a total of 654 values for atrazine concentrations in field blanks associated with surface-water sampling across the United States, 646 are censored at a consistent DL of 0.004 $\mu$g/L. In the processing of the data in the ''Initial Data Processing'' section, only one quantified value was recorded less that the DL. The 8 quantified concentrations that exceed the DL are shown in the code following this paragraph. The 8 quantified concentrations represent about 1.2 percent of the total number of blank samples.
+
+<<echo=TRUE>>=
+# Print the blank data exceeding the DL
+subset(atrazine.oaq, atrazine >= 0.004)
+@
+
+This example presents a technique for evaluating potential contamination by comparing the distribution of atrazine in environmental samples to the distribution of the 90-percent upper confidence limit for percentiles of concentration in associated field blanks (Mueller and others (2015). The code foloowing this paragraph deomonstrates one way to create a graph that shows the largest values of the environmental samples compared to the filed blanks. The range of the graph covers the largest 40 percent of the data. Different samples may require a different range.
+
+<<echo=TRUE>>=
+# Initial processing
+# The range of percentages for the envirovnemtal data
+Pct <- seq(60, 100, by=0.5)
+# The quantiles of the environmental data
+Env.Q <- quantile(atrazine.ws$atrazine, probs=Pct/100)
+# The range for the balnks, no reason to compute for probibilities
+# More than two times 1.2 percent smaller than 1
+# The confidence interval cannot be computed for 1, (100 percent)
+# set the largest percent to 99.9
+Pct.90 <- seq(97.6, 99.9, by=.1)
+# The upper 90 confidence limit of the blanks
+Bnk.90 <- censQtiles.CI(atrazine.oaq$atrazine, probs=Pct.90/100,
+  CI=0.9, bound="upper")
+# set up the graphics environment: setSweave used in vignettes
+setSweave("graph01", 6, 6)
+AA.pl <- xyPlot(Pct, Env.Q, Plot=list(name="Environmental Samples",
+  what="lines", color="orange", width="color"), yaxis.log=TRUE,
+  yaxis.range=c(0.001, 100), ytitle="Concentration, in micrograms per liter",
+  xaxis.range=c(60, 100), xtitle="Cumulative Percent of Distribtution")
+# Add minor ticks for detail on the x-axis
+addMinorTicks("x", AA.pl)
+# Add the detection limit and annotation
+refLine(horizontal=0.004, current=AA.pl)
+addAnnotation(65, 0.004, "Maximum Long-term Method Detection Limit", current=AA.pl)
+# Add the UCL--Bnk.90 is a matrix, extract the ucl column
+AA.pl <- addXY(Pct.90, Bnk.90[,"ucl"], Plot=list(name="90 Percent UCL for Blanks",
+  what="lines", color="red", width="color"), current=AA.pl)
+# And the explanation
+addExplanation(AA.pl, "ul")
+@ Close the output device
+graphics.off()
+@
+
+
+\includegraphics{graph01.pdf}
+\paragraph{}
+
+\textbf{Figure 1.} Comparison of environmental and blank data.
 
 \eject
 \section{Analysis of Spikes} 
@@ -144,6 +315,9 @@ Replicates are used to measure variability, which is defined as the random error
 \pdfbookmark[1]{References}{bib}
 \begin{thebibliography}{9}
 
+\bibitem{BB}
+Bonn, B.A., 2008, Using the U.S. Geological Survey National Water Quality Laboratory LT-MDL to evaluate and analyze data: U.S. Geological Survey Open-File Report 2008-1227, 73p.
+
 \bibitem{H12}
 Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab and R: New York, Wiley, 324 p.
 
@@ -152,6 +326,9 @@ Lorenz, D.L., 2016, smwrQW--an R package for managing and analyzing water-qualit
 
 \bibitem{TM4C4}
 Mueller, D.K., Schertz, T.L., Martin, J.D., and Sandstrom, M.W., 2015, Design, analysis, and interpretation of field quality-control data for water-sampling projects: U.S. Geological Survey Techniques and Methods book 4, chap. C4, 54 p.
+
+\bibitem{RVMG}
+Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, Trends in pesticide concentrations in urban streams in the United States, 1992--2008: U.S. Geological Survey Scientific Investigations Report 2010--5139, 101 p. plus appendixes. Available at http://pubs.usgs.gov/sir/2010/5139/.
 
 \end{thebibliography}
 

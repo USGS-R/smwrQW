@@ -1,6 +1,6 @@
 #' @title Mean and Standard Deviation
 #'
-#' @description Compute the mean and standard deviation of censored data.
+#' @description Computes the mean and standard deviation of censored data.
 #'
 #' @details The methods available in the current version are "log MLE," "MLE," "log ROS,"
 #'"ROS," "log AMLE," "AMLE," and "flipped K-M." The method "flipped K-M"

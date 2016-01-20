@@ -1,6 +1,6 @@
 #'Parameter Code Information
 #'
-#'Support function for \code{importNWISqw}.
+#'Returns information about parameter codes. Support function for \code{importNWISqw}.
 #'
 #'Valid groups for \code{param} are "All," "INF," "PHY," "INM," "INN," 
 #'"NUT," "MBI," "BIO," "IMN," "IMM," "TOX," "OPE," "OPC," "OOT," "RAD,"

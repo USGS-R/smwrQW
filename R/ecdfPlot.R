@@ -1,6 +1,7 @@
-#'Empirical Distribution Function
+#' Empirical Distribution Function
 #'
-#'Produce a graph of the empirical distribution function for left-censored data
+#' Produces a graph of the empirical distribution function: methods 
+#'for "lcens" and "qw" data.
 #'
 #'
 #' @aliases ecdfPlot.lcens ecdfPlot.qw

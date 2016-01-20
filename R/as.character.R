@@ -1,6 +1,7 @@
 #'Character Representations
 #'
-#'Create character representations of censored and water-quality data.
+#'Creates character representations of censored and water-quality data: 
+#'methods for "lcens," "mcens," and "qw" data.
 #'
 #'@rdname as.character.lcens
 #'@aliases as.character.lcens as.character.mcens as.character.qw

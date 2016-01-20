@@ -1,6 +1,6 @@
 #'Impute Detection Limits
 #'
-#'Impute values for missing detection limits for left-censored data.
+#'Imputes values for missing detection limits for left-censored data.
 #'
 #'
 #'@param values the numeric values.

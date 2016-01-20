@@ -1,0 +1,39 @@
+#' Atrazine Data
+
+#' A dataset of atrazine samples, replicates, and blanks collected by the U.S.
+#'Geological Survey from October 1, 2001 through September 30, 2012.
+#'
+#' @details The sample medium codes are regular water-quality sample, WS; replicate
+#'water-quality sample, WSQ; and field blank, OAQ. The sample type codes are regular 
+#'sample with no QAQC sample, 9; regular sample with QAQC or the replicate sample, 7;
+#'and field blank , 2.
+#'
+#' @name atrazine.df
+#' @docType data
+#' @usage atrazine.df
+#' @format Data frame with 13106 rows and 12 columns\cr
+#'\tabular{lll}{
+#'Name \tab Type \tab Description\cr
+#'staid \tab character \tab USGS station number\cr
+#'Date \tab Date \tab Sample date\cr
+#'MEDIUM_CD \tab character \tab Sample medium code, see \bold{Details}\cr
+#'SAMP_TYPE_CD \tab integer \tab Sample type code, see \bold{Details}\cr
+#'sched \tab character \tab Lab schedule\cr
+#'RESULT_VA \tab numeric \tab Numeric value of the concentration\cr
+#'REMARK_CD \tab character \tab Remark code for the value\cr
+#'RPT_LEV_VA \tab numeric \tab Reporting level\cr
+#'RPT_LEV_CD \tab character \tab Reporting level code\cr
+#'Units \tab character \tab Units of the concentration\cr
+#'QW_METHOD_CD \tab character \tab Lab method code\cr
+#'PARAMETER_CD \tab character \tab Parameter code\cr
+#'}
+#' @source Data retreived from the national water information system and processed 
+#'by Jeffery Martin and Laura Medalie of the U.S. Geological Survey.
+#' @keywords datasets
+#' @examples
+#' data(atrazine.df)
+#' # How many different kinds of samples?
+#' with(atrazine.df, table(MEDIUM_CD))
+#' # Now many stations?
+#' with(atrazine.df, table(staid))
+NULL

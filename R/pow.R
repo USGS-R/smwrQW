@@ -1,6 +1,6 @@
 #' @title Power Transforms
 #'
-#' @description The \code{pow} function provides a method for raising censored data to a positive power.
+#' @description Raises censored data to a positive power.
 #'
 #' @include lcens-class.R mcens-class.R qw-class.R
 #' @param x any object that can be converted to class "mcens" or "lcens." Must be non negative (zero data are
@@ -41,8 +41,8 @@ pow <- function(x, lambda, out="Auto") {
 			stop("data must be non negative")
 		}
 		return(x^lambda/lambda)
-	}
-	if(out == "lcens") {
+	} # Done with numeric output
+	if(out == "lcens" || (out == "Auto" && inherits(x, "lcens"))) {
 		if(censoring(x) == "multiple") {
 			stop("data cannot by multiply censored for output as lcens")
 		}
@@ -53,7 +53,7 @@ pow <- function(x, lambda, out="Auto") {
 		x@.Data[,1L] <- x@.Data[,1L]^lambda/lambda
 		x@.Data[,2L] <- ifelse(x@.Data[,2L] > 0, x@.Data[,2L]^lambda/lambda, x@.Data[,2L])
 		return(x)
-	}
+	} # Done with lcens output
 	if(inherits(x, "qw")) { # use qw2mcens
 		retval <- qw2mcens(x)
 	} else if(inherits(x, "mcens")) {
@@ -61,12 +61,9 @@ pow <- function(x, lambda, out="Auto") {
 	} else { # convert it
 		retval <- as.mcens(x)
 	}
-	# Checks
-	if(lambda <= 0) {
-		stop("lambda must be greater than 0")
-	}
+	# Checks for mcens
 	if(any(retval@censor.codes < 0, na.rm=TRUE)) {
-		stop("data must not be left-censored")
+		stop("mcens data must not be left-censored")
 	}
 	if(any(retval@.Data[, 1L] < 0, na.rm=TRUE)) {
 		stop("data must be non negative")

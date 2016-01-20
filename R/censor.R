@@ -1,6 +1,6 @@
 #' @title Multiply-censored Data Conversion
 #'
-#' @description Censor a vector at user-set limits for left- or right-censoring.
+#' @description Censors a vector at user-set limits for left- or right-censoring.
 #'
 #' @include as.lcens.R as.mcens.R
 #' @param x a numeric vector. Missing values are permitted.

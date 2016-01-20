@@ -1,6 +1,7 @@
-#'Q-Q Plot
+#' Q-Q Plot
 #'
-#'Produce a quantile-quantile (q-q) or a q-normal plot for censored data.
+#' Produces a quantile-quantile (q-q) or a q-normal plot: methods for "lcens" 
+#'and "qw" data.
 #'
 #'The argument what for either \code{LineRef} or \code{Line1.1} may be set to
 #'"none" to suppress drawing of either line.

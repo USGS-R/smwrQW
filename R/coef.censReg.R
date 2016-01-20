@@ -1,6 +1,7 @@
 #'Extract Model Coefficients
 #'
-#'Extract the model coefficients from an AMLE/MLE regression.
+#'Extracts the model coefficients from a censored regression object: method for
+#'"censReg" object.
 #'
 #'@param object the output from \code{censReg}.
 #'@param summary include standard errors and other information?

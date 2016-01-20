@@ -1,6 +1,6 @@
 #'Column Names
 #'
-#'Create valid, unique column names for water-quality constituents
+#'Creates valid, unique column names for water-quality constituents.
 #'
 #'The arguments \code{name} and \code{short} are expected to be columns
 #'retreived by those arguments in the function \code{pcodeNWISqw}.

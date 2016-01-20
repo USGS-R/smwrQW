@@ -1,6 +1,6 @@
 Package: smwrQW
-Version: 0.7.7
-Date: 2015-12-30
+Version: 0.7.8
+Date: 2016-01-20
 Title: Tools for censored data analysis
 Author: Dave Lorenz <lorenz@usgs.gov>.
 Maintainer: Dave Lorenz <lorenz@usgs.gov>
@@ -45,6 +45,9 @@ Collate:
     'as.lcens.R'
     'as.mcens.R'
     'as.qw.R'
+    'atrazine.df.R'
+    'atrazine.dl.R'
+    'atrazine.spk.R'
     'boxPlot.lcens.R'
     'boxPlotCensStats.R'
     'c.R'
@@ -124,6 +127,7 @@ Collate:
     'quantile.R'
     'qw2mcens.R'
     'qwCoalesce.R'
+    'qwRPD.R'
     'ratio.R'
     'rbindQW.R'
     'readNWQLdl.R'

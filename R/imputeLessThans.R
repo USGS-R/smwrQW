@@ -1,6 +1,6 @@
 #' @title Impute Censored Values
 #' 
-#' @description Impute left-censored values using the expectation???maximization method.
+#' @description Imputes substitute values for left-censored values using the expectation maximization method.
 #' 
 #' @details Imputation of left-censored data requires the assumption of multivariate 
 #'log-normality for a single population. If the data represent samples from multiple

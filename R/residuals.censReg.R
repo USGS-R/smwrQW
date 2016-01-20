@@ -1,6 +1,7 @@
 #' @title Extract Model Residuals
 #'
-#' @description Extract the residuals of an AMLE/MLE regression.
+#' @description Extracts the residuals from a censored regression object: method 
+#'for "censReg" object.
 #'
 #' @details The value for \code{type} can be any one of the following:
 #'\tabular{ll}{ Value \tab Description\cr

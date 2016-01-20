@@ -1,7 +1,7 @@
 #'Coerce to a Data Frame
 #'
-#'Create data frames from censored and water-quality data.
-#'
+#'Creates data frames from censored and water-quality data: 
+#'methods for "lcens," "mcens," and "qw" data.
 #'
 #' @aliases as.data.frame.lcens as.data.frame.mcens as.data.frame.qw
 #' @param x any R object to put into a data frame.

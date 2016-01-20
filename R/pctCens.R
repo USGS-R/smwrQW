@@ -1,6 +1,7 @@
 #' Percent Censored
 #'
-#' Gets the percentage of censoring ("left," "right," or "multiple") for an object.
+#' Computes the percentage of censoring ("left," "right," or "multiple") for an 
+#'object.
 #'
 #' @param x the object to compute the percentage of censoring. Missing values
 #'are permitted and removed before computing the percentage,

@@ -1,7 +1,7 @@
 #' @title Test for difference in left-censored samples
 #'
-#' @description This function tests for differences in paired left-censored samples from 2
-#'groups.
+#' @description Tests for differences in paired left-censored samples from two
+#'groups using the PPW test (O'Brien and Fleming, 1987).
 #'
 #' @details The O'Brien-Fleming adjustment forces the score for all paired censored
 #'values to be equal to each other. It also forces equality between observed
@@ -15,8 +15,8 @@
 #'the analysis.
 #' @param alternative character string describing the alternative hypothesis.
 #'Must be one of "two.sided," "greater," or "less."
-#' @param OBrienFleming should the O'Brien-Flemming adjustment be made? See
-#'\bold{Details}.
+#' @param OBrienFleming logical, if \code{TRUE}, then apply the OBrienFleming otherwise it is
+#'not applied. See \bold{Details}.
 #' @param data.names character string to be used to explain the data. Default
 #'names are derived from the data arguments.
 #' @return An object of class "htest" that inherits "ppw."
@@ -31,24 +31,12 @@
 #'distributions are not different from one another.
 #' @seealso \code{\link{survdiff}}, \code{\link{survfit}},
 #'\code{\link{lcens-class}}
-#' @references Gehan, E.A., 1965, A generalized Wilcoxon test for comparing
-#'arbitraritly singly censored samples: Biometrika, v. 52, p. 203-223.\cr
-#'
-#'Harrington, D.P., and Fleming, T.R., 1982, A class of rank test procedures
-#'for censored survival data: Biometrika, v. 69, p. 553-566.\cr
-#'
+#' @references
 #'Helsel, D.R. 2012, Statistics for Censored Environmental Data Using Minitab
 #'and R: New York, Wiley, 324 p.\cr
 #'
-#'Peto, R., and Peto, J., 1972, Asymptotically efficient rank invariant test
-#'procedures (with discussion): Journal of the Royal Statistical Society,
-#'Series A v. 135, p. 185-206.\cr
-#'
-#'Prentice, R.L. 1978, Linear rank tests with right-censored data: Biometrika,
-#'v. 65, p. 167-179.\cr
-#'
-#'Prentice, R.L., and Marke, P., 1979, A qualitative discrepancy between
-#'censored data rank tests: Biometrika, v. 35, p. 861-867.\cr
+#'O'Brien, P.C. and Fleming, T.R., 1987, A paired Prentice-Wilcoxon test for censored 
+#'paried data: Biometrics, v. 43, p. 451--455.
 #'
 #' @keywords censored htest
 #' @examples

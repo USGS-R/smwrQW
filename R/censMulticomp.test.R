@@ -1,6 +1,6 @@
 #'Multiple Comparisons
 #'
-#'Perform mutliple nonparametric comparison tests among groups of left-censored
+#'Performs a multiple nonparametric comparison test among groups of left-censored
 #'data.
 #'
 #'

@@ -1,6 +1,6 @@
 #' @title Gehan Test Scores
 #' 
-#' @description Compute Gehan test scores that compare the values in one
+#' @description Computes Gehan scores that compare the values in one
 #'group to the values in another group.
 #'
 #' @details If \code{y} is missing, then \code{x} is compared to itself 

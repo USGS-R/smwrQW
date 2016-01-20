@@ -1,6 +1,6 @@
 #' @title Code Censored Values
 #' 
-#' @description Recode censored data to u-scores, which is the sum of the sign of the 
+#' @description Recodes censored data to u-scores, which is the sum of the sign of the 
 #'differences beween each value and all other values. It is equivalent to the rank but 
 #'scaled so the the mean is 0.
 #' 

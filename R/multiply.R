@@ -1,7 +1,7 @@
 #' @title Multiply Water-Quality Data by a Number
 #'
-#' @description The \code{mutliply} function provides a method for mutliplying 
-#'water-quality data by a number and maintain the integrity of the data.
+#' @description Multiplies water-quality data by a number while maintaining the 
+#'integrity of the data.
 #'
 #' @details Multiplication is not defined for objects of class "qw" because it
 #'can change some of the metadata, in particular the units, the analytical method,

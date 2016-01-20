@@ -1,6 +1,7 @@
 #' @title Censored Data Methods for Function \code{xyPlot}
 #'
-#' @description Produce a scatter plot of censored data.
+#' @description Creates a line/scatter plot: selected methods for "lcens," 
+#'"mcens," and "qw" data.
 #'
 #' Setting \code{xlabels} to 0 or negative values will 
 #'suppress ticks and labels. If negative, then try to create that absolute value

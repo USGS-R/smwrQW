@@ -1,7 +1,7 @@
-#'Test for Normality
+#' Test for Normality
 #'
-#'Generates the sequence of probability points for uncensored and censored
-#'values
+#' Computes the probability plot correlation coefficient test for departures 
+#'from normality for left-censored data.
 #'
 #'
 #' @param x a vector of left-censored observations, missing values are

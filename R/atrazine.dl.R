@@ -1,0 +1,29 @@
+#' Atrazine Reporting Data
+
+#' A dataset of the reporting and detection levels for atrazine from the
+#'U.S. Geological Survey National Water Quality Lab.
+#'
+#' @name atrazine.dl
+#' @docType data
+#' @usage atrazine.dl
+#' @format Data frame with 23 rows and 9 columns\cr
+#'\tabular{lll}{
+#'Name \tab Type \tab Description\cr
+#'ConstituentName \tab character \tab Name of the constituent\cr
+#'TestID \tab character \tab Parameter code and method\cr
+#'LabCode \tab character \tab Lab code for method\cr
+#'StartDate \tab Date \tab Start date for the reporting and detection levels\cr
+#'EndDate \tab Date \tab End date for the reporting and detection levels\cr
+#'ReportLevelCode \tab character \tab Reporting level code\cr
+#'DetectionLevel \tab numeric \tab Detection level\cr
+#'ReportingLevel \tab numeric \tab Reporting level\cr
+#'Units \tab character \tab Units of the concentration\cr
+#'}
+#' @source Data retrieved from the U.S. Geological Survey National Water Quality Lab
+#'reporting level database on January 4, 2016.
+#' @keywords datasets
+#' @examples
+#' data(atrazine.dl)
+#' # What methods; 39632 is the parameter code for atrazine
+#' with(atrazine.dl, unique(TestID))
+NULL

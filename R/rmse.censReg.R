@@ -1,7 +1,7 @@
-#'Root-Mean-Squared Error
+#' Root-Mean-Squared Error
 #'
-#'Compute the root-mean-squared error (RMSE) of the difference between
-#'observed values and the fitted values
+#' Computes the root-mean-squared error (RMSE) of a censored regression object: 
+#'method for "censReg" object.
 #'
 #' @param x the output from \code{censReg}.
 #' @param \dots further arguments passed to or from other methods.

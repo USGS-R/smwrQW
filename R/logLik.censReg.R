@@ -1,6 +1,7 @@
-#'Extract Log-Likelihood
+#' Extract Log-Likelihood
 #'
-#'Compute the log-likelihood statistics for an AMLE/MLE regression. 
+#' Extracts the log-likelihood statistic from a censored regression object: 
+#'method for "censReg" object.
 #'
 #'@param object the output from \code{censReg}.
 #'@param \dots further arguments passed to or from other methods.

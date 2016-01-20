@@ -1,7 +1,6 @@
 #'Length of an Object
 #'
-#'Get the length of censored or water-quality data objects.
-#'
+#'Gets the length of a vector: methods for "lcens," "mcens," and "qw" data.
 #'
 #' @aliases length.lcens length.mcens length.qw
 #' @usage \method{length}{lcens}(x)

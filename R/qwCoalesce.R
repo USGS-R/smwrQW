@@ -1,6 +1,6 @@
 #' Replace missing values
 #'
-#' Construct a vector with as few missing values as possible from a selected
+#' Constructs a vector with as few missing values as possible from a selected
 #'sequence of vectors.
 #'
 #' @param \dots any number of objects of class "qw." Missing values are permitted.

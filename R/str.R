@@ -1,6 +1,7 @@
-#'Display Structure
+#' Display Structure
 #'
-#'These methods display the basic information o 
+#' Displays the basic information about an object: methods for "lcens," "mcens," 
+#'and "qw" data.
 #'
 #' @aliases str.lcens str.mcens str.qw
 #' @param object an object of class "lcens,", "mcens," or "qw."

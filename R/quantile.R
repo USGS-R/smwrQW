@@ -1,7 +1,8 @@
 #' Sample Quantiles
 #'
-#' Produce sample or projected quantiles corresponding to the given
-#'probabilities.  The smallest observation (censored or uncensored) corresponds
+#' Computes sample or estimated quantiles corresponding to the given probabilities:
+#'methods for "lcens," "mcens," and "qw" data.
+#'The smallest observation (censored or uncensored) corresponds
 #'to a probability of 0 and the largest to a probability of 1.
 #'
 #' The methods available in the current version are "flipped K-M," "log ROS,"

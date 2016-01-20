@@ -1,7 +1,7 @@
 #' @title Test for difference in left-censored samples
 #'
-#' @description This function tests for differences in paired left-censored samples from 2
-#'groups.
+#' @description Tests for differences in paired left-censored samples from two
+#'groups using Pratt's (1959) adjustment for ties.
 #'
 #' @importFrom coin wilcoxsign_test
 #' @param x the paired samples to \code{y}. Forced to class "lcens." Missing 

@@ -1,6 +1,6 @@
 #'Probability Plot
 #'
-#'Produce a probability plot of censored data.
+#' Produces a probability plot: methods for "lcens" and "qw" data.
 #'
 #'The control parameters for left-censored data, \code{Censored}, are the same
 #'as those for uncensored data, \code{Plot}. See \code{\link{setPlot}} for

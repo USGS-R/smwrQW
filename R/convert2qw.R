@@ -1,6 +1,6 @@
 #'Water-Quality Data
 #'
-#'Convert information from discrete water-quality samples to data of class "qw."
+#'Converts information from discrete water-quality samples to data of class "qw."
 #'Attempts to construct the best-fit estimates for data of class "qw" from more limited 
 #'data sources like just remark codes and values. But will also convert data created by 
 #'\code{as.data.frame(object of class qw, expand=TRUE)}.

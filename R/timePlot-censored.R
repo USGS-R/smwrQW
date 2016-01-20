@@ -1,6 +1,7 @@
 #' @title Censored Data Methods for Function \code{timePlot}
 #'
-#' @description Produce a plot of censored time-series data.
+#' @description Creates a plot of time-series data: selected methods for "lcens" 
+#'and "qw" data.
 #'
 #' @details The value for \code{xlabels} must be one of "full," the full month names;
 #'"abbrev," abbreviations; or "letter," the first letter of the

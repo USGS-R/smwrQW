@@ -1,7 +1,7 @@
 #' @title Test for difference in left-censored samples
 #'
-#' @description This function tests for differences in left-censored samples from 2 or more
-#'groups.
+#' @description Performs a test for differences in left-censored samples from 2 
+#'or more groups.
 #'
 #' @importFrom survival survdiff Surv
 #' @param x the samples from each group. Forced to class "lcens." Missing values

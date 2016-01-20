@@ -1,6 +1,7 @@
 #' @title Split Leading Qualifiers
 #'
-#' @description Split vector of strings of combined data into numeric and remark columns
+#' @description Splits a vector of strings of combined data into numeric and 
+#'remark columns.
 #'
 #' @param x a character vector, missing values are permitted and result in missing values in the output
 #' @param name a character string giving the names of the output columns.

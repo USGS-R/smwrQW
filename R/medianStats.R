@@ -1,6 +1,6 @@
 #' Median Value
 #'
-#' Compute the sample median of left- or multiply-censored or water-quality data.
+#' Computes the sample median: methods for "lcens," "mcens," and "qw" data.
 #'
 #' @aliases median.lcens median.mcens median.qw
 #' @param x the censored data object.

@@ -1,7 +1,7 @@
-#'Support Functions for Censored Regression
+#' Support Function for Censored Regression
 #'
-#'This is a support function for censored regression. It predicts values from
-#'an AMLE/MLE regression on lcens response data.
+#' Support function for censored regression to predict values from a 
+#'censored regression model.
 #'
 #'
 #'@param fit the output from \code{censReg_AMLE.fit}.

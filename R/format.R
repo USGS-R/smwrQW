@@ -1,6 +1,6 @@
 #' Encode in a Common Format
 #'
-#' Format a censored or water-quality data object for pretty printing.
+#' Formats data for pretty printing: methods for "lcens," "mcens," and "qw" data.
 #'
 #' @details The argument \code{style} must be one of "asis," which tries to format
 #'the data to best show the values; "simple," which is like "asis" except that interval

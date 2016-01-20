@@ -1,11 +1,11 @@
 #' @title Variance Inflation Factors
 #'
-#' @description Computes the variance inflation factor (Helsel and Hirsch, 2002) for each
-#'variable in an AMLE/MLE regression.
+#' @description Extracts the variance inflation factors (Helsel and Hirsch, 2002)
+#'from a censored regression object: method for "censReg" object.
 #'
 #' @param model an object of class "censReg"---output from \code{censReg}.
 #' @param \dots not used, further arguments passed to or from other methods.
-#' @return  A named numeric vector containing the variance inflation factors 
+#' @return  A named numeric vector containing the variance inflation factor 
 #'for each variable.
 #' @seealso \code{\link{censReg}}
 #' @references Helsel, D.R. and Hirsch, R.M., 2002, Statistical methods in 

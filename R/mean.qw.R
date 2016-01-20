@@ -1,8 +1,8 @@
 #' Arithmetic Mean
 #'
-#' Compute a useful mean of water-quality data. This function is intended primarily for 
-#'computing the mean of a small set of data, for example to compute the mean of daily
-#'samples. See \bold{Note}.
+#' Computes the arithmetic mean of water-quality data. This function is intended 
+#'primarily to compute a useful mean of a small set of data, for example to 
+#'compute the mean of daily samples. See \bold{Note}.
 #'
 #' The \code{lt.tol} argument can be used to collapse interval censored data, creating an
 #'uncensored value, when the range of interval censored data is less than \code{lt.tol}

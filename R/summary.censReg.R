@@ -1,6 +1,7 @@
 #' Summarizing Linear Model Fits
 #'
-#' Summaryizes the output from an AMLE/MLE regression
+#' Summarizes the output from a censored regression object: method 
+#'for "censReg" object.
 #'
 #' @param object an object of class "censReg"---output from \code{censReg}.
 #' @param correlation include the correlation matrix of the estimated
@@ -11,7 +12,7 @@
 #'statistics, critical values for selected diagnostic statistics, 
 #'an indication of which observations exceed any of the selected 
 #'diagnostic statistics, and optionally the parameter correlation matrix.
-#' @note The pseudo R-squared is computed using the McKelvey-Zavoina method,
+#' @note The pseudo R-squared is computed using the McKelvey-Zavoina (1975) method,
 #'which tries to describe the proportion of variance explained by the fit and
 #'tries to capture the square of the correlation between the fitted and
 #'actual values. For uncensored data, it is equal to the usual R-squared 

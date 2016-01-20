@@ -1,6 +1,6 @@
 #' Quantiles with Confidence Limits
 #' 
-#' Compute sample quantiles and confidence limits of left-censored data 
+#' Computes sample quantiles and confidence limits of left-censored data 
 #'for specified probabilities.
 #' 
 #' @details The \code{survfit} function in the \code{survival} package is used to compute

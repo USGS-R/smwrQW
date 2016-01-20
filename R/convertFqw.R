@@ -1,6 +1,6 @@
 #' Water-Quality Data
 #'
-#' Convert information from data of class "qw" to separate columns representing the data in
+#' Converts information from data of class "qw" to separate columns representing the data in
 #'the "qw" columns. This can facilitate transfer to other systems or editing the meta data
 #'in a "qw" column. Uses \code{as.data.frame(object of class qw, expand=TRUE)} to convert each
 #'"qw" column.

@@ -1,6 +1,6 @@
 #' Water-Quality Data
 #'
-#' Convert a dataset containing stacked discrete sample water-quality data to a
+#' Converts a dataset containing stacked discrete water-quality sample data to a
 #'dataset representing those data as class "qw."
 #'
 #' Only \code{values} and \code{remark.codes} are required. All others can be

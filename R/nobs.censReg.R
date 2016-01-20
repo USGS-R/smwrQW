@@ -1,6 +1,7 @@
-#'Extract the Number of Observations from a Fit
+#' Extract the Number of Observations from a Fit
 #'
-#'Extract the number of observations from an AMLE/MLE regression.
+#' Extracts the number of observations from a censored regression object: 
+#'method for "censReg" object.
 #'
 #' @param object an object of class "censReg"---output from \code{censReg}.
 #' @param \dots further arguments passed to or from other methods.
