@@ -1,6 +1,6 @@
 Package: smwrQW
-Version: 0.7.8
-Date: 2016-01-20
+Version: 0.7.9
+Date: 2016-01-27
 Title: Tools for censored data analysis
 Author: Dave Lorenz <lorenz@usgs.gov>.
 Maintainer: Dave Lorenz <lorenz@usgs.gov>
@@ -32,8 +32,8 @@ LazyLoad: yes
 LazyData: yes
 Collate:
     'qw-class.R'
-    'mcens-class.R'
     'lcens-class.R'
+    'mcens-class.R'
     'Arith-censored.R'
     'Compare-censored.R'
     'Math-censored.R'
@@ -147,3 +147,4 @@ Collate:
     'vif.censReg.R'
     'xyPlot-censored.R'
     'z%eq%.R'
+RoxygenNote: 5.0.1

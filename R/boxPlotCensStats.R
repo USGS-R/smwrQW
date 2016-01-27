@@ -104,10 +104,17 @@ boxPlotCensStats <- function(x, Box, yaxis.log) {
                            width="standard", symbol="circle", filled=TRUE,
                            size=0.09, color="black"))
   if(ctype == "estimated") {
+  	# Create dummy function to return empty vector if length is 0
+  	bpFillIn <- function(x, method) {
+  		if(length(x)) {
+  			return(fillIn(x, method=method))
+  		}
+  		return(fillIn(numeric(0)))
+  	}
     if(yaxis.log)
-      x <- lapply(x, fillIn, method="log ROS")
+      x <- lapply(x, bpFillIn, method="log ROS")
     else
-      x <- lapply(x, fillIn, method="ROS")
+      x <- lapply(x, bpFillIn, method="ROS")
     ## Process the data min and max needed for renderBoxPlot
     minx <- min(unlist(x), na.rm=TRUE)
     maxx <- max(unlist(x), na.rm=TRUE)
@@ -123,7 +130,7 @@ boxPlotCensStats <- function(x, Box, yaxis.log) {
     }
     else
       resbox <- lapply(x, bxp.stats, range=0)
-    ## Modify resbox to add needed info, taken from uncesored boxplot stats
+    ## Modify resbox to add needed info, taken from uncensored boxplot stats
     for(i in names(resbox)) {
       target <- resbox[[i]] # make it easy to modify
       target$group <- target$conf <- NULL
@@ -145,10 +152,11 @@ boxPlotCensStats <- function(x, Box, yaxis.log) {
       	target$estimated <- -Inf
       }
       ## Verify that estimated values less than the RL are not > RL
-      if(clevs[1L] > -Inf)
+      if(clevs[1L] > -Inf) {
         target$critical <- max(target$data[seq(along=clevs)])
-      else
+      } else {
         target$critical <- -Inf
+      }
       if(type == "truncated" && target$n > Box$nobox) { # compute 10/90
         probs <- Box$truncated/100
         tobind <- quantile(target$data, probs=probs, type=2, na.rm=TRUE)
@@ -181,8 +189,12 @@ boxPlotCensStats <- function(x, Box, yaxis.log) {
   } # End of estimated processing
   else {
     ## Process the data min and max needed for renderBoxPlot
+  	# set warn to -1 to suppress warning on no nonmissing values
+  	warn <- options("warn")
+  	options(warn=-1)
     minx <- min(sapply(x, function(xarg) min(xarg@.Data[, 1L], na.rm=TRUE)), na.rm=TRUE)
     maxx <- max(sapply(x, function(xarg) max(xarg@.Data[, 1L], na.rm=TRUE)), na.rm=TRUE)
+    options(warn)
     ## Convert to common log if yaxis.log
     if(yaxis.log) {
       if(minx <= 0)
