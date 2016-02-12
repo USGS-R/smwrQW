@@ -1,32 +1,38 @@
-# Sample .travis.yml for R projects from https://github.com/craigcitro/r-travis
+# Sample .travis.yml for R projects.
+#
+# See README.md for instructions, or for more configuration options,
+# see the wiki:
+#   https://github.com/craigcitro/r-travis/wiki
 
 language: c
+sudo: required
+dist: trusty
+script: ./travis-tool.sh run_tests
 
-os:
-  - osx
-  - linux
+before_install:
+  - sudo apt-get update
+  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+  - chmod 755 ./travis-tool.sh
+  - ./travis-tool.sh bootstrap
+  - ./travis-tool.sh install_deps
 
+install:
+  - ./travis-tool.sh github_package USGS-R/smwrData
+  - ./travis-tool.sh github_package USGS-R/smwrBase
+  - ./travis-tool.sh github_package USGS-R/smwrGraphs
+  - ./travis-tool.sh github_package USGS-R/smwrStats
+  - ./travis-tool.sh install_deps
+  
 env:
    global:
-     - CRAN: http://cran.rstudio.com
+     - R_LIBS="http://cran.rstudio.com"
      - R_BUILD_ARGS="--no-build-vignettes --no-manual"
      - R_CHECK_ARGS="--no-build-vignettes --no-manual --as-cran"
      - BOOTSTRAP_LATEX=""
-     - NOT_CRAN="true" 
+     - NOT_CRAN="true"
 
-script: "./travis-tool.sh run_tests"
+script: ./travis-tool.sh run_tests
 
-before_script:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - "./travis-tool.sh bootstrap"
-  - "./travis-tool.sh aptget_install r-cran-rodbc"
-  - "./travis-tool.sh install_deps - ./travis-tool.sh install_r methods stats digest memoise testthat KernSmooth akima lubridate dataRetrieval car leaps boot coin survival XML zCompositions NADA psych randtests"
-  - "./travis-tool.sh install_github USGS-R/smwrData"
-  - "./travis-tool.sh install_github USGS-R/smwrBase"
-  - "./travis-tool.sh install_github USGS-R/smwrGraphs"
-  - "./travis-tool.sh install_github USGS-R/smwrStats"
-  
 after_script:
   - "./travis-tool.sh dump_logs"
 

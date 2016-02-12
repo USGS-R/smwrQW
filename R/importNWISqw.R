@@ -62,6 +62,7 @@
 #'
 #'\dontrun{
 #'importNWISqw("05330000", "00608") # Ammonia samples from the Minnesota River at Jordan.
+#'Empty <- importNWISqw('05330000',c('00400','00403'),begin.date='2008-01-01')
 #'}
 #' @import dataRetrieval
 #' @export
@@ -82,39 +83,52 @@ importNWISqw <- function(sites, params="All", begin.date="", end.date="",
     Extra <- pcodeNWISqw(params, group=FALSE, name=FALSE, CASRN=FALSE,
                        short=TRUE, units=TRUE, col.name=FALSE)
     Extra$col_name <- paste("P", Extra$parameter_cd, sep="")
-  }
-  else
+  } else {
     Extra <- pcodeNWISqw(params, group=FALSE, name=FALSE, CASRN=FALSE,
-                         short=TRUE, units=TRUE, col.name=TRUE)
+                         short=TRUE, units=TRUE, col.name=TRUE)    
+  }
+  
   ByResult <- merge(ByResult, Extra, by.x="parm_cd", by.y="parameter_cd")
   ## Create the qw column and the by sample dataset
-  ByResult$qw <- as.qw(ByResult$result_va, ByResult$remark_cd,
-                       ByResult$val_qual_tx,
-                       as.numeric(ByResult$rpt_lev_va), ByResult$rpt_lev_cd,
-                       ByResult$parameter_units, ByResult$meth_cd,
-                       ByResult$srsname, ByResult$parm_cd)
-  ## The function group2row cannot handle complicated data structures like qw
-  ##  work around by creating index to values and then extract the actual data
-  ByResult$Seq <- seq(nrow(ByResult))
-  ## If composite samples are found in the mix, retain the end dates, times and tz
-  if(any(!is.na(ByResult[["sample_end_dt"]]))) 
-    keep <- c("sample_end_dt", "sample_end_tm", keep)
-  Carry <- c("site_no", "sample_dt", "sample_tm", "sample_start_time_datum_cd", 
-    "medium_cd", keep)
-  retval <- group2row(ByResult, Carry, "col_name", "Seq")
-  names(retval)[4L] <- "tzone_cd" # Make it simple
-	for(i in grep(".Seq", names(retval), value=TRUE, fixed=TRUE)) {
-		val <-ByResult$qw[retval[[i]]]
-		## Work around some issues, need more robust criteria etc.
-		uniq.val <- val@unique.code[!is.na(val@unique.code)][1L]
-		if((uniq.val %in% NPCd) && censoring(val) == "none") {
-			retval[[i]] <- as.numeric(val)
-		} else
-			retval[[i]] <- val
-	}
-	names(retval) <- gsub(".Seq", "", names(retval), fixed=TRUE)
-  ## Sort by date
-  Seq <- order(retval$sample_dt, retval$sample_tm, na.last=TRUE)
-  retval <- retval[Seq,]
-  return(retval)
+  
+  if(nrow(ByResult) > 0){
+    ByResult$qw <- as.qw(ByResult$result_va, ByResult$remark_cd,
+                         ByResult$val_qual_tx,
+                         as.numeric(ByResult$rpt_lev_va), ByResult$rpt_lev_cd,
+                         ByResult$parameter_units, ByResult$meth_cd,
+                         ByResult$srsname, ByResult$parm_cd)
+    
+    ## The function group2row cannot handle complicated data structures like qw
+    ##  work around by creating index to values and then extract the actual data
+    ByResult$Seq <- seq(nrow(ByResult))
+    ## If composite samples are found in the mix, retain the end dates, times and tz
+    if(any(!is.na(ByResult[["sample_end_dt"]]))) 
+      keep <- c("sample_end_dt", "sample_end_tm", keep)
+    Carry <- c("site_no", "sample_dt", "sample_tm", "sample_start_time_datum_cd", 
+               "medium_cd", keep)
+    retval <- group2row(ByResult, Carry, "col_name", "Seq")
+    names(retval)[4L] <- "tzone_cd" # Make it simple
+    for(i in grep(".Seq", names(retval), value=TRUE, fixed=TRUE)) {
+      val <-ByResult$qw[retval[[i]]]
+      ## Work around some issues, need more robust criteria etc.
+      uniq.val <- val@unique.code[!is.na(val@unique.code)][1L]
+      if((uniq.val %in% NPCd) && censoring(val) == "none") {
+        retval[[i]] <- as.numeric(val)
+      } else
+        retval[[i]] <- val
+    }
+    names(retval) <- gsub(".Seq", "", names(retval), fixed=TRUE)
+    ## Sort by date
+    Seq <- order(retval$sample_dt, retval$sample_tm, na.last=TRUE)
+    retval <- retval[Seq,]
+    return(retval)
+    
+  } else {
+    message("Do data returned")
+    ByResults$Seq <- numeric()
+    
+    return(ByResult)
+  }
+  
+
 }
