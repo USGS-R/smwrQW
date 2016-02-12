@@ -17,6 +17,10 @@ before_install:
   - ./travis-tool.sh install_deps
 
 install:
+  - ./travis-tool.sh github_package USGS-R/smwrData
+  - ./travis-tool.sh github_package USGS-R/smwrBase
+  - ./travis-tool.sh github_package USGS-R/smwrGraphs
+  - ./travis-tool.sh github_package USGS-R/smwrStats
   - ./travis-tool.sh install_deps
   
 env:
@@ -27,11 +31,6 @@ env:
      - BOOTSTRAP_LATEX=""
      - NOT_CRAN="true"
 
-r_github_packages:
- - USGS-R/smwrData
- - USGS-R/smwrBase
- - USGS-R/smwrGraphs
- - USGS-R/smwrStats
 script: ./travis-tool.sh run_tests
 
 after_script:
