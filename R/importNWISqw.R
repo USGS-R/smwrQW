@@ -88,10 +88,10 @@ importNWISqw <- function(sites, params="All", begin.date="", end.date="",
                          short=TRUE, units=TRUE, col.name=TRUE)    
   }
   
-  ByResult <- merge(ByResult, Extra, by.x="parm_cd", by.y="parameter_cd")
-  ## Create the qw column and the by sample dataset
-  
   if(nrow(ByResult) > 0){
+    ByResult <- merge(ByResult, Extra, by.x="parm_cd", by.y="parameter_cd")
+    
+    ## Create the qw column and the by sample dataset
     ByResult$qw <- as.qw(ByResult$result_va, ByResult$remark_cd,
                          ByResult$val_qual_tx,
                          as.numeric(ByResult$rpt_lev_va), ByResult$rpt_lev_cd,
@@ -124,8 +124,7 @@ importNWISqw <- function(sites, params="All", begin.date="", end.date="",
     return(retval)
     
   } else {
-    message("Do data returned")
-    ByResults$Seq <- numeric()
+    message("No data returned")
     
     return(ByResult)
   }
