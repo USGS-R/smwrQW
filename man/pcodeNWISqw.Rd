@@ -44,7 +44,7 @@ pcodeNWISqw("00925")
 }
 \references{
 Lorenz, D.L., 2014, smwrQW OFR.\cr See information about discrete
-samples at \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
+samples at \url{https://nwis.waterdata.usgs.gov/usa/nwis/qw}.
 }
 \seealso{
 \code{\link[dataRetrieval]{readNWISpCode}}

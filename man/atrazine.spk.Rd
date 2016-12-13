@@ -46,7 +46,7 @@ Geological Survey from October 1, 2001 through September 30, 2012.
 }
 \details{
 A map of the study units can be found at 
-\url{http://water.usgs.gov/nawqa/nawqamap.html}. Some of the study unit
+\url{https://water.usgs.gov/nawqa/nawqamap.html}. Some of the study unit
 codes represent combined study units from that map.
 }
 \examples{

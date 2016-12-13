@@ -82,7 +82,7 @@ Empty <- importNWISqw('05330000',c('00400','00403'),begin.date='2008-01-01')
 }
 \references{
 Lorenz, D.L., 2014, smwrQW OFR.\cr See information about discrete
-samples at \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
+samples at \url{https://nwis.waterdata.usgs.gov/usa/nwis/qw}.
 }
 \seealso{
 \code{\link{readNWISqw}}

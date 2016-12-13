@@ -14,7 +14,7 @@
 #'modify reporting levels or inspect the details of the meta data.
 #' @seealso \code{\link{readNWISqw}}, \code{\link{convert2qw}}
 #' @references Lorenz, D.L., 2014, USGSwsQW OFR.\cr See information about discrete
-#'samples at \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
+#'samples at \url{https://nwis.waterdata.usgs.gov/usa/nwis/qw}.
 #' @keywords datasets IO
 #' @examples
 #'# Make a dummy partial dataset

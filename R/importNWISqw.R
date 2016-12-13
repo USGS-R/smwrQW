@@ -56,7 +56,7 @@
 #'
 #' @seealso \code{\link{readNWISqw}}
 #' @references Lorenz, D.L., 2014, smwrQW OFR.\cr See information about discrete
-#'samples at \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
+#'samples at \url{https://nwis.waterdata.usgs.gov/usa/nwis/qw}.
 #' @keywords datasets IO
 #' @examples
 #'
@@ -92,7 +92,7 @@ importNWISqw <- function(sites, params="All", begin.date="", end.date="",
     ByResult <- merge(ByResult, Extra, by.x="parm_cd", by.y="parameter_cd")
     
     ## Create the qw column and the by sample dataset
-    ByResult$qw <- as.qw(ByResult$result_va, ByResult$remark_cd,
+    ByResult$qw <- as.qw(as.numeric(ByResult$result_va), ByResult$remark_cd,
                          ByResult$val_qual_tx,
                          as.numeric(ByResult$rpt_lev_va), ByResult$rpt_lev_cd,
                          ByResult$parameter_units, ByResult$meth_cd,

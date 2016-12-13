@@ -18,7 +18,7 @@
 #' @return A data frame with the parameter codes and the selected columns.
 #' @seealso \code{\link[dataRetrieval]{readNWISpCode}}
 #' @references Lorenz, D.L., 2014, smwrQW OFR.\cr See information about discrete
-#'samples at \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
+#'samples at \url{https://nwis.waterdata.usgs.gov/usa/nwis/qw}.
 #' @keywords datasets IO
 #' @examples
 #'
@@ -57,7 +57,7 @@ pcodeNWISqw <- function(params="all", group=TRUE, name=TRUE, CASRN=FALSE, short=
   else
     ckprm <- pmatch(params, c(grpcd, "all"), nomatch=0L)
   if(ckprm == 0L) { # Get a single pcode
-    myurl <- url(paste("http://nwis.waterdata.usgs.gov/nwis/pmcodes/pmcodes?radio_pm_search=pm_search",
+    myurl <- url(paste("https://nwis.waterdata.usgs.gov/nwis/pmcodes/pmcodes?radio_pm_search=pm_search",
                        "&pm_search=", params,
                        "&format=rdb", "&show=parameter_group_nm"[group],
                        "&show=parameter_nm", "&show=casrn"[CASRN],
@@ -75,7 +75,7 @@ pcodeNWISqw <- function(params="all", group=TRUE, name=TRUE, CASRN=FALSE, short=
     prmgp <- gsub(" ", "+", prmgp)
     prmgp <- gsub(",", "%2C", prmgp)
     ## Always retrieve name and short name to produce column name if necessary
-    myurl <- url(paste("http://nwis.waterdata.usgs.gov/nwis/pmcodes/pmcodes?radio_pm_search=param_group",
+    myurl <- url(paste("https://nwis.waterdata.usgs.gov/nwis/pmcodes/pmcodes?radio_pm_search=param_group",
                        "&pm_group=", prmgp,
                        "&format=rdb", "&show=parameter_group_nm"[group],
                        "&show=parameter_nm", "&show=casrn"[CASRN],
