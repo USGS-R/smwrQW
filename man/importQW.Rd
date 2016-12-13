@@ -86,7 +86,7 @@ importQW(QW05078470, c("DATES", "TIMES"), "P00665", "R00665", "", 0.005, "User",
 }
 \references{
 Lorenz, D.L., 2014, USGSqw OFR.\cr See information about discrete
-samples at \url{http://nwis.waterdata.usgs.gov/usa/nwis/qw}.
+samples at \url{https://nwis.waterdata.usgs.gov/usa/nwis/qw}.
 }
 \seealso{
 \code{\link{readNWISqw}}, \code{\link{importNWISqw}},
