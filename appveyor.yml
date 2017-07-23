@@ -17,7 +17,7 @@ cache:
 
 build_script:
   - travis-tool.sh install_deps
-  - travis-tool.sh install_github USGS-R/smwrBase USGS-R/smwrGraphs USGS-R/smwrStats
+  - travis-tool.sh install_github USGS-R/smwrBase USGS-R/smwrGraphs USGS-R/smwrStats USGS-R/smwrData
 
 test_script:
   - travis-tool.sh run_tests
