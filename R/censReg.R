@@ -125,6 +125,7 @@ censReg <- function(formula, data, subset, weights, na.action, dist="normal") {
     Y <- as.lcens(Y)
   }else{
     if(class(Y) == "qw") {
+
       ## Required to fix the inability of model extraction
       ## to select all required parts
       if(!is.null(saved.na.action)) {
@@ -137,18 +138,20 @@ censReg <- function(formula, data, subset, weights, na.action, dist="normal") {
       }else{
         Y <- as.lcens(Y)
       }
-    }
-  }else{
-    if(class(Y) == "lcens" && !is.null(saved.na.action)){
-      Y@censor.codes <- Y@censor.codes[-saved.na.action]
-    }
-    ## OK, do it
 
-    if(class(Y) == "lcens" && !UseWt){
-      print("step 1")
-      fit <- censReg_AMLE.fit(Y, X, dist)
     }else{
-      fit <- censReg_MLE.fit(Y, X, Wt, dist)
+
+      if(class(Y) == "lcens" && !is.null(saved.na.action)){
+        Y@censor.codes <- Y@censor.codes[-saved.na.action]
+      }
+      ## OK, do it
+
+      if(class(Y) == "lcens" && !UseWt){
+        print("step 1")
+        fit <- censReg_AMLE.fit(Y, X, dist)
+      }else{
+        fit <- censReg_MLE.fit(Y, X, Wt, dist)
+      }
     }
   }
 
