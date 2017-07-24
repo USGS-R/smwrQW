@@ -102,7 +102,6 @@
 *
 *     Check for parameter limits
 *
-      PRINT*,5.41232
       IERR = 0
       IF(NPAR .gt. MAXPARMS) IERR=1
       IF(NOBSC .gt. MAXOBSC) IERR=2
