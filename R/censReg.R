@@ -87,7 +87,7 @@ censReg <- function(formula, data, subset, weights, na.action, dist="normal") {
 
   print(class(m))
   print(m)
-  browser()
+  # segfault error occurs here
   m     <- eval(m, parent.frame())
   Terms <- attr(m, "terms")
 
