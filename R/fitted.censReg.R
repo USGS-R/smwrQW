@@ -37,7 +37,7 @@ fitted.censReg <- function(object, suppress.na.action=FALSE,
 	if(type == "mean") {
 		fits <- object$YPRED
 	} else {
-		fits <- as.vector(object$XLCAL %*% object$PARAML[1L:object$NPAR])
+		fits <- as.vector(cbind(1, object$XLCAL) %*% object$PARAML[1L:object$NPAR])
 		if(type == "link" && object$LogNorm){
 			fits <- exp(fits)
 		}
