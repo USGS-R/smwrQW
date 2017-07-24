@@ -15,7 +15,7 @@
 values corresponding to the fitted data.}
 
 \item{type}{the type of fitted value. To get fitted values on the
-original scale of the response, use "response." For back-transformed log-normal 
+original scale of the response, use "response." For back-transformed log-normal
 fitted values, use "link." To get the unbiased estimates of the
 mean for log-normal data, use "mean." Note that "link" and "mean" do not work
 for the common-log distribution.}
@@ -26,8 +26,16 @@ for the common-log distribution.}
 The fitted values from the regression.
 }
 \description{
-Extracts the fitted values from a censored regression object: method 
+Extracts the fitted values from a censored regression object: method
 for "censReg" object.
+}
+\examples{
+set.seed(345)
+X <- runif(24, 1, 5)
+Y <- X/2 + rnorm(24)
+fit <- censReg(as.lcens(Y, 1) ~ X) # censored at 1
+# Extract the fitted values
+ fitted(app1.lr)
 }
 \seealso{
 \code{\link{censReg}}

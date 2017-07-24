@@ -147,7 +147,6 @@ censReg <- function(formula, data, subset, weights, na.action, dist="normal") {
       ## OK, do it
 
       if(class(Y) == "lcens" && !UseWt){
-        print("step 1")
         fit <- censReg_AMLE.fit(Y, X, dist)
       }else{
         fit <- censReg_MLE.fit(Y, X, Wt, dist)
