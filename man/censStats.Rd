@@ -4,6 +4,10 @@
 \alias{censStats}
 \alias{censStats.default}
 \alias{censStats.lcens}
+\alias{censStats.qw}
+\alias{censStats.mcens}
+\alias{censStats.default}
+\alias{censStats.lcens}
 \alias{censStats.mcens}
 \alias{censStats.qw}
 \title{Mean and Standard Deviation}
@@ -73,4 +77,3 @@ multiply censored water quality data: Water Resources Research v. 24, n.
 \code{\link{mdlMLE}}, \code{\link{mdlROS}}
 }
 \keyword{univariate}
-

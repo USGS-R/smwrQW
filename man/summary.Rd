@@ -4,6 +4,8 @@
 \alias{summary.lcens}
 \alias{summary.mcens}
 \alias{summary.qw}
+\alias{summary.mcens}
+\alias{summary.qw}
 \title{Summarize Data}
 \usage{
 \method{summary}{lcens}(object, ...)
@@ -15,9 +17,9 @@
 \arguments{
 \item{object}{the object to summarize.}
 
-\item{details}{provide details on multiple entries?}
-
 \item{\dots}{further arguments passed to other methods.}
+
+\item{details}{provide details on multiple entries?}
 }
 \value{
 For \code{details} = \code{FALSE}, a named character vector describe
@@ -41,4 +43,3 @@ summary(importNWISqw("05330000", "00608"))
 
 }
 \keyword{misc}
-

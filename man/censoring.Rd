@@ -6,6 +6,10 @@
 \alias{censoring.lcens}
 \alias{censoring.mcens}
 \alias{censoring.qw}
+\alias{censoring.default}
+\alias{censoring.lcens}
+\alias{censoring.mcens}
+\alias{censoring.qw}
 \title{Describe Censoring}
 \usage{
 censoring(x)
@@ -43,4 +47,3 @@ censoring(as.lcens(1, 2)) # left-censored
 }
 \keyword{attribute}
 \keyword{censored}
-

@@ -45,4 +45,3 @@ are defined in the table above, in keeping with older versions of
 \code{\link{censReg}}
 }
 \keyword{regression}
-

@@ -53,4 +53,3 @@ samples at \url{https://nwis.waterdata.usgs.gov/usa/nwis/qw}.
 }
 \keyword{IO}
 \keyword{datasets}
-

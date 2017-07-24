@@ -23,7 +23,7 @@
 *     PLEVAML  TWNT probability level for the AMLE regression
 *     DF       degrees of freedom for Turnbull-Weiss normality test
 *     IERR     Error code
-*    
+*
 *     dimensions required of the arguments
 *     ------------------------------------
 *     XLCAL    NOBSC * NPAR
@@ -67,7 +67,7 @@
      &     PARMLE,PARAML,BIAS,CVX,SBIAS,SCVX,
      &     STDDEV,PVAL,COV,RESID,RSQ,LLR,SCORR,LLRAML,
      $     PLEVAML,DF,login,YPRED,AIC,SPPC,IERR)
-*     
+*
 *     dimensional parameters
 *
       INCLUDE 'fmodules.inc'
@@ -102,6 +102,7 @@
 *
 *     Check for parameter limits
 *
+      PRINT*,5.41232
       IERR = 0
       IF(NPAR .gt. MAXPARMS) IERR=1
       IF(NOBSC .gt. MAXOBSC) IERR=2
@@ -128,7 +129,7 @@
       uncenmin = D1MACH(2)
       uncenmax = -D1MACH(2)
       DO 20 K1=1,NOBSC
-         IF(CENSFLAG(K1)) THEN 
+         IF(CENSFLAG(K1)) THEN
             Ncens = Ncens + 1
          ELSE
             IF(YLCAL(K1) .LT. uncenmin) uncenmin = YLCAL(K1)

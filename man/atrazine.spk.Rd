@@ -55,4 +55,3 @@ data(atrazine.spk)
 mean(atrazine.spk$Recovery)
 }
 \keyword{datasets}
-

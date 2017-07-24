@@ -18,4 +18,3 @@ An object of class "survfit."
 Support function for computing statistics for multiply-censored data.
 }
 \keyword{misc}
-

@@ -5,6 +5,9 @@
 \alias{censpp.default}
 \alias{censpp.lcens}
 \alias{censpp.mcens}
+\alias{censpp.default}
+\alias{censpp.lcens}
+\alias{censpp.mcens}
 \title{Probability Plotting Positions}
 \usage{
 censpp(x, a = 0.44)
@@ -59,4 +62,3 @@ Research v. 24, n. 12, pp.1997-2004
 \code{\link{ppoints}}
 }
 \keyword{manip}
-

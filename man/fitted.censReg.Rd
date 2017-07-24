@@ -33,4 +33,3 @@ for "censReg" object.
 \code{\link{censReg}}
 }
 \keyword{regression}
-

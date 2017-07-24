@@ -34,6 +34,7 @@ censReg_AMLE.fit <- function(Y, X, dist="normal") {
   if(dist == "commonlog")
     Y <- log10(Y)
 
+  print("step 2")
   fit <- .Fortran("evalaml",
                   NOBSC    = as.integer(NOBSC),
                   NPAR     = as.integer(NPAR),

@@ -30,7 +30,7 @@ Builds a linear regression model for censored response data.
 The left-hand side of the formula may be any numeric variable, just as with
 \code{lm} or a variable of class "lcens," "mcens," or "qw."\cr
 For un- or left-censored data, AMLE is used unless weights are specified in
-the model, then MLE is used, through a call to \code{survreg}. For any other 
+the model, then MLE is used, through a call to \code{survreg}. For any other
 censored data, MLE is used.\cr
 If \code{dist} is "normal," then the regression analysis assumes that the
 residuals are normally distributed. If \code{dist} is "lognormal," then
@@ -38,13 +38,13 @@ the regression analysis assumes that the residuals are lognormally
 distributed. In this case, predicted values are back transformed and
 optionally bias corrected to represent the expected mean. If \code{dist}
 is "commonlog," then the response data are transformed using \code{log10}
-and those residuals are assumed to be normally distributed. No back 
+and those residuals are assumed to be normally distributed. No back
 transformation is made for predicted values.
 }
 \note{
 A special feature of \code{censReg} is the ability to expand
 the formula passed as a variable rather than as an expressly entered
-formula. This feature is intended to facilitate certain kinds of scripts that 
+formula. This feature is intended to facilitate certain kinds of scripts that
 construct a formula from combinations of variables in a dataset.
 
 Objects of class "censReg" have these methods:
@@ -75,15 +75,16 @@ X <- runif(24, 1, 5)
 Y <- X/2 + rnorm(24)
 lm(Y ~ X) # the uncensored regression
 censReg(as.lcens(Y, 1) ~ X) # censored at 1
+stop("do errors in examples stop appveyor")
 
 }
 \references{
 Lorenz, 2015, smwrQW.\cr
 Breen, R., 1996, Regression models: censored, sample selected, or truncated data:
-Sage University Paper series on Quantitative Applications in the Social Sciences, 
+Sage University Paper series on Quantitative Applications in the Social Sciences,
 07-111, Thousand Oaks, CA, \cr
 Cohn, T.A., 1988, Adjusted maximum likelihood estimation of moments
-of lognormal populations from type I censored samples: 
+of lognormal populations from type I censored samples:
 U.S. Geological Survey Open-File Report 88-350, 34 p.\cr
 }
 \seealso{
@@ -91,4 +92,3 @@ U.S. Geological Survey Open-File Report 88-350, 34 p.\cr
 }
 \keyword{censored}
 \keyword{regression}
-

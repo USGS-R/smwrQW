@@ -34,4 +34,3 @@ Multiplication is not defined for objects of class "qw" because it
 can change some of the metadata, in particular the units, the analytical method,
 or the unique identifier (pcode).
 }
-

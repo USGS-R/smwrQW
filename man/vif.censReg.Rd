@@ -28,4 +28,3 @@ Investigations, book 4, chap. A3, 522 p.
 \code{\link{censReg}}
 }
 \keyword{regression}
-
