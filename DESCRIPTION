@@ -147,4 +147,4 @@ Collate:
     'vif.censReg.R'
     'xyPlot-censored.R'
     'z%eq%.R'
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

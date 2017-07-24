@@ -37,4 +37,3 @@ data(atrazine.dl)
 with(atrazine.dl, unique(TestID))
 }
 \keyword{datasets}
-

@@ -4,6 +4,8 @@
 \alias{print.lcens}
 \alias{print.mcens}
 \alias{print.qw}
+\alias{print.mcens}
+\alias{print.qw}
 \title{Print Values}
 \usage{
 \method{print}{lcens}(x, digits = 4, ...)
@@ -26,4 +28,3 @@ The object \code{x} is returned invisibly.
 Print representations of censored or water-quality data values.
 }
 \keyword{print}
-

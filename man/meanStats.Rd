@@ -3,6 +3,7 @@
 \name{mean.lcens}
 \alias{mean.lcens}
 \alias{mean.mcens}
+\alias{mean.mcens}
 \title{Arithmetic Mean}
 \usage{
 \method{mean}{lcens}(x, ...)
@@ -31,4 +32,3 @@ using \code{censStats}.
 }
 \keyword{censored}
 \keyword{univariate}
-

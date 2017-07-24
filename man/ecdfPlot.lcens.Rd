@@ -3,6 +3,7 @@
 \name{ecdfPlot.lcens}
 \alias{ecdfPlot.lcens}
 \alias{ecdfPlot.qw}
+\alias{ecdfPlot.qw}
 \title{Empirical Distribution Function}
 \usage{
 \method{ecdfPlot}{lcens}(x, group = NULL, Plot = list(name = "Auto", what =
@@ -66,4 +67,3 @@ ecdfPlot(as.lcens(Xu, 1.0))
 \code{\link{probPlot.lcens}}
 }
 \keyword{hplot}
-

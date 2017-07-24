@@ -48,4 +48,3 @@ methods of clinical measurement: Lancet, i, p. 307--310.
 \seealso{
 \code{\link[smwrStats]{rpd}}
 }
-

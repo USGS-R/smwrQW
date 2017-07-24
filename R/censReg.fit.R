@@ -24,43 +24,50 @@ censReg_AMLE.fit <- function(Y, X, dist="normal") {
   ##    2012Dec28 DLLorenz Roxygenized
   ##    2012Dec28          This version
   ##
-  NPAR <- ncol(X)
+
+  NPAR  <- ncol(X)
   NOBSC <- nrow(X)
+
   if(dist == "lognormal")
     Y <- log(Y)
+
   if(dist == "commonlog")
     Y <- log10(Y)
+
   fit <- .Fortran("evalaml",
-                  NOBSC = as.integer(NOBSC),
-                  NPAR = as.integer(NPAR),
-                  XLCAL = as.matrix(X),
-                  YLCAL = Y@.Data[, 1L],
-                  YD = Y@.Data[, 2L],
-                  CENSFLAG = Y@censor.codes,
-                  PARMLE = double(NPAR + 1L),
-                  PARAML = double(NPAR + 1L),
-                  BIAS = double(NPAR + 1L),
-                  CV = matrix(0., NPAR + 1L, NPAR + 1L),
-                  SBIAS = double(NPAR + 1L),
-                  SCV = matrix(0., NPAR + 1L, NPAR + 1L),
-                  STDDEV = double(NPAR + 1L),
-                  PVAL = double(NPAR + 1L),
-                  COV = matrix(0., NPAR + 1L, NPAR + 1L),
-                  RESID = double(NOBSC),
-                  RSQ = double(1L),
-                  LLR = double(1L),
-                  SCORR = double(1L),
-                  LLRAML = double(1L),
-                  PLEVAML = double(1L),
-                  DF = integer(1L),
-                  LogNorm = dist == "lognormal",
-                  YPRED = double(NOBSC),
-                  AIC = double(1L),
-                  SPPC = double(1L),
-                  IERR = integer(1L))
-  fit$weights=rep(1., NOBSC)
-  fit$dist <- dist
-  fit$method <- "AMLE"
+                  NOBSC    = as.integer(NOBSC),
+                  NPAR     = as.integer(NPAR),
+                  XLCAL    = as.double(as.matrix(X)),
+                  YLCAL    = as.double(slot(Y, ".Data")[,1]),
+                  YD       = as.double(slot(Y, ".Data")[,2]),
+                  CENSFLAG = as.logical(slot(Y, "censor.codes")),
+                  PARMLE   = double(NPAR + 1L),
+                  PARAML   = double(NPAR + 1L),
+                  BIAS     = double(NPAR + 1L),
+                  CV       = as.double(matrix(0., NPAR + 1L, NPAR + 1L)),
+                  SBIAS    = double(NPAR + 1L),
+                  SCV      = as.double(matrix(0., NPAR + 1L, NPAR + 1L)),
+                  STDDEV   = double(NPAR + 1L),
+                  PVAL     = double(NPAR + 1L),
+                  COV      = as.double(matrix(0., NPAR + 1L, NPAR + 1L)),
+                  RESID    = double(NOBSC),
+                  RSQ      = double(1L),
+                  LLR      = double(1L),
+                  SCORR    = double(1L),
+                  LLRAML   = double(1L),
+                  PLEVAML  = double(1L),
+                  DF       = integer(1L),
+                  LogNorm  = dist == "lognormal",
+                  YPRED    = double(NOBSC),
+                  AIC      = double(1L),
+                  SPPC     = double(1L),
+                  IERR     = integer(1L),
+                  PACKAGE  = "smwrQW")
+
+  fit$weights <- rep(1., NOBSC)
+  fit$dist    <- dist
+  fit$method  <- "AMLE"
+
   return(fit)
 }
 
@@ -146,7 +153,7 @@ censReg_MLE.fit <- function(Y, X, Wt, dist="normal") {
   						BIAS = BIAS,
   						CV = cbind(rbind(vcv/sigma^2*bcor, 0), -BIAS),
   						SBIAS = SBIAS,
-  						SCV = rbind(cbind(vcv/sigma^2*bcor,0), 
+  						SCV = rbind(cbind(vcv/sigma^2*bcor,0),
   												c(rep(0, NPAR), sr$var[NPAR+1L, NPAR+1L])),
   						STDDEV = c(sqrt(diag(sr$var)))*sqrt(bcor),
   						PVAL = summary(sr)$table[,"p"],

@@ -37,4 +37,3 @@ pctCens(as.lcens(c(1:5, NA), 2)) # left-censored
 }
 \keyword{attribute}
 \keyword{censored}
-

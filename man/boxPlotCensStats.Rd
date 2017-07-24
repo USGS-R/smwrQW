@@ -19,4 +19,3 @@ Info to actually plot the boxplot.
 \description{
 Computes the statistics for a left-censored data boxplot.
 }
-

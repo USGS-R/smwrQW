@@ -4,6 +4,8 @@
 \alias{is.na.lcens}
 \alias{is.na.mcens}
 \alias{is.na.qw}
+\alias{is.na.mcens}
+\alias{is.na.qw}
 \title{Missing Values}
 \usage{
 \method{is.na}{lcens}(x)
@@ -28,4 +30,3 @@ is.na(as.lcens(c(1,3, NA), 2))
 
 }
 \keyword{manip}
-

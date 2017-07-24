@@ -62,4 +62,3 @@ load assays with known detection limits: Biometrics,  v. 57 no. 4, p. 1238--1244
 }
 \keyword{censored}
 \keyword{summary}
-

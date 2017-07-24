@@ -43,4 +43,3 @@ censored samples: The Statistician, v. 42, p. 37--43.
 \code{\link{ppcc.test}}, \code{\link{censpp}}
 }
 \keyword{htest}
-

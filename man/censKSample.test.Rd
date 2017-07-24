@@ -44,6 +44,7 @@ more similar to the Wilcoxon test if all data are uncensored.
  The null hypothesis is that the
 distributions in each group are not different from one another.
 }
+
 \examples{
 
 # Compare uncensored results
@@ -80,4 +81,3 @@ time-to-event data: Boca Raton, Fla., Chapman and Hall, 280 p.\cr
 }
 \keyword{censored}
 \keyword{htest}
-

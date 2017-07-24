@@ -4,6 +4,8 @@
 \alias{quantile.lcens}
 \alias{quantile.mcens}
 \alias{quantile.qw}
+\alias{quantile.mcens}
+\alias{quantile.qw}
 \title{Sample Quantiles}
 \usage{
 \method{quantile}{lcens}(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
@@ -73,4 +75,3 @@ multiply censored water quality data: Water Resources Research v. 24, n.
 \code{\link{quantile}}, \code{\link{censQuantile}}
 }
 \keyword{univar}
-

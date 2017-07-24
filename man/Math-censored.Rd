@@ -2,10 +2,10 @@
 % Please edit documentation in R/Math-censored.R
 \docType{methods}
 \name{Math-censored}
+\alias{Math-censored}
 \alias{Math,lcens-method}
 \alias{Math,mcens-method}
 \alias{Math,qw-method}
-\alias{Math-censored}
 \title{Mathematical Transform Methods for \code{lcens} objects}
 \usage{
 \S4method{Math}{lcens}(x)
@@ -27,4 +27,3 @@ log(as.lcens(c(1, 3), 2))
 }
 \keyword{manip}
 \keyword{methods}
-

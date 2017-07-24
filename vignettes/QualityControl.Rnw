@@ -15,7 +15,14 @@
 %\VignetteDepends{smwrQW}
 
 \begin{document}
-\SweaveOpts{concordance=TRUE}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
 \raggedright
 \title{Quality Control Data Analysis}
 
@@ -92,7 +99,7 @@ censMean.CI(Xmc, method="log ROS", CI=.9)
 
 \subsection{Confidence Interval for the Median and other Percentiles}
 
-The median and other percentiles are statistics of particular importance in QC analyses. Nonparametric confidence intervals on percentiles are calculated using the binomial probability function when applied to uncensored data (Mueller and others, 2015) and an approximation using the Kaplan-Meier method described by Helsel (2012) when the data are censored. In general, the confidence interval for the approximation is slightly smaller than that based on the binomial distribution, as demonstrated by the first part of the code following this paragraph. The \texttt{qtiles.CI} function in the \textbf{smwrStats} package computes confidence intervals for uncensored data and the \texttt{censQtiles.CI} function in the \textbf{smwrQW} package computes confidence intervals for left-censored data. The code following this paragraph demonstrates both functions. 
+The median and other percentiles are statistics of particular importance in QC analyses. Nonparametric confidence intervals on percentiles are calculated using the binomial probability function when applied to uncensored data (Mueller and others, 2015) and an approximation using the Kaplan-Meier method described by Helsel (2012) when the data are censored. In general, the confidence interval for the approximation is slightly smaller than that based on the binomial distribution, as demonstrated by the first part of the code following this paragraph. The \texttt{qtiles.CI} function in the \textbf{smwrStats} package computes confidence intervals for uncensored data and the \texttt{censQtiles.CI} function in the \textbf{smwrQW} package computes confidence intervals for left-censored data. The code following this paragraph demonstrates both functions.
 
 <<echo=TRUE>>=
 # Uncensored data, by default, 90% CI for median
@@ -139,41 +146,41 @@ Jeff and Laura, I think some details on the preprocessing of the sample data. Th
 
 Bonn (2008) describes the fundamentals of of the various reporting limits used the the U.S. Geological Survey National Water Quality Laboratory (NWQL). She describes the process of recensoring data at the long-term method detection limit (LT-MDL) for the purposes of analyzing low-level concentrations, which is important for quality control. This section describes that procedure for selected atrazine samples colleced by the U.S. Geological Survey National Stream Water-Quality Assessment (NAWQA) program from October 1, 2001 through September 30, 2012. The procedure described would be applicable to any data retrieved from analysis by the NWQL and broadly applicable to data from other laboratories. Ryberg and others (2010) describe a procedure for lowering the effective detection limit for information-rich analyses where values less that the detection limit for the math can be quantified. That proceedure could be extended to blanks or other cases of distinct patterns of those quantified values less than the detection level.
 
-The first step in processing these data for the quality-control analysis is to recode the reporting level of the data to the detection limit. This is only necessary if the laboratory uses the quantitation level rather than the detection limit for censored values as described in Bonn (2008). The R code immediately following this paragraph illustrates how to extract the information and update both the reporting levels and the values in the dataset. The initial part of the R code recodes some data in each dataset so that the codes used in the different datasets agree. The user must be careful to review the processing carefully to verify that the detection levels are correct. 
+The first step in processing these data for the quality-control analysis is to recode the reporting level of the data to the detection limit. This is only necessary if the laboratory uses the quantitation level rather than the detection limit for censored values as described in Bonn (2008). The R code immediately following this paragraph illustrates how to extract the information and update both the reporting levels and the values in the dataset. The initial part of the R code recodes some data in each dataset so that the codes used in the different datasets agree. The user must be careful to review the processing carefully to verify that the detection levels are correct.
 
 <<echo=TRUE>>=
 # Get the sample and the reporting level data (supplied with smwrQW)
 data(atrazine.df)
 data(atrazine.dl)
-# Change the schedule code (sched) in the sample data to match the 
-# LabCode in the reporting level data (easy for these data, others 
+# Change the schedule code (sched) in the sample data to match the
+# LabCode in the reporting level data (easy for these data, others
 # could be more complicated).
 atrazine.df$LabCode <- sub("NWQL", "1", atrazine.df$sched)
 # The reportling level data do not report values for LabCode 12033 prior
-# to 2005-03-04, but that LabCode is recorded in the sample data. 
-# LabCode 12033 is equivalent to 12003, so recode 
-atrazine.df$LabCode[atrazine.df$LabCode == "12033" & 
+# to 2005-03-04, but that LabCode is recorded in the sample data.
+# LabCode 12033 is equivalent to 12003, so recode
+atrazine.df$LabCode[atrazine.df$LabCode == "12033" &
     atrazine.df$Date < "2005-03-04"] <- "12003"
 # Extract the method code from the TestID in the reporting level data
 atrazine.dl$QW_METHOD_CD <- substring(atrazine.dl$TestID, 6)
 # For these data the reporting level codes agree, but in some case, the
 # reporting level data uses lower case.
 # The data are now ready for processing. They cannot be merged because
-# there is no exact match for dates. This requires a relatively slow 
+# there is no exact match for dates. This requires a relatively slow
 # loop to get the 1 to 1 match.
 # First set up vector of detection limits
 DL <- numeric(nrow(atrazine.df))
 # Then loop through each row
 for(i in seq(DL)) {
 	# match method code
-	tmp.mc <- atrazine.df$QW_METHOD_CD[i] == atrazine.dl$QW_METHOD_CD 
+	tmp.mc <- atrazine.df$QW_METHOD_CD[i] == atrazine.dl$QW_METHOD_CD
 	# match reporting level codes
 	tmp.rlc <- atrazine.df$RPT_LEV_CD[i] == atrazine.dl$ReportLevelCode
 	# and finally the dates
-	tmp.dt <- atrazine.df$Date[i] >= atrazine.dl$StartDate & 
+	tmp.dt <- atrazine.df$Date[i] >= atrazine.dl$StartDate &
 		atrazine.df$Date[i] <= atrazine.dl$EndDate
 	# match lab code only if necessary--more than one detection limit
-	# This works when the LabCode is not recorded in the sample data or 
+	# This works when the LabCode is not recorded in the sample data or
 	# for different DLs among the LabCodes
 	tmp.sel <- tmp.mc & tmp.rlc & tmp.dt
 	if(sum(tmp.sel) > 1) {
@@ -204,7 +211,7 @@ atrazine.df[Miss, c("Date", "sched", "RPT_LEV_VA", "RPT_LEV_CD", "QW_METHOD_CD")
 atrazine.df$DL <- ifelse(is.na(DL), atrazine.df$RPT_LEV_VA, DL)
 atrazine.df$DL_CD <- ifelse(is.na(DL), atrazine.df$RPT_LEV_CD, "DL")
 # Update the censored values in RESULT_VA--this works only for left-censored
-atrazine.df$RESULT_VA <- ifelse(atrazine.df$REMARK_CD == "<", 
+atrazine.df$RESULT_VA <- ifelse(atrazine.df$REMARK_CD == "<",
     atrazine.df$DL, atrazine.df$RESULT_VA)
 @
 
@@ -213,23 +220,23 @@ The last step in processing these data for the quality-control analysis is to sp
 <<echo=TRUE>>=
 # Subset the atrazine sample data and rename the columns
 # Blank data
-atrazine.oaq <- subset(atrazine.df, MEDIUM_CD == "OAQ", 
-  select = c("staid", "Date", "MEDIUM_CD", "SAMP_TYPE_CD", 
+atrazine.oaq <- subset(atrazine.df, MEDIUM_CD == "OAQ",
+  select = c("staid", "Date", "MEDIUM_CD", "SAMP_TYPE_CD",
     "RESULT_VA", "REMARK_CD", "DL", "DL_CD", "QW_METHOD_CD",
     "Units", "PARAMETER_CD"))
 names(atrazine.oaq)[5:11] <- paste0("atrazine", c("", ".rmk",
   ".rlv", ".rmt", ".mth", ".unt", ".pcd"))
 # Check if practcal to reset the DL for the blank data by method
-with(subset(atrazine.oaq, atrazine < atrazine.rlv), 
+with(subset(atrazine.oaq, atrazine < atrazine.rlv),
      table(atrazine, atrazine.mth))
-# there is only 1 value less than the detection limit, so the payback for 
+# there is only 1 value less than the detection limit, so the payback for
 # resetting the detection limits is small.
 # Convert the atrazine to "qw"
 atrazine.oaq <- convert2qw(atrazine.oaq, scheme="partial")
 #
 # Replicate data
-atrazine.wsq <- subset(atrazine.df, MEDIUM_CD == "WSQ", 
-  select = c("staid", "Date", "MEDIUM_CD", "SAMP_TYPE_CD", 
+atrazine.wsq <- subset(atrazine.df, MEDIUM_CD == "WSQ",
+  select = c("staid", "Date", "MEDIUM_CD", "SAMP_TYPE_CD",
     "RESULT_VA", "REMARK_CD", "DL", "DL_CD", "QW_METHOD_CD",
     "Units", "PARAMETER_CD"))
 names(atrazine.wsq)[5:11] <- paste0("atrazine", c("", ".rmk",
@@ -238,8 +245,8 @@ names(atrazine.wsq)[5:11] <- paste0("atrazine", c("", ".rmk",
 atrazine.wsq <- convert2qw(atrazine.wsq, scheme="partial")
 #
 # Envirionmental sample data
-atrazine.ws <- subset(atrazine.df, MEDIUM_CD == "WS", 
-  select = c("staid", "Date", "MEDIUM_CD", "SAMP_TYPE_CD", 
+atrazine.ws <- subset(atrazine.df, MEDIUM_CD == "WS",
+  select = c("staid", "Date", "MEDIUM_CD", "SAMP_TYPE_CD",
     "RESULT_VA", "REMARK_CD", "DL", "DL_CD", "QW_METHOD_CD",
     "Units", "PARAMETER_CD"))
 names(atrazine.ws)[5:11] <- paste0("atrazine", c("", ".rmk",
@@ -249,7 +256,7 @@ atrazine.ws <- convert2qw(atrazine.ws, scheme="partial")
 @
 
 \eject
-\section{Analysis of Blanks} 
+\section{Analysis of Blanks}
 
 Blanks are used to estimate the positive bias that can be caused by extraneous contamination introduced into environmental samples during collection, processing, shipment, and laboratory analysis. Evaluation of data from field blanks depends on the inference space represented by the blanks. In general, there are two possibilities: (1) a single blank is prepared to represent potential sources of contamination that affect a specific, small set of environmental samples, or (2) multiple blanks are prepared periodically over time and space to represent potential sources of contamination that might affect a much larger set of environmental samples.
 
@@ -292,7 +299,7 @@ AA.pl <- addXY(Pct.90, Bnk.90[,"ucl"], Plot=list(name="90 Percent UCL for Blanks
   what="lines", color="red", width="color"), current=AA.pl)
 # And the explanation
 addExplanation(AA.pl, "ul")
-@ Close the output device
+# Close the output device
 graphics.off()
 @
 
@@ -303,12 +310,12 @@ graphics.off()
 \textbf{Figure 1.} Comparison of environmental and blank data.
 
 \eject
-\section{Analysis of Spikes} 
+\section{Analysis of Spikes}
 
 Spikes are used to estimate the positive or negative bias that can affect the measured results for environmental samples because of analyte degradation or problems with the analytical methods. This bias is estimated by determining the recovery of known concentrations of the analytes in the spiked sample. Calculation of recovery for matrix spikes requires a separate environmental sample to determine the background concentration of the analyte in the unspiked matrix. Recovery in the spiked matrix samples can be compared to some criteria or to typical recovery for the analytical method based on laboratory reagent spikes.
 
 \eject
-\section{Analysis of Replicates} 
+\section{Analysis of Replicates}
 
 Replicates are used to measure variability, which is defined as the random error in independent measurements as the result of repeated application of the measurement process under identical conditions. Statistical evaluation of replicate variability is based on the standard deviation of measured values in the primary environmental sample and the replicate sample or samples. If only one set of a large number of replicates was collected, the standard deviation could be calculated directly; however, the general practice is to collect many sets of a small number of replicates under different conditions.
 

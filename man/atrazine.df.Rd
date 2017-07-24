@@ -48,4 +48,3 @@ with(atrazine.df, table(MEDIUM_CD))
 with(atrazine.df, table(staid))
 }
 \keyword{datasets}
-

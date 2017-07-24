@@ -24,4 +24,3 @@ The printed output appears as 2 columns, the first column is the
 percentile and the second column is the value.
 }
 \keyword{utilities}
-

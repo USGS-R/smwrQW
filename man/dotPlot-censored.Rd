@@ -2,9 +2,9 @@
 % Please edit documentation in R/dotPlot-censored.R
 \docType{methods}
 \name{dotPlot-censored}
+\alias{dotPlot-censored}
 \alias{dotPlot,mcens-method}
 \alias{dotPlot,qw-method}
-\alias{dotPlot-censored}
 \title{Censored Data Methods for Function \code{dotPlot}}
 \usage{
 \S4method{dotPlot}{mcens}(x, y, Plot = list(name = "", what = "points", type =
@@ -86,4 +86,3 @@ environment before calling \code{dotPlot}.
 }
 \keyword{hplot}
 \keyword{methods}
-

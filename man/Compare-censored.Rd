@@ -2,13 +2,13 @@
 % Please edit documentation in R/Compare-censored.R
 \docType{methods}
 \name{Compare-censored}
+\alias{Compare-censored}
 \alias{Compare,lcens,numeric-method}
 \alias{Compare,mcens,numeric-method}
+\alias{Compare,qw,numeric-method}
 \alias{Compare,numeric,lcens-method}
 \alias{Compare,numeric,mcens-method}
 \alias{Compare,numeric,qw-method}
-\alias{Compare,qw,numeric-method}
-\alias{Compare-censored}
 \title{Comparison Methods for \code{lcens}, \code{mcens}, and \code{qw} objects}
 \usage{
 \S4method{Compare}{lcens,numeric}(e1, e2)
@@ -50,4 +50,3 @@ as.lcens(c(1, 3), 2) < 4
 }
 \keyword{manip}
 \keyword{methods}
-
