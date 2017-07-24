@@ -16,7 +16,7 @@
       SUBROUTINE AMLSTAT(CENSFLAG,DF,LLRAML,NOBSC,NPAR,
      &     PARAML,PLEVAML,PVAL,RESID,RSQ,SCORR,
      &     XLCAL,XLIKE,YD,YHAT,YLCAL,YLCAL2,IERR)
-*     
+*
 *     dimensional parameters and logical devices
 *
       INCLUDE 'fmodules.inc'
@@ -50,7 +50,7 @@
 *     observations rather than the observations (5/7/92 Tim Cohn).
 *
 *     (Preserve the original YLCAL for use by LADREG and JKNIFE by
-*     introducing YLCAL2).  
+*     introducing YLCAL2).
 *
       RESSD = SQRT(PARAML(NPAR+1))
       SUM = 0.D0
@@ -71,7 +71,7 @@
 *     calculate the Turnbull-Weiss likelihood ratio normality test
 *     (S/R NORTEST) and the associated probability level
 *
-      CALL NORTEST(CENSFLAG,DF,LLRAML,NOBSC,SRESID,PLEVAML)
+      CALL NORTEST(CENSFLAG,DF,LLRAML,NOBSC,SRESID,PLEVAML,IERR)
 *
 *     compute R^2 of the load regression and the serial correlation of
 *     the residuals
