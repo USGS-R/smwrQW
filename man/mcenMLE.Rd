@@ -30,4 +30,3 @@ for multiply censored water quality data: Water Resources Research v. 24, n.
 12, pp.1997-2004
 }
 \keyword{misc}
-

@@ -34,4 +34,3 @@ adjusted p-value is less than the \code{alpha} level set in
 \code{\link{genWilcox.test}}
 }
 \keyword{utilities}
-

@@ -62,6 +62,7 @@ A \code{plot} method is supported for the returned object.
  The null hypothesis is that the
 distributions are not different from one another.
 }
+
 \examples{
 
 # Compare uncensored results
@@ -102,4 +103,3 @@ censored data rank tests: Biometrika, v. 35, p. 861-867.\cr
 }
 \keyword{censored}
 \keyword{htest}
-

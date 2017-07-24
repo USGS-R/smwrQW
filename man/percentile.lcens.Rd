@@ -3,6 +3,7 @@
 \name{percentile.lcens}
 \alias{percentile.lcens}
 \alias{percentile.qw}
+\alias{percentile.qw}
 \title{Empirical Cumulative Percent}
 \usage{
 \method{percentile}{lcens}(x, q, test = ">=", na.rm = TRUE,
@@ -62,4 +63,3 @@ percentile(Xr, 1:5)
 \keyword{manip}
 \keyword{math}
 \keyword{univar}
-

@@ -2,8 +2,8 @@
 % Please edit documentation in R/imputeLessThans.R
 \name{imputeLessThans}
 \alias{imputeLessThans}
-\alias{imputeLessThans.data.frame}
 \alias{imputeLessThans.default}
+\alias{imputeLessThans.data.frame}
 \title{Impute Censored Values}
 \usage{
 imputeLessThans(..., type = c("MLE", "robust"), initial = c("complete.obs",
@@ -16,6 +16,10 @@ imputeLessThans(..., type = c("MLE", "robust"), initial = c("complete.obs",
   "robust"), initial = c("complete.obs", "multRepl"))
 }
 \arguments{
+\item{\dots}{either a data frame that contains columns of class "qw" or any combination of
+individual vectors of class "numeric," "lcens," or "qw." Missing values are
+removed before processing.}
+
 \item{type}{the type of estimate, "MLE" for maximum likelihood estimates, or "robust"
 for robust estimation methods. See \code{\link[zCompositions]{lrEM}} for details.}
 
@@ -26,10 +30,6 @@ See \code{\link[zCompositions]{lrEM}} for details.}
 
 \item{group}{character string, the name of the column in the data frame to indicate
 a group for imputation. See \bold{Details}}
-
-\item{\dots}{either a data frame that contains columns of class "qw" or any combination of
-individual vectors of class "numeric," "lcens," or "qw." Missing values are
-removed before processing.}
 }
 \value{
 A data frame containing the original data with imputed censored values.
@@ -46,4 +46,3 @@ for any group is 3.
 \seealso{
 \code{\link[zCompositions]{lrEM}}, \code{\link{mImputeLessThans}}
 }
-

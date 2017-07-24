@@ -67,4 +67,3 @@ Joint Statistical Meeting, Boston, August 9--13, 1992, p. 142--151.
 \seealso{
 \code{\link{censReg}}, \code{\link{predictMVUE}}
 }
-

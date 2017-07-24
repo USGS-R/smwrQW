@@ -19,4 +19,3 @@ Support function for computing statistics for left- and multiply censored
 data.
 }
 \keyword{misc}
-

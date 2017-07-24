@@ -51,4 +51,3 @@ normality of the residuals more accurately.
 }
 \keyword{hplot}
 \keyword{regression}
-

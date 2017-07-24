@@ -2,12 +2,12 @@
 % Please edit documentation in R/xyPlot-censored.R
 \docType{methods}
 \name{xyPlot-censored}
+\alias{xyPlot-censored}
+\alias{xyPlot,numeric,lcens-method}
+\alias{xyPlot,numeric,qw-method}
 \alias{xyPlot,Date,qw-method}
 \alias{xyPlot,lcens,lcens-method}
-\alias{xyPlot,numeric,lcens-method}
 \alias{xyPlot,numeric,mcens-method}
-\alias{xyPlot,numeric,qw-method}
-\alias{xyPlot-censored}
 \title{Censored Data Methods for Function \code{xyPlot}}
 \usage{
 \S4method{xyPlot}{numeric,lcens}(x, y, Plot = list(name = "", what = "points",
@@ -101,4 +101,3 @@ environment before calling \code{xyPlot}.
 }
 \keyword{hplot}
 \keyword{methods}
-

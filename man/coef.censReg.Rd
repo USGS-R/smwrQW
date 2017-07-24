@@ -29,4 +29,3 @@ AMLE regression and from a Wald chi-square test for MLE regression.
 \seealso{
 \code{\link{censReg}},
 }
-

@@ -5,6 +5,9 @@
 \alias{[.mcens}
 \alias{[.qw}
 \alias{subset.qw}
+\alias{[.mcens}
+\alias{[.qw}
+\alias{subset.qw}
 \title{Subset an Object}
 \usage{
 \method{[}{lcens}(x, i, ...)
@@ -20,9 +23,9 @@
 
 \item{i}{index specifying elements to extract.}
 
-\item{subset}{an logical expression involving a slot name of the qw object.}
-
 \item{\dots}{not used, required for other methods.}
+
+\item{subset}{an logical expression involving a slot name of the qw object.}
 }
 \value{
 A subset of the object \code{x}.
@@ -53,4 +56,3 @@ Xcens
 \code{\link{[.qw}}
 }
 \keyword{manip}
-

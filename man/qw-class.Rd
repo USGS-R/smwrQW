@@ -45,10 +45,12 @@ used to define columns is datasets organized by sample.}
 
 \item{\code{names}}{a character vector of unique names for each element in \code{.Data}.}
 }}
+
 \section{Objects from the Class}{
  Objects can be created by calls to
 \code{as.qw}.
 }
+
 \examples{
 
 showClass("qw")
@@ -58,4 +60,3 @@ showClass("qw")
 Lorenz, D.L., in preparation
 }
 \keyword{classes}
-

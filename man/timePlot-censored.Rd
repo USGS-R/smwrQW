@@ -2,9 +2,9 @@
 % Please edit documentation in R/timePlot-censored.R
 \docType{methods}
 \name{timePlot-censored}
+\alias{timePlot-censored}
 \alias{timePlot,Date,lcens-method}
 \alias{timePlot,Date,qw-method}
-\alias{timePlot-censored}
 \title{Censored Data Methods for Function \code{timePlot}}
 \usage{
 \S4method{timePlot}{Date,lcens}(x, y, Plot = list(name = "", what = "points",
@@ -72,4 +72,3 @@ the number of labels.
 }
 \keyword{hplot}
 \keyword{methods}
-

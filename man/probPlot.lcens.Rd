@@ -3,6 +3,7 @@
 \name{probPlot.lcens}
 \alias{probPlot.lcens}
 \alias{probPlot.qw}
+\alias{probPlot.qw}
 \title{Probability Plot}
 \usage{
 \method{probPlot}{lcens}(x, truncate, FLIP = FALSE, distribution = "normal",
@@ -96,4 +97,3 @@ probPlot(as.lcens(Xu, 1.0))
 \code{\link{qqPlot.lcens}}
 }
 \keyword{hplot}
-

@@ -4,6 +4,8 @@
 \alias{as.data.frame.lcens}
 \alias{as.data.frame.mcens}
 \alias{as.data.frame.qw}
+\alias{as.data.frame.mcens}
+\alias{as.data.frame.qw}
 \title{Coerce to a Data Frame}
 \usage{
 \method{as.data.frame}{lcens}(x, row.names = NULL, optional = FALSE, ...,
@@ -23,12 +25,12 @@ frame. Missing values are not allowed.}
 
 \item{optional}{logical. If \code{TRUE}, set column names to \code{nm}.}
 
+\item{\dots}{additional arguments to be passed to or from methods.}
+
 \item{nm}{set as column name if \code{optional} is \code{TRUE}.}
 
 \item{expand}{create a data frame from all of the slots from the object
 instead of creating a data frame containting the object.}
-
-\item{\dots}{additional arguments to be passed to or from methods.}
 }
 \value{
 A data frame constructred from \code{x}.
@@ -41,4 +43,3 @@ methods for "lcens," "mcens," and "qw" data.
 \code{\link{data.frame}}
 }
 \keyword{manip}
-

@@ -24,4 +24,3 @@ censored regression object: method for "censReg" object.
 \code{\link{censReg}}
 }
 \keyword{regression}
-

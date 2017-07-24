@@ -3,6 +3,7 @@
 \name{censReg_AMLE.fit}
 \alias{censReg_AMLE.fit}
 \alias{censReg_MLE.fit}
+\alias{censReg_MLE.fit}
 \title{Support Functions for Censored Regression}
 \usage{
 censReg_AMLE.fit(Y, X, dist = "normal")
@@ -31,4 +32,3 @@ either AMLE or MLE regression.
 }
 \keyword{censored}
 \keyword{utilities}
-

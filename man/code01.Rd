@@ -2,8 +2,8 @@
 % Please edit documentation in R/code01.R
 \name{code01}
 \alias{code01}
-\alias{code01.data.frame}
 \alias{code01.default}
+\alias{code01.data.frame}
 \title{Code Censored Values}
 \usage{
 code01(..., criteria)
@@ -13,6 +13,10 @@ code01(..., criteria)
 \method{code01}{data.frame}(..., criteria)
 }
 \arguments{
+\item{\dots}{either a data frame that contains columns of class "qw" or any combination of
+individual vectors of class "integer," "numeric," "lcens," or "qw." Missing values are
+removed before processing.}
+
 \item{criteria}{a vector indicating the critical values for each repsective value in
 \code{\dots}. May be a named vector containing critical values for the named argument
 in \code{\dots} or not supplied. For any argument in \code{\dots} that does not have
@@ -21,10 +25,6 @@ no censored values, the median. The critical value can never be smaller than
 the largest censoring level and will be changed with a warning message. A special case
 is for integer values that have a minimum of 0---for those data the default criterion is to
 return 0 if the value is 0 and return 1 for any other value.}
-
-\item{\dots}{either a data frame that contains columns of class "qw" or any combination of
-individual vectors of class "integer," "numeric," "lcens," or "qw." Missing values are
-removed before processing.}
 }
 \value{
 A data frame containing the binary coded values. Each column has an attribute
@@ -37,4 +37,3 @@ Recodes censored data to a binary coding system with 0 indicating
 less than some critical value and 1 indicating greater than or equal to that critical 
 value.
 }
-

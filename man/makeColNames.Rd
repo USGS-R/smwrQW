@@ -32,4 +32,3 @@ functions.
 \code{\link{pcodeNWISqw}}, \code{\link{pcodeColData}}
 }
 \keyword{utilities}
-
