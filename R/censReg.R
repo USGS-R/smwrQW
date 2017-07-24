@@ -76,8 +76,8 @@ censReg <- function(formula, data, subset, weights, na.action, dist="normal") {
   ##    2012Dec28 DLLorenz Roxygenized
   ##    2014Sep04 DLLorenz Formula fix by Parker Norton
   ##
-  call  <- match.call()
-  m     <- match.call(expand.dots = FALSE)
+  call  <- m  <- match.call()
+  # m     <- match.call(expand.dots = FALSE)
   UseWt <- !missing(weights)
   dist  <- match.arg(dist, c("normal", "lognormal", "commonlog"))
 
@@ -85,9 +85,6 @@ censReg <- function(formula, data, subset, weights, na.action, dist="normal") {
   m$dist <- NULL
   m[[1]] <- as.name("model.frame")
 
-  print(class(m))
-  print(m)
-  # segfault error occurs here
   m     <- eval(m, parent.frame())
   Terms <- attr(m, "terms")
 
