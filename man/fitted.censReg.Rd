@@ -34,8 +34,9 @@ set.seed(345)
 X <- runif(24, 1, 5)
 Y <- X/2 + rnorm(24)
 fit <- censReg(as.lcens(Y, 1) ~ X) # censored at 1
+ncol(fit$XLCAL) == fit$NPAR
 # Extract the fitted values
- fitted(app1.lr)
+fitted(fit)
 }
 \seealso{
 \code{\link{censReg}}
