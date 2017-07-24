@@ -66,7 +66,6 @@
 #'Y <- X/2 + rnorm(24)
 #'lm(Y ~ X) # the uncensored regression
 #'censReg(as.lcens(Y, 1) ~ X) # censored at 1
-#'stop("do errors in examples stop appveyor")
 #'
 #' @export
 censReg <- function(formula, data, subset, weights, na.action, dist="normal") {
@@ -77,25 +76,21 @@ censReg <- function(formula, data, subset, weights, na.action, dist="normal") {
   ##    2012Dec28 DLLorenz Roxygenized
   ##    2014Sep04 DLLorenz Formula fix by Parker Norton
   ##
-  print("step 0")
   call  <- match.call()
-  print("step 0")
   m     <- match.call(expand.dots = FALSE)
-  print("step 0")
   UseWt <- !missing(weights)
-  print("step 0")
   dist  <- match.arg(dist, c("normal", "lognormal", "commonlog"))
 
   ## Remove components not needed for model.frame
   m$dist <- NULL
-  print("step 0")
   m[[1]] <- as.name("model.frame")
+
   print(class(m))
   print(m)
-  m <- eval(m, parent.frame())
-  print("step 0")
+  browser()
+  m     <- eval(m, parent.frame())
   Terms <- attr(m, "terms")
-  print("step 0.5")
+
   ## Make sure that the formula is a formula and not a symbol--this
   # improves output and subsequent formula references
   if (typeof(call$formula) == "symbol") {

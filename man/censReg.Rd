@@ -75,7 +75,6 @@ X <- runif(24, 1, 5)
 Y <- X/2 + rnorm(24)
 lm(Y ~ X) # the uncensored regression
 censReg(as.lcens(Y, 1) ~ X) # censored at 1
-stop("do errors in examples stop appveyor")
 
 }
 \references{
