@@ -7,14 +7,14 @@
 qwCoalesce(..., means = FALSE, lt.tol = 0.1)
 }
 \arguments{
+\item{\dots}{any number of objects of class "qw." Missing values are permitted.}
+
 \item{means}{logical, if \code{TRUE}, then compute the mean of all nonmissing
 values in the data sepcified in \dots. if \code{FALSE}, then select the first 
 nonmissing value the sequence spcified in \dots.}
 
 \item{lt.tol}{an arbitrary tolerance metric to drop interval-censoring. See 
 \code{\link{mean.qw}} for details.}
-
-\item{\dots}{any number of objects of class "qw." Missing values are permitted.}
 }
 \value{
 For \code{means} set to \code{FALSE}, an object of class "qw" in which each element 
@@ -41,4 +41,3 @@ column of alkalinity may be desired when there are multiple columns of
 alkalinity determined by various methods.
 }
 \keyword{manip}
-

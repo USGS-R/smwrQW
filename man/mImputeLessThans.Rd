@@ -2,8 +2,8 @@
 % Please edit documentation in R/mImputeLessThans.R
 \name{mImputeLessThans}
 \alias{mImputeLessThans}
-\alias{mImputeLessThans.data.frame}
 \alias{mImputeLessThans.default}
+\alias{mImputeLessThans.data.frame}
 \title{Impute Censored Values}
 \usage{
 mImputeLessThans(..., m = 10, initial = c("lrEM", "complete.obs",
@@ -16,6 +16,10 @@ mImputeLessThans(..., m = 10, initial = c("lrEM", "complete.obs",
   initial = c("lrEM", "complete.obs", "multRepl"))
 }
 \arguments{
+\item{\dots}{either a data frame that contains columns of class "qw" or any combination of
+individual vectors of class "numeric," "lcens," or "qw." Missing values are
+removed before processing.}
+
 \item{m}{the number of multiple imputations desired.}
 
 \item{initial}{the method to use for the initial log-ratio covariance matrix, either
@@ -26,10 +30,6 @@ See \code{\link[zCompositions]{lrDA}} for details.}
 
 \item{group}{character string, the name of the column in the data frame to indicate
 a group for imputation. See \bold{Details}}
-
-\item{\dots}{either a data frame that contains columns of class "qw" or any combination of
-individual vectors of class "numeric," "lcens," or "qw." Missing values are
-removed before processing.}
 }
 \value{
 A list of length \code{m} containing data frames with imputed censored values. If
@@ -50,4 +50,3 @@ for any group is 3.
 \seealso{
 \code{\link[zCompositions]{lrDA}}, \code{\link{imputeLessThans}}
 }
-

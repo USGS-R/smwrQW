@@ -2,9 +2,9 @@
 % Please edit documentation in R/fillIn.R
 \name{fillIn}
 \alias{fillIn}
+\alias{fillIn.numeric}
 \alias{fillIn.lcens}
 \alias{fillIn.mcens}
-\alias{fillIn.numeric}
 \title{Estimate Censored Values}
 \usage{
 fillIn(x, method, alpha)
@@ -62,4 +62,3 @@ biologists, Cambridge University Press, Cambridge, UK, 539 p.
 \code{\link{as.double.qw}}
 }
 \keyword{manip}
-

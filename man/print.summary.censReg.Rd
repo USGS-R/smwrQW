@@ -28,4 +28,3 @@ null model with the attained p-value, and the computational method.
 \code{\link{censReg}}, \code{\link{coef.censReg}}
 }
 \keyword{utilities}
-

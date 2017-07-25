@@ -35,4 +35,3 @@ Helsel, D.R. 2012, Statistics for censored environmental data
 using Minitab and R: New York, Wiley, 324 p.
 }
 \keyword{misc}
-

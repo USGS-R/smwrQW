@@ -3,6 +3,7 @@
 \name{qqPlot.lcens}
 \alias{qqPlot.lcens}
 \alias{qqPlot.qw}
+\alias{qqPlot.qw}
 \title{Q-Q Plot}
 \usage{
 \method{qqPlot}{lcens}(x, y, alpha = 0.4, Plot = list(name = "", what =
@@ -98,4 +99,3 @@ qqPlot(as.lcens(Xu, 1.0), yaxis.log=TRUE)
 \code{\link{probPlot.lcens}}
 }
 \keyword{hplot}
-

@@ -30,4 +30,3 @@ of lognormal populations from type 1 censored samples: U.S. Geological Survey
 Open-File Report 88-350, 34 p.
 }
 \keyword{misc}
-

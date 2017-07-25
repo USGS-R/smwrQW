@@ -4,6 +4,8 @@
 \alias{as.character.lcens}
 \alias{as.character.mcens}
 \alias{as.character.qw}
+\alias{as.character.mcens}
+\alias{as.character.qw}
 \title{Character Representations}
 \usage{
 \method{as.character}{lcens}(x, ...)
@@ -25,4 +27,3 @@ Creates character representations of censored and water-quality data:
 methods for "lcens," "mcens," and "qw" data.
 }
 \keyword{manip}
-

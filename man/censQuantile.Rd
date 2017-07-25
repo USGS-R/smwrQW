@@ -6,6 +6,10 @@
 \alias{censQuantile.lcens}
 \alias{censQuantile.mcens}
 \alias{censQuantile.qw}
+\alias{censQuantile.default}
+\alias{censQuantile.lcens}
+\alias{censQuantile.mcens}
+\alias{censQuantile.qw}
 \title{Sample Quantiles}
 \usage{
 censQuantile(x, probs = seq(0, 1, 0.25), na.rm = FALSE, method = "ROS",
@@ -79,4 +83,3 @@ multiply censored water quality data: Water Resources Research v. 24, n.
 \code{\link{quantile}}, \code{\link{quantile.lcens}}
 }
 \keyword{univar}
-

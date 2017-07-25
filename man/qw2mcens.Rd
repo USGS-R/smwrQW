@@ -20,4 +20,3 @@ for "less-than" data.
 \seealso{
 \code{\link{as.mcens}}
 }
-

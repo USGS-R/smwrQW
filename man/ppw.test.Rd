@@ -47,6 +47,7 @@ A \code{plot} method is supported for the returned object.
  The null hypothesis is that the
 distributions are not different from one another.
 }
+
 \examples{
 
 # Compare uncensored results
@@ -71,4 +72,3 @@ paried data: Biometrics, v. 43, p. 451--455.
 }
 \keyword{censored}
 \keyword{htest}
-

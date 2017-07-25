@@ -2,16 +2,16 @@
 % Please edit documentation in R/Arith-censored.R
 \docType{methods}
 \name{Arith-censored}
-\alias{Arith,lcens,lcens-method}
-\alias{Arith,lcens,numeric-method}
-\alias{Arith,mcens,mcens-method}
-\alias{Arith,mcens,numeric-method}
-\alias{Arith,numeric,lcens-method}
-\alias{Arith,numeric,mcens-method}
-\alias{Arith,numeric,qw-method}
-\alias{Arith,qw,numeric-method}
-\alias{Arith,qw,qw-method}
 \alias{Arith-censored}
+\alias{Arith,lcens,numeric-method}
+\alias{Arith,numeric,lcens-method}
+\alias{Arith,lcens,lcens-method}
+\alias{Arith,mcens,numeric-method}
+\alias{Arith,numeric,mcens-method}
+\alias{Arith,mcens,mcens-method}
+\alias{Arith,qw,numeric-method}
+\alias{Arith,numeric,qw-method}
+\alias{Arith,qw,qw-method}
 \title{Arithmetic Methods for \code{lcens}, \code{mcens}, and \code{qw} objects}
 \usage{
 \S4method{Arith}{lcens,numeric}(e1, e2)
@@ -54,4 +54,3 @@ as.lcens(c(1, 3), 2) * 2
 }
 \keyword{manip}
 \keyword{methods}
-

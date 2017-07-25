@@ -4,6 +4,8 @@
 \alias{format.lcens}
 \alias{format.mcens}
 \alias{format.qw}
+\alias{format.mcens}
+\alias{format.qw}
 \title{Encode in a Common Format}
 \usage{
 \method{format}{lcens}(x, digits = NULL, ...)
@@ -17,6 +19,8 @@
 
 \item{digits}{how many significant digits are to be used for numbers?}
 
+\item{\dots}{further arguments passed to or from other methods.}
+
 \item{round}{round the data before formating? Can also be a numeric vector of
 length 2 containing the maximum number of significant digits and the maximum
 number of decimal digits.}
@@ -24,8 +28,6 @@ number of decimal digits.}
 \item{units}{logical, if \code{TRUE} then include the units of the data.}
 
 \item{style}{the style for objects of class "qw." See \bold{Details}.}
-
-\item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
 A character representations of the elements of \code{x}.
@@ -51,4 +53,3 @@ format(as.mcens(1:3, 1:3))
 
 }
 \keyword{manip}
-

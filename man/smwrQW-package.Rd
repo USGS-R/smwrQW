@@ -28,13 +28,12 @@ tools include automatic conversion of "qw" data into the "best" (left-only or
 multiply censored) format.\cr Need a general description of the tools by
 group--a brief synopsis of the OFR.
 }
+\references{
+Lorenz, D.L., in preparation.
+}
 \author{
 Dave Lorenz <lorenz@usgs.gov>
 
 Maintainer: Dave Lorenz <lorenz@usgs.gov>
 }
-\references{
-Lorenz, D.L., in preparation.
-}
 \keyword{package}
-

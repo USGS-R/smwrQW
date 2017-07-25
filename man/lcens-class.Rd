@@ -19,10 +19,12 @@ missing values in \code{.Data}.}
 
 \item{\code{names}}{a character vector of unique names for each element in \code{.Data}.}
 }}
+
 \section{Objects from the Class}{
  Objects can be created by calls to
 \code{as.lcens}.
 }
+
 \examples{
 
 showClass("lcens")
@@ -32,4 +34,3 @@ showClass("lcens")
 Lorenz, D.L., in preparation
 }
 \keyword{classes}
-

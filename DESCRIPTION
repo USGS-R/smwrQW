@@ -1,6 +1,6 @@
 Package: smwrQW
-Version: 0.7.12
-Date: 2016-12-13
+Version: 0.7.13
+Date: 2017-07-24
 Title: Tools for censored data analysis
 Author: Dave Lorenz <lorenz@usgs.gov>.
 Maintainer: Dave Lorenz <lorenz@usgs.gov>
@@ -22,7 +22,8 @@ Suggests:
     smwrData,
     cluster,
     NADA,
-    psych
+    psych,
+    knitr
 Description: This package provides tools for the analysis and graphing
     of censored data, focussing on water-quality data. It provides
     a uniform user interface to many different methods for the
@@ -147,4 +148,4 @@ Collate:
     'vif.censReg.R'
     'xyPlot-censored.R'
     'z%eq%.R'
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
