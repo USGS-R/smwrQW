@@ -23,6 +23,7 @@ Missing values are permitted only for elements of \code{.Data} that are missing.
 
 \item{\code{names}}{a character vector of unique names for each element in \code{.Data}.}
 }}
+
 \note{
 Note that \code{censor.codes} and \code{interval} are not necessary, but
 included to make some manipulations easier.
@@ -31,6 +32,7 @@ included to make some manipulations easier.
  Objects can be created by calls to
 \code{as.mcens}.
 }
+
 \examples{
 
 showClass("mcens")
@@ -40,4 +42,3 @@ showClass("mcens")
 Lorenz, D.L., in preparation
 }
 \keyword{classes}
-

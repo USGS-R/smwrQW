@@ -19,4 +19,3 @@ formatted contents of \code{x} and returns immediately.
 \description{
 Invoke a spreadsheet-style data viewer on a matrix-like \code{R} object.
 }
-

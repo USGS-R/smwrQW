@@ -21,4 +21,3 @@ censored regression model.
 \seealso{
 \code{\link{censReg}},
 }
-

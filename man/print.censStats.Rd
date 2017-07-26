@@ -25,4 +25,3 @@ if a log-transform was used in the computation, then the mean and standard
 deviation of the log-transformed values.
 }
 \keyword{utilities}
-

@@ -91,4 +91,3 @@ U.S. Geological Survey Open-File Report 88-350, 34 p.\cr
 }
 \keyword{censored}
 \keyword{regression}
-

@@ -31,4 +31,3 @@ plots are available from the \code{\link{summary.censReg}} output.
 }
 \keyword{hplot}
 \keyword{regression}
-

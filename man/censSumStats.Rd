@@ -8,6 +8,10 @@ censSumStats(..., group = NULL, Nums = TRUE, Stats = TRUE,
   Probs = (0:4)/4, na.rm = TRUE, method = "log MLE")
 }
 \arguments{
+\item{\dots}{any number of vectors or a data frame of the data to
+be summarized. If \code{\dots} is a data frame, then only numeric data,
+including "lcens," "mcens," and "qw" data types, will be summarized.}
+
 \item{group}{the data to group the data in \code{\dots}.}
 
 \item{Nums}{logical, include the number of observations and numbers of 
@@ -24,10 +28,6 @@ in the output data.frame}
 \item{method}{the method to use for computing the statistics. Must be one of
 "log MLE," "MLE," "log ROS," "ROS," or "flipped K-M." The method "flipped K-M"
 is only applicaple to un- or left-censored data.}
-
-\item{\dots}{any number of vectors or a data frame of the data to
-be summarized. If \code{\dots} is a data frame, then only numeric data,
-including "lcens," "mcens," and "qw" data types, will be summarized.}
 }
 \value{
 A data.frame with the selected statistcs for each variable
@@ -37,4 +37,3 @@ in \code{\dots} grouped by each unique value in \code{group}.
 Computes selected summary statistics for censored data.
 }
 \keyword{univar}
-

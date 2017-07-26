@@ -2,10 +2,10 @@
 % Please edit documentation in R/show-censored.R
 \docType{methods}
 \name{show-censored}
+\alias{show-censored}
 \alias{show,lcens-method}
 \alias{show,mcens-method}
 \alias{show,qw-method}
-\alias{show-censored}
 \title{Show Methods for \code{WSqw} objects}
 \usage{
 \S4method{show}{lcens}(object)
@@ -25,4 +25,3 @@ Prints the object.
 }
 \keyword{manip}
 \keyword{methods}
-

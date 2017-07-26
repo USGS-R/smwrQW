@@ -31,4 +31,3 @@ Create a diagnostics plot of the reporting levels and observations
 }
 \keyword{censored}
 \keyword{hplot}
-

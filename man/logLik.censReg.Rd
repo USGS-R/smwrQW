@@ -22,4 +22,3 @@ method for "censReg" object.
 \seealso{
 \code{\link{censReg}},
 }
-

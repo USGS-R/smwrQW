@@ -3,16 +3,16 @@
 \docType{methods}
 \name{as.lcens}
 \alias{as.lcens}
-\alias{as.lcens,character,missing,missing-method}
 \alias{as.lcens,lcens,missing,missing-method}
-\alias{as.lcens,numeric,missing,character-method}
-\alias{as.lcens,numeric,missing,logical-method}
 \alias{as.lcens,numeric,missing,missing-method}
-\alias{as.lcens,numeric,numeric,character-method}
-\alias{as.lcens,numeric,numeric,logical-method}
 \alias{as.lcens,numeric,numeric,missing-method}
+\alias{as.lcens,numeric,numeric,logical-method}
+\alias{as.lcens,numeric,numeric,character-method}
+\alias{as.lcens,numeric,missing,logical-method}
+\alias{as.lcens,numeric,missing,character-method}
 \alias{as.lcens,qw,missing,missing-method}
 \alias{as.lcens,qw,numeric,missing-method}
+\alias{as.lcens,character,missing,missing-method}
 \title{Left-censored Data Conversion}
 \usage{
 as.lcens(values, detlim, censor.codes)
@@ -85,4 +85,3 @@ Lorenz, D.L., in preparation
 }
 \keyword{manip}
 \keyword{methods}
-

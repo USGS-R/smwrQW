@@ -4,6 +4,8 @@
 \alias{length.lcens}
 \alias{length.mcens}
 \alias{length.qw}
+\alias{length.mcens}
+\alias{length.qw}
 \title{Length of an Object}
 \usage{
 \method{length}{lcens}(x)
@@ -31,4 +33,3 @@ length(as.lcens(c(1,3, NA), 2))
 
 }
 \keyword{attribute}
-

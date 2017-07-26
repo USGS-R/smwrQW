@@ -20,4 +20,3 @@ An object of class "survfit."
 Support function for computing statistics for left-censored data.
 }
 \keyword{misc}
-

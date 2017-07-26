@@ -61,6 +61,7 @@ Despite these problems, the approach is satisfactory for most applications:
 "the estimates are not very sensitive to the precise value of the censoring
 threshold for the above-threshold values."
 }
+
 \examples{
 
 ## The actual detection limits are 2,2,2,1,1,1.
@@ -77,4 +78,3 @@ Available online as \url{https://pubs.er.usgs.gov/publication/tm4A5}.
 \code{\link{readNWQLdl}}
 }
 \keyword{manip}
-

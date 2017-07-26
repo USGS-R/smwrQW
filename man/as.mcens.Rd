@@ -3,15 +3,15 @@
 \docType{methods}
 \name{as.mcens}
 \alias{as.mcens}
-\alias{as.mcens,character,missing,missing-method}
-\alias{as.mcens,lcens,missing,missing-method}
 \alias{as.mcens,mcens,missing,missing-method}
-\alias{as.mcens,numeric,missing,character-method}
-\alias{as.mcens,numeric,missing,integer-method}
+\alias{as.mcens,lcens,missing,missing-method}
 \alias{as.mcens,numeric,missing,missing-method}
-\alias{as.mcens,numeric,missing,numeric-method}
 \alias{as.mcens,numeric,numeric,missing-method}
+\alias{as.mcens,numeric,missing,numeric-method}
+\alias{as.mcens,numeric,missing,integer-method}
+\alias{as.mcens,numeric,missing,character-method}
 \alias{as.mcens,qw,missing,missing-method}
+\alias{as.mcens,character,missing,missing-method}
 \title{Multiply-censored Data Conversion}
 \usage{
 as.mcens(lower.val, upper.val, censor.codes)
@@ -80,4 +80,3 @@ Lorenz, D.L., in preparation
 }
 \keyword{manip}
 \keyword{methods}
-

@@ -50,4 +50,3 @@ using Minitab and R: New York, Wiley, 324 p.
 \keyword{censored}
 \keyword{htest}
 \keyword{nonparametric}
-

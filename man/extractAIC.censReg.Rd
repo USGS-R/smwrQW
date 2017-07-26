@@ -35,4 +35,3 @@ IEE transactions on Automatic Control, v. 19, no. 6, p. 716--723.
 \code{\link{censReg}}, \code{\link{extractAIC}}
 }
 \keyword{regression}
-
