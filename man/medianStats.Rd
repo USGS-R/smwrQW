@@ -8,16 +8,18 @@
 \alias{median.qw}
 \title{Median Value}
 \usage{
-\method{median}{lcens}(x, na.rm = FALSE)
+\method{median}{lcens}(x, na.rm = FALSE, ...)
 
-\method{median}{mcens}(x, na.rm = FALSE)
+\method{median}{mcens}(x, na.rm = FALSE, ...)
 
-\method{median}{qw}(x, na.rm = FALSE)
+\method{median}{qw}(x, na.rm = FALSE, ...)
 }
 \arguments{
 \item{x}{the censored data object.}
 
 \item{na.rm}{remove missing values before computation?}
+
+\item{\dots}{potentially further arguments for methods; not used in the default or lcens method.}
 }
 \value{
 A vector of length one representing the sample median.
