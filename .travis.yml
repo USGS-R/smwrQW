@@ -31,8 +31,6 @@ env:
 repos:
   CRAN: https://cran.rstudio.com
   GRAN: https://owi.usgs.gov/R 
-    
-warnings_are_errors: true
 
 script: 
   - |
