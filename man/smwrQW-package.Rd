@@ -10,8 +10,6 @@ that focuses on the analysis of water-quality data.
 }
 \details{
 \tabular{ll}{ Package: \tab smwrQW\cr Type: \tab Package\cr 
-Version: \tab 0.7.9\cr 
-Date: \tab 2015-01-27\cr 
 License: \tab CC0\cr 
 Depends: \tab dataRetrieval smwrBase smwrGraphs smwrStats \cr
 Imports: \tab boot coin lubridate methods mvtnorm survival XML zCompositions\cr
@@ -30,10 +28,5 @@ group--a brief synopsis of the OFR.
 }
 \references{
 Lorenz, D.L., in preparation.
-}
-\author{
-Dave Lorenz <lorenz@usgs.gov>
-
-Maintainer: Dave Lorenz <lorenz@usgs.gov>
 }
 \keyword{package}

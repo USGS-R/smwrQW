@@ -2,8 +2,10 @@ Package: smwrQW
 Version: 0.7.13
 Date: 2017-07-24
 Title: Tools for censored data analysis
-Author: Dave Lorenz <lorenz@usgs.gov>.
-Maintainer: Dave Lorenz <lorenz@usgs.gov>
+Authors@R: c( person("Dave", "Lorenz", role = "cre", email = "gs-w_r_admin@usgs.gov"),
+              person("Laura", "De Cicco", role = "aut"), 
+              person("Alison", "Appling", role = "ctb"),
+              person("Joseph", "Stachelek", role = "ctb"))
 Depends:
     dataRetrieval,
     smwrBase,
@@ -31,6 +33,7 @@ Description: This package provides tools for the analysis and graphing
 License: CC0
 LazyLoad: yes
 LazyData: yes
+BugReports: https://github.com/USGS-R/smwrQW/issues
 Collate:
     'qw-class.R'
     'lcens-class.R'
