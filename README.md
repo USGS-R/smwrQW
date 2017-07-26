@@ -17,7 +17,7 @@ In the meantime, we rely on community involvement to report and fix bugs.
 ### Reporting bugs
 
 Please consider reporting bugs and asking questions on the Issues page:
-[https://github.com/USGS-R/smwrQW/issues](https://github.com/USGS-R/rloadest/issues)
+[https://github.com/USGS-R/smwrQW/issues](https://github.com/USGS-R/smwrQW/issues)
 
 Follow `@USGS-R` on Twitter for updates on USGS R packages:
 [https://twitter.com/USGS_R](https://twitter.com/USGS_R)
@@ -30,7 +30,7 @@ Follow `@USGS-R` on Twitter for updates on USGS R packages:
 
 ## Code of Conduct
 
-We want to encourage a warm, welcoming, and safe environment for contributing to this project. See the [code of conduct](https://github.com/USGS-R/rloadest/blob/master/CONDUCT.md) for more information.
+We want to encourage a warm, welcoming, and safe environment for contributing to this project. See the [code of conduct](https://github.com/USGS-R/smwrQW/blob/master/CONDUCT.md) for more information.
 
 ## Package Installation
 To install the `smwrQW` package:
@@ -60,7 +60,7 @@ USGS R Installation Instructions: [https://owi.usgs.gov/R/training-curriculum/in
 5. In the RStudio "Console" window (usually left or lower-left), run the following command:
 
   ```r
-  install.packages("rloadest")
+  install.packages("smwrQW")
   ```
   
 
