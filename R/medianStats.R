@@ -5,6 +5,7 @@
 #' @aliases median.lcens median.mcens median.qw
 #' @param x the censored data object.
 #' @param na.rm remove missing values before computation?
+#' @param \dots potentially further arguments for methods; not used in the default or lcens method.
 #' @return A vector of length one representing the sample median.
 #' @note The median is computed using the flipped Kaplan-Meier method described
 #'in Helsel (2012).
@@ -19,17 +20,17 @@
 #' @rdname medianStats
 #' @export
 #' @method median lcens
-median.lcens <- function(x, na.rm=FALSE)
+median.lcens <- function(x, na.rm=FALSE, ...)
   as.vector(quantile(x, probs=0.50, na.rm=na.rm, method="flipped K-M"))
 
 #' @rdname medianStats
 #' @export
 #' @method median mcens
-median.mcens <- function(x, na.rm=FALSE)
+median.mcens <- function(x, na.rm=FALSE, ...)
   as.vector(quantile(x, probs=0.50, na.rm=na.rm, method="flipped K-M"))
 
 #' @rdname medianStats
 #' @export
 #' @method median qw
-median.qw <- function(x, na.rm=FALSE)
+median.qw <- function(x, na.rm=FALSE, ...)
   as.vector(quantile(as.mcens(x), probs=0.50, na.rm=na.rm, method="flipped K-M"))

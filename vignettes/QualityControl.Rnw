@@ -333,7 +333,7 @@ Lorenz, D.L., 2016, smwrQW--an R package for managing and analyzing water-qualit
 Mueller, D.K., Schertz, T.L., Martin, J.D., and Sandstrom, M.W., 2015, Design, analysis, and interpretation of field quality-control data for water-sampling projects: U.S. Geological Survey Techniques and Methods book 4, chap. C4, 54 p.
 
 \bibitem{RVMG}
-Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, Trends in pesticide concentrations in urban streams in the United States, 1992--2008: U.S. Geological Survey Scientific Investigations Report 2010--5139, 101 p. plus appendixes. Available at http://pubs.usgs.gov/sir/2010/5139/.
+Ryberg, K.R., Vecchia, A.V., Martin, J.D., and Gilliom, R.J., 2010, Trends in pesticide concentrations in urban streams in the United States, 1992--2008: U.S. Geological Survey Scientific Investigations Report 2010--5139, 101 p. plus appendixes. Available at https://pubs.usgs.gov/sir/2010/5139/.
 
 \end{thebibliography}
 
