@@ -1,5 +1,5 @@
 Package: smwrQW
-Version: 0.7.13
+Version: 0.7.14
 Date: 2017-07-24
 Title: Tools for censored data analysis
 Authors@R: c( person("Dave", "Lorenz", role = "cre", email = "gs-w_r_admin@usgs.gov"),
