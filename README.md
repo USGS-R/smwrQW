@@ -10,7 +10,7 @@ This package is currently in an 'orphaned' state, and
 looking for a new maintainer. For more information, see:
 [https://owi.usgs.gov/R/packages.html#orphan](https://owi.usgs.gov/R/packages.html#orphan)
 
-If you are interested in becoming the official maintainer of `rloadest`, please email gs-w_r_admin@usgs.gov.
+If you are interested in becoming the official maintainer of `smwrQW`, please email gs-w_r_admin@usgs.gov.
 
 In the meantime, we rely on community involvement to report and fix bugs.
 
