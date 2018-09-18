@@ -242,7 +242,7 @@ Helsel, D.R., and Hirsch, R.M., 2002, Statistical methods in water resources: U.
 Lorenz, D.L., 2015, smwrStats--An R package for the analysis of hydrologic data, Version 0.7.3: U.S. Geological Survey Open File Report, ? p.
   
 \bibitem{PA}
-Palarea-Albaladejo J. and Martin-Fernandez J.A., 2013, Values below detection limit in compositional chemical data: Analytica Chimica Acta 2013, v. 764, p. 32-43. accessed July 6, 2015 at http://dx.doi.org/10.1016/j.aca.2012.12.029.
+Palarea-Albaladejo J. and Martin-Fernandez J.A., 2013, Values below detection limit in compositional chemical data: Analytica Chimica Acta 2013, v. 764, p. 32-43. accessed July 6, 2015 at https://doi.org/10.1016/j.aca.2012.12.029.
 
 \end{thebibliography}
 
